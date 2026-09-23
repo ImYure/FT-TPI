@@ -28,4 +28,22 @@ describe("sumar", ()=>{
         
         expect(resultado).toBe(true);
     })
+
+
+     test("devuelve false cuando la edad es 17", ()=>{
+        const edad = 17
+
+        const resultado = EsmayorDeEdad(edad)
+        
+        expect(resultado).toBe(false);
+    })
+
+
+     test("devuelve hola, ana cuando el nombre es ana", ()=>{
+        const nombre = "ana"
+
+        const nom = saludar(nombre)
+        
+        expect(nom).toBe("hola, ana!");
+    })
 })
