@@ -9,3 +9,4 @@ export function esMayorDeEdad(edad){
 export function saludar(nombre){
     return `Hola, ${nombre}`
 }
+

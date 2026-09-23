@@ -1,4 +1,4 @@
-import { sumar } from "./funciones";
+import { saludar, sumar,EsmayorDeEdad } from "./funciones";
 import {describe, test, it, expect} from "vitest"
 
 describe("sumar", ()=>{
@@ -19,5 +19,13 @@ describe("sumar", ()=>{
         const resultado = sumar(a,b)
         
         expect(resultado).toBe(0);
+    })
+
+     test("devuelve true cuando la edad es 20", ()=>{
+        const edad = 20
+
+        const resultado = EsmayorDeEdad(edad)
+        
+        expect(resultado).toBe(true);
     })
 })
