@@ -3,13 +3,15 @@ export function sumar(a, b) {
 
 }
 
+export function saludar(nombre) {
+    return `hola, ${nombre}!`
+
+}
+
+
+
 export function EsmayorDeEdad(edad) {
     return edad >= 20
 
 }
 
-
-export function saludar(nombre) {
-    return `hola, ${nombre}!`
-
-}
