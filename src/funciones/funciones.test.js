@@ -31,7 +31,7 @@ describe("sumar", ()=>{
     })
 
 
-     test("devuelve true cuando la edad es 17", ()=>{
+     test("devuelve false cuando la edad es 17", ()=>{
         const edad = 17
 
         const resultado = EsmayorDeEdad(edad)
@@ -43,8 +43,8 @@ describe("sumar", ()=>{
      test("devuelve hola,ana cuando el nombre es ana", ()=>{
         const nombre = "ana"
 
-        const nom = saludar(nombre)
+        const resu = saludar(nombre)
         
-        expect(nom).toBe("hola,ana!");
+        expect(resu).toBe("hola, ana!");
     })
 })
