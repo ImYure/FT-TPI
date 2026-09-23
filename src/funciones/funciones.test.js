@@ -1,5 +1,4 @@
-import { saludar, sumar,sumar2 } from "./funciones";
-import { EsmayorDeEdad } from './funciones.js'
+import { saludar, sumar,EsmayorDeEdad } from "./funciones";
 import {describe, test, it, expect} from "vitest"
 
 describe("sumar", ()=>{
@@ -14,10 +13,10 @@ describe("sumar", ()=>{
     })
 
     test("devuelve 0 cuando se suman dos 0", ()=>{
-        const c = 0
-        const d = 0
+        const a = 0
+        const b = 0
 
-        const resultado = sumar2(c,d)
+        const resultado = sumar(a,b)
         
         expect(resultado).toBe(0);
     })
@@ -31,7 +30,7 @@ describe("sumar", ()=>{
     })
 
 
-     test("devuelve true cuando la edad es 17", ()=>{
+     test("devuelve false cuando la edad es 17", ()=>{
         const edad = 17
 
         const resultado = EsmayorDeEdad(edad)
@@ -40,11 +39,11 @@ describe("sumar", ()=>{
     })
 
 
-     test("devuelve hola,ana cuando el nombre es ana", ()=>{
+     test("devuelve hola, ana cuando el nombre es ana", ()=>{
         const nombre = "ana"
 
         const nom = saludar(nombre)
         
-        expect(nom).toBe("hola,ana!");
+        expect(nom).toBe("hola, ana!");
     })
 })
