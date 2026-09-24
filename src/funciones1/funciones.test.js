@@ -1,5 +1,10 @@
 import { describe, test, expect } from "vitest";
-import { esPar, formatearPrecio, iniciales, contarPalabras } from "./funciones.js";
+import {
+    esPar,
+    formatearPrecio,
+    iniciales,
+    contarPalabras,
+} from "./funciones.js";
 
 /* ═══════════════════════════════════════════════════════════════════
    EJERCICIO 0 - Primeros tests unitarios
@@ -14,30 +19,29 @@ import { esPar, formatearPrecio, iniciales, contarPalabras } from "./funciones.j
 // RESUELTO - usalo de modelo
 // ─────────────────────────────────────────────────────────────────────
 describe("esPar", () => {
-  test("devuelve true cuando el numero es par", () => {
-    // Arrange
-    const numero = 4;
+    test("devuelve true cuando el numero es par", () => {
+        // Arrange
+        const numero = 4;
 
-    // Act
-    const resultado = esPar(numero);
+        // Act
+        const resultado = esPar(numero);
 
-    // Assert
-    expect(resultado).toBe(true);
-  });
+        // Assert
+        expect(resultado).toBe(true);
+    });
 
-  test("devuelve false cuando el numero es impar", () => {
-    expect(esPar(7)).toBe(false);
-  });
+    test("devuelve false cuando el numero es impar", () => {
+        expect(esPar(7)).toBe(false);
+    });
 
-  test("considera al cero como par", () => {
-    expect(esPar(0)).toBe(true);
-  });
+    test("considera al cero como par", () => {
+        expect(esPar(0)).toBe(true);
+    });
 
-  test("funciona con numeros negativos", () => {
-    expect(esPar(-4)).toBe(true);
-    expect(esPar(-3)).toBe(false);
-  });
-
+    test("funciona con numeros negativos", () => {
+        expect(esPar(-4)).toBe(true);
+        expect(esPar(-3)).toBe(false);
+    });
 });
 
 // ─────────────────────────────────────────────────────────────────────
@@ -50,26 +54,106 @@ describe("esPar", () => {
 //   - un numero grande, con dos separadores de miles (1234567)
 // ─────────────────────────────────────────────────────────────────────
 describe("formatearPrecio", () => {
-  test("formatea un monto entero con separador de miles", () => {
-    expect(formatearPrecio(1500)).toBe("$ 1.500");
-  });
+    test("formatea un monto entero con separador de miles", () => {
+        expect(formatearPrecio(1500)).toBe("$ 1.500");
+    });
 
-  test.todo("formatea un monto con decimales");
-  test.todo("formatea el cero");
-  test.todo("formatea un monto negativo");
-  test.todo("usa dos separadores de miles en montos de siete cifras");
+    test("formatea un monto con decimales", () => {
+        //Arrange
+        const monto = 1500.5;
+
+        //Act
+        const resultado = formatearPrecio(monto);
+
+        //Assert
+        expect(resultado).toBe("$ 1.500,50");
+    });
+
+    test("formatea el cero", () => {
+        //Arrange
+        const monto = 0;
+
+        //Act
+        const resultado = formatearPrecio(monto);
+
+        //Assert
+        expect(resultado).toBe("$ 0");
+    });
+
+    test("formatea un monto negativo", () => {
+        //Arrange
+        const monto = -200;
+
+        //Act
+        const resultado = formatearPrecio(monto);
+
+        //Assert
+        expect(resultado).toBe("-$ 200");
+    });
+
+    test("usa dos separadores de miles en montos de siete cifras", () => {
+        //Arrange
+        const monto = 1234567
+
+        //Act
+        const resultado = formatearPrecio(monto)
+
+        //Assert
+        expect(resultado).toBe("$ 1.234.567")
+    });
 });
+
 
 // ─────────────────────────────────────────────────────────────────────
 // EJERCICIO 2
 // Pensa: que pasa con un nombre de una sola palabra? Y con espacios de mas?
 // Y con un string vacio?
 // ─────────────────────────────────────────────────────────────────────
+
+
 describe("iniciales", () => {
-  test.todo("devuelve las iniciales de un nombre y dos apellidos");
-  test.todo("funciona con un nombre de una sola palabra");
-  test.todo("ignora los espacios de mas");
-  test.todo("devuelve una cadena vacia si el nombre esta vacio");
+    test("devuelve las iniciales de un nombre y dos apellidos", () => {
+        //Arrange
+        const nombres = "ana maria lopez";
+
+        //Act
+        const resultado = iniciales(nombres);
+
+        //Assert
+        expect(resultado).toBe("A.M.L.")
+    });
+
+    test("funciona con un nombre de una sola palabra", () => {
+        //Arrange
+        const nombre = "Ana"
+
+        //Act
+        const resultado = iniciales(nombre)
+
+        //Assert
+        expect(resultado).toBe("A.")
+    });
+
+    test("ignora los espacios de mas", () => {
+        //Arrange
+        const nombre = "Ana  Maria  Lopez"
+
+        //Act
+        const resultado = iniciales(nombre)
+
+        //Assert
+        expect(resultado).toBe("A.M.L.")
+    });
+    test("devuelve una cadena vacia si el nombre esta vacio", () => {
+        //Arrange
+        const nombre = ""
+
+        //Act
+        const resultado = iniciales(nombre)
+
+        //Assert
+        expect(resultado).toBe("")
+    });
 });
 
 // ─────────────────────────────────────────────────────────────────────
@@ -78,9 +162,59 @@ describe("iniciales", () => {
 // varias palabras separadas por muchos espacios, saltos de linea.
 // ─────────────────────────────────────────────────────────────────────
 describe("contarPalabras", () => {
-  test.todo("cuenta las palabras de una frase");
-  test.todo("devuelve 0 con un texto vacio");
-  test.todo("devuelve 0 con un texto de solo espacios");
-  test.todo("no cuenta de mas si hay varios espacios seguidos");
-  test.todo("cuenta bien si hay saltos de linea");
+    test("cuenta las palabras de una frase", () => {
+        //Arrange
+        const texto = "Hatsune Miku"
+
+        //Act
+        const resultado = contarPalabras(texto)
+
+        //Assert
+        expect(resultado).toBe(2)
+    });
+
+    test("devuelve 0 con un texto vacio", () => {
+        //Arrange
+        const texto = ""
+
+        //Act
+        const resultado = contarPalabras(texto)
+
+        //Assert
+        expect(resultado).toBe(0)
+    });
+
+    test("devuelve 0 con un texto de solo espacios", () => {
+        //Arrange
+        const texto = "   "
+
+        //Act
+        const resultado = contarPalabras(texto)
+
+        //Assert
+        expect(resultado).toBe(0)
+    });
+
+    test("no cuenta de mas si hay varios espacios seguidos", () => {
+        //Arrange
+        const texto = "Hatsune   Miku"
+
+        //Act
+        const resultado = contarPalabras(texto)
+
+        //Assert
+        expect(resultado).toBe(2)
+    });
+
+    test("cuenta bien si hay saltos de linea", () => {
+        //Arrange
+        const texto = "Hatsune\nMiku\nAzure";
+
+        //Act
+        const resultado = contarPalabras(texto)
+
+        //Assert
+        expect(resultado).toBe(3)
+    });
+
 });
