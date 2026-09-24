@@ -152,7 +152,7 @@ describe("iniciales", () => {
 
   test("ignora los espacios de mas",() => {
     //arrange
-    const nombre= "valentin chanampa meneses"
+    const nombre= "valentin   chanampa   meneses"
 
     //act
     const resultado= iniciales(nombre)
