@@ -16,7 +16,7 @@ describe("sumar", ()=>{
         const a = 0
         const b = 0
 
-        const resultado = sumar2(c,d)
+        const resultado = sumar(a,b)
         
         expect(resultado).toBe(0);
     })
