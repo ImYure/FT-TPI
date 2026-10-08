@@ -282,7 +282,7 @@ expect(resultado).toEqual({ valida: true, errores: [] });
 describe("validarPassword - casos extra (opcional)", () => {
   test("acepta una contraseña cuya única mayúscula es acentuada (Á, Ñ)", () => {
         //arrange
-    const contraseña =  "Águeronicolas011"
+    const contraseña =  "Águeronicolas002"
 
     //act
     const resultado = validarPassword(contraseña)
@@ -295,7 +295,7 @@ expect(resultado).toEqual({ valida: true, errores: [] });
   test("rechaza una contraseña con un tab o salto de línea", () => {
           //arrange
 
-    const contraseña =  "Águer\t011"
+    const contraseña =  "Águer\t022"
 
     //act
     const resultado = validarPassword(contraseña)
