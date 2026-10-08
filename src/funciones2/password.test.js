@@ -145,10 +145,12 @@ describe("validarPassword - reglas de contenido", () => {
   })
 });
 
+
+
 describe("validarPassword - acumulación de errores", () => {
   test("devuelve 2 errores si faltan mayúscula y número", () =>{
        //arrange
-    const contraseña = "qwertyuiopasdfghjklñ"
+    const contraseña = "awertyuiopasdfghjklñ"
 
     //act
     const resultado = validarPassword(contraseña)
@@ -164,7 +166,7 @@ describe("validarPassword - acumulación de errores", () => {
 
   test("devuelve 4 errores si viola todas las reglas", () =>{
        //arrange
-    const contraseña = " qwert "
+    const contraseña = " awert "
 
     //act
     const resultado = validarPassword(contraseña)
