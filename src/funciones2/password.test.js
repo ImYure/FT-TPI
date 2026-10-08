@@ -188,7 +188,7 @@ describe("validarPassword - entradas inesperadas", () => {
   test("rechaza una cadena vacía sin lanzar excepción", () =>{
 
         //arrange
-    const contraseña = ""
+    const contraseña =""
 
     //act
     const resultado = validarPassword(contraseña)
@@ -203,7 +203,7 @@ describe("validarPassword - entradas inesperadas", () => {
 
   test("rechaza null sin lanzar excepción",() => {
       //arrange
-    const contraseña = null
+    const contraseña =null
 
     //act
     const resultado = validarPassword(contraseña)
@@ -218,7 +218,7 @@ describe("validarPassword - entradas inesperadas", () => {
   test("rechaza undefined sin lanzar excepción", () => {
 
        //arrange
-    const contraseña = undefined
+    const contraseña =undefined
 
     //act
     const resultado = validarPassword(contraseña)
@@ -235,7 +235,7 @@ describe("validarPassword - entradas inesperadas", () => {
 
     
        //arrange
-    const contraseña = 12345678
+    const contraseña =123456789
 
     //act
     const resultado = validarPassword(contraseña)
