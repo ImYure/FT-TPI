@@ -98,7 +98,7 @@ expect(resultado.errores).toContain(MENSAJES.LONGITUD);
 describe("validarPassword - reglas de contenido", () => {
   test("rechaza una contraseña sin números", () =>{
       //arrange
-    const contraseña = "Qwertyuiopasdfghjklñ"
+    const contraseña = "Awertyuiopasdfghjklñ"
 
     //act
     const resultado = validarPassword(contraseña)
@@ -110,7 +110,7 @@ describe("validarPassword - reglas de contenido", () => {
 
   test("rechaza una contraseña con un espacio al principio", () => {
          //arrange
-    const contraseña = " 1Qwertyuiopasdfghjklñ"
+    const contraseña = " 1Awertyuiopasdfghjklñ"
 
     //act
     const resultado = validarPassword(contraseña)
@@ -122,7 +122,7 @@ describe("validarPassword - reglas de contenido", () => {
 
   test("rechaza una contraseña con un espacio en el medio", () =>{
       //arrange
-    const contraseña = " Qwertyuiop1 asdfghjklñ"
+    const contraseña = " Awertyuiop1 asdfghjklñ"
 
     //act
     const resultado = validarPassword(contraseña)
@@ -134,7 +134,7 @@ describe("validarPassword - reglas de contenido", () => {
 
   test("rechaza una contraseña con un espacio al final", () => {
       //arrange
-    const contraseña = " Qwertyuiopasdfghjklñ1 "
+    const contraseña = " Awertyuiopasdfghjklñ1 "
 
     //act
     const resultado = validarPassword(contraseña)
