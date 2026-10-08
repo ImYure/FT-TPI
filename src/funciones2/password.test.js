@@ -253,7 +253,7 @@ describe("validarPassword - entradas inesperadas", () => {
 describe("validarPassword - caracteres del español", () => {
   test("acepta una contraseña con ñ", () => {
        //arrange
-    const contraseña = "Capitanñuloricoosi1"
+    const contraseña = "Capitanñuloricoosi0"
 
     //act
     const resultado = validarPassword(contraseña)
@@ -263,10 +263,10 @@ expect(resultado).toEqual({ valida: true, errores: [] });
 
   })
 
-  test.todo("acepta una contraseña con acentos", () => {
+  test("acepta una contraseña con acentos", () => {
 
     //arrange
-    const contraseña = "Capitanñuloricós11"
+    const contraseña = "Capitanñuloricós00"
 
     //act
     const resultado = validarPassword(contraseña)
