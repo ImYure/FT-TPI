@@ -78,10 +78,21 @@ describe("formatearPrecio", () => {
 // Y con un string vacio?
 // ─────────────────────────────────────────────────────────────────────
 describe("iniciales", () => {
-  test.todo("devuelve las iniciales de un nombre y dos apellidos");
-  test.todo("funciona con un nombre de una sola palabra");
-  test.todo("ignora los espacios de mas");
-  test.todo("devuelve una cadena vacia si el nombre esta vacio");
+  test("devuelve las iniciales de un nombre y dos apellidos", () => {
+    expect(iniciales("ana maria lopez")).toBe("A.M.L.");
+  });
+
+  test("funciona con un nombre de una sola palabra", () => {
+    expect(iniciales("juan")).toBe("J.");
+  });
+
+  test("ignora los espacios de mas", () => {
+    expect(iniciales("  maria   jose  ")).toBe("M.J.");
+  });
+
+  test("devuelve una cadena vacia si el nombre esta vacio", () => {
+    expect(iniciales("")).toBe("");
+  });
 });
 
 // ─────────────────────────────────────────────────────────────────────
