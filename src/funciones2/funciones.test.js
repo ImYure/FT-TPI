@@ -101,9 +101,23 @@ describe("iniciales", () => {
 // varias palabras separadas por muchos espacios, saltos de linea.
 // ─────────────────────────────────────────────────────────────────────
 describe("contarPalabras", () => {
-  test.todo("cuenta las palabras de una frase");
-  test.todo("devuelve 0 con un texto vacio");
-  test.todo("devuelve 0 con un texto de solo espacios");
-  test.todo("no cuenta de mas si hay varios espacios seguidos");
-  test.todo("cuenta bien si hay saltos de linea");
+  test("cuenta las palabras de una frase", () => {
+    expect(contarPalabras("Hola mundo cruel")).toBe(3);
+  });
+
+  test("devuelve 0 con un texto vacio", () => {
+    expect(contarPalabras("")).toBe(0);
+  });
+
+  test("devuelve 0 con un texto de solo espacios", () => {
+    expect(contarPalabras("   ")).toBe(0);
+  });
+
+  test("no cuenta de mas si hay varios espacios seguidos", () => {
+    expect(contarPalabras("Hola    mundo")).toBe(2);
+  });
+
+  test("cuenta bien si hay saltos de linea", () => {
+    expect(contarPalabras("Hola\nmundo\r\nnuevo")).toBe(3);
+  });
 });
