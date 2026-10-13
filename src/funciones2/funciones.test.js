@@ -51,13 +51,25 @@ describe("esPar", () => {
 // ─────────────────────────────────────────────────────────────────────
 describe("formatearPrecio", () => {
   test("formatea un monto entero con separador de miles", () => {
+    // Arrange & Act & Assert (caso simple)
     expect(formatearPrecio(1500)).toBe("$ 1.500");
   });
 
-  test.todo("formatea un monto con decimales");
-  test.todo("formatea el cero");
-  test.todo("formatea un monto negativo");
-  test.todo("usa dos separadores de miles en montos de siete cifras");
+  test("formatea un monto con decimales", () => {
+    expect(formatearPrecio(1500.5)).toBe("$ 1.500,50");
+  });
+
+  test("formatea el cero", () => {
+    expect(formatearPrecio(0)).toBe("$ 0");
+  });
+
+  test("formatea un monto negativo", () => {
+    expect(formatearPrecio(-200)).toBe("-$ 200");
+  });
+
+  test("usa dos separadores de miles en montos de siete cifras", () => {
+    expect(formatearPrecio(1234567)).toBe("$ 1.234.567");
+  });
 });
 
 // ─────────────────────────────────────────────────────────────────────
