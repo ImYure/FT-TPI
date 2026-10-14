@@ -48,7 +48,7 @@ export function medalla(puntaje) {
  * @returns {number}
  */
 export function bonusPorTiempo(segundos) {
-  if (segundos < 60) return 500;
+  if (segundos <= 60) return 500;
   if (segundos <= 120) return 200;
   return 0;
 }
