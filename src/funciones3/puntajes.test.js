@@ -206,7 +206,6 @@ describe("medalla", () => {
         //Assert
         expect(resultado).toBe("oro")
     })
-
 });
 
 // ─────────────────────────────────────────────────────────────────────
@@ -227,7 +226,7 @@ describe("bonusPorTiempo", () => {
         expect(bonusPorTiempo(30)).toBe(500);
     });
 
-    test("da 200 puntos de bonus si el nivel se termina en 61 segundos", () => {
+    test("da 200 pts de bonus si el nivel se termino en 61 segundos", () => {
         //Arrange
         const segundos = 61
 
@@ -249,38 +248,30 @@ describe("bonusPorTiempo", () => {
         expect(resultado).toBe(500)
     })
 
-    test("", () => {
+    test("da 200 pts de bonus si el nivel se termino en 120 segundos", () => {
         //Arrange
-
+        const segundos = 120
 
         //Act
-
+        const resultado = bonusPorTiempo(segundos)
 
         //Assert
+        expect(resultado).toBe(200)
     })
 
-    test("", () => {
+    test("sin pts bonus si el nivel se termino en 121 segundos o mas", () => {
         //Arrange
-
+        const segundos = 121
 
         //Act
-
-
-        //Assert
-    })
-
-    test("", () => {
-        //Arrange
-
-
-        //Act
-
+        const resultado = bonusPorTiempo(segundos)
 
         //Assert
+        expect(resultado).toBe(0)
     })
-
-    // Seguí vos.
 });
+
+
 
 // ─────────────────────────────────────────────────────────────────────
 // EJERCICIO 4
@@ -311,7 +302,75 @@ describe("podio", () => {
         expect(resultado).toEqual(["Beto", "Caro", "Ana"]);
     });
 
-    // Seguí vos.
+    test("devuelve los nombres de los 3 jugadores con más puntos, de mayor a menor", () => {
+        // Arrange
+        const jugadores = [
+            { nombre: "Ana", puntos: 300 },
+            { nombre: "Beto", puntos: 900 },
+            { nombre: "Caro", puntos: 500 }
+        ];
+
+        // Act
+        const resultado = podio(jugadores);
+
+        // Assert
+        expect(resultado).toEqual(["Beto", "Caro", "Ana"]);
+    });
+
+    test("devuelve la lista de los 3 jugadores (o los que haya) con mas pts, de mayor a menor", () => {
+        // Arrange
+        const jugadores = [
+            { nombre: "Ana", puntos: 300 },
+            { nombre: "Beto", puntos: 900 }
+        ];
+
+        // Act
+        const resultado = podio(jugadores);
+
+        // Assert
+        expect(resultado).toEqual(["Beto", "Ana"]);
+    })
+
+    test("no devuelve ninguna lista si no hay jugadores", () => {
+        // Arrange
+        const jugadores = [
+        ];
+
+        // Act
+        const resultado = podio(jugadores);
+
+        // Assert
+        expect(resultado).toEqual([]);
+    })
+
+    test("devuelve la lista de los 3 jugadores con mas puntos, aunque esten ultimos en la lista", () => {
+        // Arrange
+        const jugadores = [
+            { nombre: "Ana", puntos: 300 },
+            { nombre: "Beto", puntos: 900 },
+            { nombre: "Caro", puntos: 500 },
+            { nombre: "Hatsune Miku", puntos: 9999 }
+        ];
+
+        // Act
+        const resultado = podio(jugadores);
+
+        // Assert
+        expect(resultado).toEqual(["Hatsune Miku", "Beto", "Caro"]);
+    })
+
+    test("devuelve la lista de los jugadores con mas puntos, aunque solo haya uno", () => {
+        // Arrange
+        const jugadores = [
+            { nombre: "Hatsune Miku", puntos: 9999 }
+        ];
+
+        // Act
+        const resultado = podio(jugadores);
+
+        // Assert
+        expect(resultado).toEqual(["Hatsune Miku"]);
+    })
 });
 
 // ─────────────────────────────────────────────────────────────────────
