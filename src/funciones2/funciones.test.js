@@ -118,6 +118,6 @@ describe("contarPalabras", () => {
   });
 
   test("cuenta bien si hay saltos de linea", () => {
-    expect(contarPalabras("Hola\nmundo\r\nnuevo")).toBe(3);
+    expect(contarPalabras("Hola\nmundo\r\nnuevo")).toBe(31);
   });
 });
