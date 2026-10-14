@@ -387,7 +387,39 @@ describe("formatearTiempo", () => {
         expect(formatearTiempo(75)).toBe("1:15");
     });
 
-    // Seguí vos.
+    test("devuelve '0' cuando pasen 0 segundos", () => {
+        //Arrange
+        const tiempo = 0
+
+        //Act
+        const resultado = formatearTiempo(tiempo)
+
+        //Assert
+        expect(resultado).toBe("0:00")
+    })
+
+    test("devuelve '1:00' cuando pasen 60 segundos", () => {
+        //Arrange
+        const tiempo = 60
+
+        //Act
+        const resultado = formatearTiempo(tiempo)
+
+        //Assert
+        expect(resultado).toBe("1:00")
+    })
+
+    test("devuelve '10:07' cuando pasen 607 segundos", () => {
+        //Arrange
+        const tiempo = 607
+
+        //Act
+        const resultado = formatearTiempo(tiempo)
+
+        //Assert
+        expect(resultado).toBe("10:07")
+    })
+
 });
 
 // ─────────────────────────────────────────────────────────────────────
@@ -420,7 +452,17 @@ describe("validarNombre", () => {
         expect(resultado.errores).toContain(ERRORES.ESPACIOS);
     });
 
-    // Seguí vos.
+    test("acepta un nombre de 12 caracteres que no tenga espacios y empiece con una letra", () => {
+        //Arrange
+        const nombre = "HatsuneMikuu"
+
+        //Act
+        const resultado = validarNombre(nombre)
+
+        //Assert
+        expect(resultado).toEqual({ valido: true, errores: [] })
+    })
+
 });
 
 /* ═══════════════════════════════════════════════════════════════════
