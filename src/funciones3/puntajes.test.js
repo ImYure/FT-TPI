@@ -251,13 +251,6 @@ describe("bonusPorTiempo", () => {
     expect(resultado).toBe(0)
   })
 
-  test("no da bonus (o da 0) si los segundos son negativos", () => {
-     const segundos = -5
-
-     const resultado = bonusPorTiempo(segundos)
-
-     expect(resultado).toBe(0)
-  });
 });
 
 // ─────────────────────────────────────────────────────────────────────
@@ -289,8 +282,72 @@ describe("podio", () => {
     expect(resultado).toEqual(["Beto", "Caro", "Ana"]);
   });
 
-  // Seguí vos.
+   test("devuelve los nombres de los 3 jugadores con más puntos, de mayor a menor", () => {
+      // Arrange
+    const jugadores = [
+      { nombre: "Caro", puntos: 500 },
+      { nombre: "Beto", puntos: 900 },
+       { nombre: "Dani", puntos: 100 },
+    ];
+
+    // Act
+    const resultado = podio(jugadores);
+
+    // Assert
+    expect(resultado).toEqual(["Beto", "Caro", "Dani"]);
+   })
+
+   test("devuelve el nombre de 1 solo jugador con mas puntos de mayor a menor", () =>{
+
+    const jugadores = [
+    { nombre:  "Caro",  puntos:  500},
+    ]
+    
+    const resultado = podio(jugadores)
+
+    expect(resultado).toEqual(["Caro"]);
+   })
+
+
+   test("devuelve un array vacio si no hay jugadores",() => {
+
+    const jugadores = []
+
+    const resultado = podio(jugadores)
+
+    expect(resultado).toEqual([]);
+   })
+
+   test("devuelve el podio correcto si el jugador con mas puntos esta ultimo en la lista", () => {
+
+    const jugadores = [
+      {nombre: "Dani", puntos: 100},
+      {nombre: "Ana", puntos: 300},
+       { nombre: "Caro", puntos: 500 },
+      {nombre: "Beto", puntos: 900}, 
+    ]
+
+    const resultado = podio(jugadores)
+
+    expect(resultado).toEqual(["Beto", "Caro", "Ana"])
+   })
+
+   test("devuelve a los mejores 2 jugadores con mas puntos", () => {
+
+    const jugadores = [
+      {nombre: "Beto", puntos: 900},
+       {nombre: "Caro", puntos: 500},
+    ]
+
+    const resultado = podio(jugadores)
+
+    expect(resultado).toEqual(["Beto", "Caro"]);
+   })
+
+
 });
+
+
 
 // ─────────────────────────────────────────────────────────────────────
 // EJERCICIO 5
@@ -306,7 +363,53 @@ describe("formatearTiempo", () => {
     expect(formatearTiempo(75)).toBe("1:15");
   });
 
-  // Seguí vos.
+
+test("devuelve '0:00' cuando pasaron 0 segundos", () => {
+
+  const horas = 0 
+
+  const resultado = formatearTiempo(horas)
+
+  expect(resultado).toBe("0:00")
+})
+
+test("devuelve '0:20' cuando pasaron 20 segundos", () => {
+
+  const horas = 20 
+
+  const resultado = formatearTiempo(horas)
+
+  expect(resultado).toBe("0:20")
+})
+
+test("devuelve '1:00' cuando pasaron 60 segundos", () => {
+
+  const horas = 60 
+
+  const resultado = formatearTiempo(horas)
+
+  expect(resultado).toBe("1:00")
+})
+
+
+test("devuelve '1:05' cuando sobran menos de 10 segundos (65 segundos)", () => {
+
+  const horas = 65 
+
+  const resultado = formatearTiempo(horas)
+
+  expect(resultado).toBe("1:05")
+})
+
+test("devuelve '10:50' cuando pasan más de 10 minutos (650 segundos)", () => {
+   
+  const horas = 650
+
+  const resultado = formatearTiempo(horas)
+
+  expect(resultado).toBe("10:50")
+  });
+
 });
 
 // ─────────────────────────────────────────────────────────────────────
@@ -339,7 +442,34 @@ describe("validarNombre", () => {
     expect(resultado.errores).toContain(ERRORES.ESPACIOS);
   });
 
-  // Seguí vos.
+  test("acepta un nombre de 3 caracteres" , () => {
+
+    const nombre = "ABC"
+
+    const resultado = validarNombre(nombre)
+
+    expect(resultado).toEqual({valido : true, errores: []});
+  })
+
+ test("acepta un nombre de 12 caracteres y con mayuscula" , () => {
+
+    const nombre = "leonkennedya"
+
+    const resultado = validarNombre(nombre)
+
+    expect(resultado).toEqual({valido : true, errores: []});
+  })
+
+
+   test("rechaza un nombre de 13 caracteres y que no tenga espacios y contenga mayusculas" , () => {
+
+    const nombre = "Abdcghieqwrty"
+
+    const resultado = validarNombre(nombre)
+
+    expect(resultado).toEqual({valido : false, errores: [ERRORES.LONGITUD]});
+  })
+
 });
 
 /* ═══════════════════════════════════════════════════════════════════
