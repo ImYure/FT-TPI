@@ -227,6 +227,58 @@ describe("bonusPorTiempo", () => {
         expect(bonusPorTiempo(30)).toBe(500);
     });
 
+    test("da 200 puntos de bonus si el nivel se termina en 61 segundos", () => {
+        //Arrange
+        const segundos = 61
+
+        //Act
+        const resultado = bonusPorTiempo(segundos)
+
+        //Assert
+        expect(resultado).toBe(200)
+    })
+
+    test("da 500 pts de bonus si el nivel termino en 60 segundos o menos", () => {
+        //Arrange
+        const segundos = 60
+
+        //Act
+        const resultado = bonusPorTiempo(segundos)
+
+        //Assert
+        expect(resultado).toBe(500)
+    })
+
+    test("", () => {
+        //Arrange
+
+
+        //Act
+
+
+        //Assert
+    })
+
+    test("", () => {
+        //Arrange
+
+
+        //Act
+
+
+        //Assert
+    })
+
+    test("", () => {
+        //Arrange
+
+
+        //Act
+
+
+        //Assert
+    })
+
     // Seguí vos.
 });
 
