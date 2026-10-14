@@ -461,15 +461,27 @@ describe("validarNombre", () => {
   })
 
 
-   test("rechaza un nombre de 13 caracteres y que no tenga espacios y contenga mayusculas" , () => {
+   test("devuelve dos errores", () => {
 
-    const nombre = "Abdcghieqwrty"
+    const nombre = "A "; 
 
-    const resultado = validarNombre(nombre)
+    // Act
+    const resultado = validarNombre(nombre);
 
-    expect(resultado).toEqual({valido : false, errores: [ERRORES.LONGITUD]});
+    // Assert
+    expect(resultado).toEqual({valido: false, errores: [ERRORES.LONGITUD, ERRORES.ESPACIOS]})
   })
 
+  
+   test("rechaza nombres vacios", () => {
+
+    const nombre = ""; 
+
+    
+    const resultado = validarNombre(nombre);
+
+  expect(resultado).toEqual({valido: false,   errores: [ERRORES.LONGITUD, ERRORES.INICIAL]})
+  })
 });
 
 /* ═══════════════════════════════════════════════════════════════════
