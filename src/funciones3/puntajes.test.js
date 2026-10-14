@@ -1,4 +1,4 @@
-import { describe, test, expect } from "vitest";
+import { describe, test, expect, expectTypeOf } from "vitest";
 import {
     calcularPuntaje,
     medalla,
@@ -68,9 +68,29 @@ describe("calcularPuntaje", () => {
         expect(resultado).toBe(0)
     });
 
-    test.todo("devuelve 0 cuando los errores restan justo lo mismo que suman los aciertos");
+    test("devuelve 0 cuando los errores restan justo lo mismo que suman los aciertos", () => {
+        //Arrange
+        const aciertos = 2
+        const errores = 4
 
-    test.todo("devuelve 0, y no un número negativo, cuando los errores restan más de lo que suman los aciertos");
+        //Act
+        const resultado = calcularPuntaje(aciertos, errores)
+
+        //Assert
+        expect(resultado).toBe(0)
+    });
+
+    test("devuelve 0, y no un número negativo, cuando los errores restan más de lo que suman los aciertos", () => {
+        //Arrange
+        const aciertos = 1
+        const errores = 4
+
+        //Act
+        const resultado = calcularPuntaje(aciertos, errores)
+
+        //Assert
+        expect(resultado).toBe(0)
+    });
 
 });
 
@@ -85,18 +105,108 @@ describe("medalla", () => {
         expect(medalla(250)).toBe("bronce");
     });
 
-    test.todo("devuelve 'sin medalla' con un puntaje de 50");
-    test.todo("devuelve 'plata' con un puntaje de 700");
-    test.todo("devuelve 'oro' con un puntaje de 3000");
+    test("devuelve 'sin medalla' con un puntaje de 50", () => {
+        //Arrange
+        const puntaje = 50
 
-    test.todo("devuelve 'sin medalla' con 99 puntos (le falta uno para bronce)");
-    test.todo("devuelve 'bronce' con exactamente 100 puntos");
+        //Act
+        const resultado = medalla(puntaje)
 
-    test.todo("devuelve 'bronce' con 499 puntos (le falta uno para plata)");
-    test.todo("devuelve 'plata' con exactamente 500 puntos");
+        //Assert
+        expect(resultado).toBe("sin medalla")
+    });
 
-    // Falta el cambio de plata a oro.
-    // Escribí vos los dos tests, con su nombre, siguiendo el modelo de arriba.
+    test("devuelve 'plata' con un puntaje de 700", () => {
+        //Arrange
+        const puntaje = 700
+
+        //Act
+        const resultado = medalla(puntaje)
+
+        //Assert
+        expect(resultado).toBe("plata")
+    });
+
+    test("devuelve 'oro' con un puntaje de 3000", () => {
+        //Arrange
+        const puntaje = 3000
+
+        //Act
+        const resultado = medalla(puntaje)
+
+        //Assert
+        expect(resultado).toBe("oro")
+    });
+
+
+    test("devuelve 'sin medalla' con 99 puntos (le falta uno para bronce)", () => {
+        //Arrange
+        const puntaje = 99
+
+        //Act
+        const resultado = medalla(puntaje)
+
+        //Assert
+        expect(resultado).toBe("sin medalla")
+    });
+
+    test("devuelve 'bronce' con exactamente 100 puntos", () => {
+        //Arrange
+        const puntaje = 100
+
+        //Act
+        const resultado = medalla(puntaje)
+
+        //Assert
+        expect(resultado).toBe("bronce")
+    });
+
+
+    test("devuelve 'bronce' con 499 puntos (le falta uno para plata)", () => {
+        //Arrange
+        const puntaje = 499
+
+        //Act
+        const resultado = medalla(puntaje)
+
+        //Assert
+        expect(resultado).toBe("bronce")
+    });
+
+    test("devuelve 'plata' con exactamente 500 puntos", () => {
+        //Arrange
+        const puntaje = 500
+
+        //Act
+        const resultado = medalla(puntaje)
+
+        //Assert
+        expect(resultado).toBe("plata")
+    });
+
+
+    test("devuelve 'plata' con 999 puntos (le falta uno para oro)", () => {
+        //Arrange
+        const puntaje = 999
+
+        //Act
+        const resultado = medalla(puntaje)
+
+        //Assert
+        expect(resultado).toBe("plata")
+    })
+
+    test("devuelve 'oro' con 1000 puntos exactos", () => {
+        //Arrange
+        const puntaje = 1000
+
+        //Act
+        const resultado = medalla(puntaje)
+
+        //Assert
+        expect(resultado).toBe("oro")
+    })
+
 });
 
 // ─────────────────────────────────────────────────────────────────────
