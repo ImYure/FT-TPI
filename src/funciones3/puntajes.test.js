@@ -241,15 +241,16 @@ describe("bonusPorTiempo", () => {
     expect(resultado).toBe(500)
   })
 
+test("da 500 pts de bonus si el nivel termino en 60 segundos o menos", () => {
+        //Arrange
+        const segundos = 60
 
-  test("da 0 puntos de bonus si el nivel se termina en 140 segundos", () => {
+        //Act
+        const resultado = bonusPorTiempo(segundos)
 
-    const segundos= 140
-
-    const resultado = bonusPorTiempo(segundos)
-
-    expect(resultado).toBe(0)
-  })
+        //Assert
+        expect(resultado).toBe(500)
+    })
 
 });
 
@@ -344,7 +345,20 @@ describe("podio", () => {
     expect(resultado).toEqual(["Beto", "Caro"]);
    })
 
+    test("mantiene el orden original si dos jugadores empatan en puntos", () => {
+        // Arrange
+        const jugadores = [
+            { nombre: "Ana", puntos: 900 },
+            { nombre: "Beto", puntos: 900 },
+            { nombre: "Caro", puntos: 300 },
+        ];
 
+        // Act
+        const resultado = podio(jugadores);
+
+        // Assert
+        expect(resultado).toEqual(["Ana", "Beto", "Caro"]);
+    });
 });
 
 
@@ -503,27 +517,54 @@ describe("validarNombre", () => {
    ───────────────────────────────────────────────────────────────────
    PREGUNTAS - respondé acá mismo, dentro de este comentario
 
-   1. Ejercicio 3: ¿con qué valor de `segundos` encontraste el error?  ______
-      ¿Qué devolvía la función?  ______   ¿Qué tenía que devolver?  ______
+   1. Ejercicio 3: ¿con qué valor de `segundos` encontraste el error?  
+   con el valor que lo encontre fueron con 60 segundos
+      ¿Qué devolvía la función? 
+      la funcion devolvia 200   
+      ¿Qué tenía que devolver?  lo que tenia que devolver eran 500 puntos
+
+
+
 
    2. ¿Qué cambiaste en `puntajes.js` para arreglarlo?
-      _______________________________________________________
+
+      lo que cambie en puntajes.js fue la funcion de if (segundos < 60) return 500; 
+
+
 
    3. Antes de encontrarlo, ¿cuántos tests de `bonusPorTiempo` tenías en
-      verde?  ______
-      Estaban en verde y el error estaba igual. ¿Por qué no lo detectaban?
-      _______________________________________________________
+      verde? Estaban en verde y el error estaba igual. 
+      
+      tenia todos los test en verde menos el de los 60 segundos que faltaba.
 
-   4. Desafío final: ¿en qué función estaba el segundo error?  ____________
-      ¿Con qué entrada lo encontraste?  ____________
+      ¿Por qué no lo detectaban?
+        porque la funcion tenia  que ser < 60 si era mayor a eso  lo tomaba como 200 puntos
+
+
+
+   4. Desafío final: ¿en qué función estaba el segundo error?
+   lo encontre en la funcion validarnombre
+
+
+      ¿Con qué entrada lo encontraste? 
+      con las 12 entradas de caracteres exactos que necesitabamos
+
+
       ¿Qué tiene en común esa entrada con la de la pregunta 1?
-      _______________________________________________________
+      Encontré otro error en validarNombre, al probar un nombre de exactamente 12 caracteres. 
+      La función lo consideraba inválido, aunque debería aceptarlo. 
+      Ambos errores estaban relacionados con los límites de una condición.
 
-   5. Verificación: ¿cuántos tests se pusieron en rojo?  ______
+
+
+
+   5. Verificación: ¿cuántos tests se pusieron en rojo?  
       ¿Cuál o cuáles?
-      _______________________________________________________
+      
+      Antes de corregirlos, fallaron los tests que comprobaban los 60 segundos en bonusPorTiempo y el nombre de 12 caracteres en validarNombre.
 
    6. Ejercicio 4: si dos jugadores tienen los mismos puntos, ¿cuál de los
       dos va primero en el podio? ¿Lo dice el comentario de la función?
-      _______________________________________________________
+      
+      Antes de corregirlos, fallaron los tests que comprobaban los 60 segundos en bonusPorTiempo y el nombre de 12 caracteres en validarNombre.
    ═══════════════════════════════════════════════════════════════════ */
