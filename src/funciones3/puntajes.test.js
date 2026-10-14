@@ -463,6 +463,61 @@ describe("validarNombre", () => {
         expect(resultado).toEqual({ valido: true, errores: [] })
     })
 
+    test("acepta un nombre de 3 caracteres que no tenga espacios y empiece con una letra", () => {
+        //Arrange
+        const nombre = "abc"
+
+        //Act
+        const resultado = validarNombre(nombre)
+
+        //Assert
+        expect(resultado).toEqual({ valido: true, errores: [] })
+    })
+
+    test("rechaza un nombre de 13 caracteres que no tenga espacios y empiece con una letra", () => {
+        //Arrange
+        const nombre = "HatsuneMikuuu"
+
+        //Act
+        const resultado = validarNombre(nombre)
+
+        //Assert
+        expect(resultado).toEqual({ valido: false, errores: [ERRORES.LONGITUD] })
+    })
+
+    test("rechaza un nombre que empiece por un numero", () => {
+        //Arrange
+        const nombre = "1Miku"
+
+        //Act
+        const resultado = validarNombre(nombre)
+
+        //Assert
+        expect(resultado).toEqual({ valido: false, errores: [ERRORES.INICIAL] })
+    })
+
+    test("rechaza un nombre que este vacio", () => {
+        //Arrange
+        const nombre = ""
+
+        //Act
+        const resultado = validarNombre(nombre)
+
+        //Assert
+        expect(resultado).toEqual({ valido: false, errores: [ERRORES.LONGITUD, ERRORES.INICIAL] })
+    })
+
+    test("rechaza un nombre con espacios", () => {
+        //Arrange
+        const nombre = "Hatsune Miku"
+
+        //Act
+        const resultado = validarNombre(nombre)
+
+        //Assert
+        expect(resultado).toEqual({ valido: false, errores: [ERRORES.ESPACIOS] })
+    })
+
 });
 
 /* ═══════════════════════════════════════════════════════════════════
