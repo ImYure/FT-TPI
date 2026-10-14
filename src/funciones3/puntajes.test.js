@@ -371,6 +371,21 @@ describe("podio", () => {
         // Assert
         expect(resultado).toEqual(["Hatsune Miku"]);
     })
+
+    test("mantiene el orden original si dos jugadores empatan en puntos", () => {
+        // Arrange
+        const jugadores = [
+            { nombre: "Ana", puntos: 900 },
+            { nombre: "Beto", puntos: 900 },
+            { nombre: "Caro", puntos: 300 },
+        ];
+
+        // Act
+        const resultado = podio(jugadores);
+
+        // Assert
+        expect(resultado).toEqual(["Ana", "Beto", "Caro"]);
+    });
 });
 
 // ─────────────────────────────────────────────────────────────────────
@@ -539,27 +554,49 @@ describe("validarNombre", () => {
    ───────────────────────────────────────────────────────────────────
    PREGUNTAS - respondé acá mismo, dentro de este comentario
 
-   1. Ejercicio 3: ¿con qué valor de `segundos` encontraste el error?  ______
-      ¿Qué devolvía la función?  ______   ¿Qué tenía que devolver?  ______
+   1. Ejercicio 3: ¿con qué valor de `segundos` encontraste el error?
+       encontre el error en el valor de segundo 60
+
+      ¿Qué devolvía la función?
+       devolvia 200 porqe estaba mal hecha la funcion en puntajes.js
+      
+      ¿Qué tenía que devolver?
+       tenia que devolver 500
 
    2. ¿Qué cambiaste en `puntajes.js` para arreglarlo?
-      _______________________________________________________
+      cambie este pedazo de if "(segundos < 60)" a este corregido "(segundos <= 60)"
 
    3. Antes de encontrarlo, ¿cuántos tests de `bonusPorTiempo` tenías en
-      verde?  ______
+      verde?
+       tenia todos los tests en verdes menos el que requeria de 60 segundos exactos
+
       Estaban en verde y el error estaba igual. ¿Por qué no lo detectaban?
-      _______________________________________________________
+       porque como tenia que ser < 60, si era mayor a eso ya lo tomaba como 200 puntos en vez de
 
-   4. Desafío final: ¿en qué función estaba el segundo error?  ____________
-      ¿Con qué entrada lo encontraste?  ____________
+   4. Desafío final: ¿en qué función estaba el segundo error? 
+       en la funcionde validarNombre
+
+      ¿Con qué entrada lo encontraste? 
+       con la entrada que necesitaba 12 caracteres exactos
+
       ¿Qué tiene en común esa entrada con la de la pregunta 1?
-      _______________________________________________________
+      que en una necesitabas un tiempo exacto para que funcione, y en la otra necesitabas una cierta cantidad de caracteres exactos
 
-   5. Verificación: ¿cuántos tests se pusieron en rojo?  ______
+   5. Verificación: ¿cuántos tests se pusieron en rojo?
+       solo 3
+
       ¿Cuál o cuáles?
-      _______________________________________________________
+
+      estos:
+      1. "da 500 pts de bonus si el nivel termino en 60 segundos o menos"
+      2. "acepta un nombre de 12 caracteres que no tenga espacios y empiece con una letra"
+      3. "no devuelve ninguna lista si no hay jugadores"
+
 
    6. Ejercicio 4: si dos jugadores tienen los mismos puntos, ¿cuál de los
       dos va primero en el podio? ¿Lo dice el comentario de la función?
+       si 2 jugadores tienen los mismos puntos, quedaria 1ro el que este primero en el array
+       no, el comentario de podio solo explica el orden por puntos de mayor a menor y qué pasa si hay menos de 3 jugadores
+
       _______________________________________________________
    ═══════════════════════════════════════════════════════════════════ */
