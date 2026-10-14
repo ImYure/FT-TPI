@@ -54,33 +54,152 @@ describe("validarPassword - casos inválidos", () => {
 // ─────────────────────────────────────────────────────────────────────
 
 describe("validarPassword - valores límite de longitud", () => {
-  test.todo("acepta una contraseña de 20 caracteres");
-  test.todo("rechaza una contraseña de 7 caracteres");
-  test.todo("rechaza una contraseña de 21 caracteres");
+
+  test.todo("rechaza una contraseña de 7 caracteres", () => {
+
+    // Arrange
+    const password = "12345Ab"; // exactamente 7 caracteres
+    // Act
+    const resultado = validarPassword(password);
+    // Assert
+    expect(resultado).toEqual({ valida: false, errores: [] });
+
+  });
+
+  //test ya resuelto
+
+  test.todo("acepta una contraseña de 20 caracteres", () => {
+   
+    // Arrange
+    const password = "123456789a123456789A"; // exactamente 20 caracteres
+    // Act
+    const resultado = validarPassword(password);
+    // Assert
+    expect(resultado).toEqual({ valida: true, errores: [] });
+  });
+
+  test.todo("rechaza una contraseña de 21 caracteres", () => {
+
+    // Arrange
+    const password = "123456789a123456789A1"; // exactamente 21 caracteres
+    // Act
+    const resultado = validarPassword(password);
+    // Assert
+    expect(resultado).toEqual({ valida: true, errores: [] });
+  });
 });
 
 describe("validarPassword - reglas de contenido", () => {
-  test.todo("rechaza una contraseña sin números");
-  test.todo("rechaza una contraseña con un espacio al principio");
-  test.todo("rechaza una contraseña con un espacio en el medio");
-  test.todo("rechaza una contraseña con un espacio al final");
+  test.todo("rechaza una contraseña sin números", () => {
+
+    // Arrange
+    const password = "Abcdefghi"; // exactamente 9 caracteres sin numero
+    // Act
+    const resultado = validarPassword(password);
+    // Assert
+    expect(resultado).toEqual({ valida: false, errores: [] });
+
+  });
+
+  test.todo("rechaza una contraseña con un espacio al principio", () => {
+
+    // Arrange
+    const password = " 12345678Ab"; // exactamente 10 caracteres con espacio incluido al principio
+    // Act
+    const resultado = validarPassword(password);
+    // Assert
+    expect(resultado).toEqual({ valida: false, errores: [] });
+
+  });
+
+  test.todo("rechaza una contraseña con un espacio en el medio", () => {
+    
+    // Arrange
+    const password = "12345 678Ab"; // exactamente 10 caracteres con espacio incluido al medio
+    // Act
+    const resultado = validarPassword(password);
+    // Assert
+    expect(resultado).toEqual({ valida: false, errores: [] });
+
+  });
+
+  test.todo("rechaza una contraseña con un espacio al final", () => {
+
+    // Arrange
+    const password = "12345678Ab "; // exactamente 10 caracteres con espacio incluido al final
+    // Act
+    const resultado = validarPassword(password);
+    // Assert
+    expect(resultado).toEqual({ valida: false, errores: [] });
+
+
+  });
 });
 
 describe("validarPassword - acumulación de errores", () => {
-  test.todo("devuelve 2 errores si faltan mayúscula y número");
-  test.todo("devuelve 4 errores si viola todas las reglas");
+  test.todo("devuelve 2 errores si faltan mayúscula y número", () => {
+    
+    // Arrange
+    const password = "abcdefghijk "; // falta mayuscula y numerpo
+    // Act
+    const resultado = validarPassword(password);
+    // Assert
+    expect(resultado).toEqual({ valida: false, errores: [] });
+
+  });
+  test.todo("devuelve 4 errores si viola todas las reglas", () => {
+    // Arrange
+    const password = " x d "; // falta todo
+    // Act
+    const resultado = validarPassword(password);
+    // Assert
+    expect(resultado).toEqual({ valida: false, errores: [] });
+
+  });
 });
 
 describe("validarPassword - entradas inesperadas", () => {
-  test.todo("rechaza una cadena vacía sin lanzar excepción");
-  test.todo("rechaza null sin lanzar excepción");
-  test.todo("rechaza undefined sin lanzar excepción");
-  test.todo("rechaza un número sin lanzar excepción");
+  test.todo("rechaza una cadena vacía sin lanzar excepción", () => {
+    // Arrange
+    const password = " x d "; // falta todo
+    // Act
+    const resultado = validarPassword(password);
+    // Assert
+    //expect??
+  });
+  test.todo("rechaza null sin lanzar excepción", () => {
+    // Arrange
+    // Act
+    // Assert
+
+  });
+  test.todo("rechaza undefined sin lanzar excepción", () => {
+    // Arrange
+    // Act
+    // Assert
+
+  });
+  test.todo("rechaza un número sin lanzar excepción", () => {
+    // Arrange
+    // Act
+    // Assert
+
+  });
 });
 
 describe("validarPassword - caracteres del español", () => {
-  test.todo("acepta una contraseña con ñ");
-  test.todo("acepta una contraseña con acentos");
+  test.todo("acepta una contraseña con ñ", () => {
+    // Arrange
+    // Act
+    // Assert
+
+  });
+  test.todo("acepta una contraseña con acentos", () => {
+    // Arrange
+    // Act
+    // Assert
+
+  });
 });
 
 /*
