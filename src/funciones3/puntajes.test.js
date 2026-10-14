@@ -145,24 +145,55 @@ describe("medalla", () => {
   });
 
   test("devuelve 'bronce' con exactamente 100 puntos", () => {
+  
+    const puntaje = 100
 
+    const resultado= medalla(puntaje)
+
+    expect(resultado).toBe("bronce")
 
   });
 
   test("devuelve 'bronce' con 499 puntos (le falta uno para plata)", () => {
 
+    const puntaje = 499
+
+    const resultado = medalla(puntaje)
+
+    expect(resultado).toBe("bronce")
 
   });
 
   test("devuelve 'plata' con exactamente 500 puntos", () =>{
 
+    const puntaje = 500
 
+    const resultado = medalla(puntaje)
+
+    expect(resultado).toBe("plata")
+
+  })
+
+
+  test("devuelve 'plata' cuando  con 999 puntos (le falta uno para oro)" , () => {
+
+    const puntaje = 999
+
+    const resultado = medalla(puntaje)
+
+    expect(resultado).toBe("plata")  
+})
+
+
+test("devuelve 'oro' cuando  con 1000 puntos", () => {
+
+    const puntaje = 1000
+
+    const resultado = medalla(puntaje)
+
+    expect(resultado).toBe("oro")  
+})
   });
-
-  // Falta el cambio de plata a oro.
-  // Escribí vos los dos tests, con su nombre, siguiendo el modelo de arriba.
-});
-
 // ─────────────────────────────────────────────────────────────────────
 // EJERCICIO 3 - Cazar el error
 // La función `bonusPorTiempo` tiene UN error: en algún caso no hace lo
@@ -181,7 +212,52 @@ describe("bonusPorTiempo", () => {
     expect(bonusPorTiempo(30)).toBe(500);
   });
 
-  // Seguí vos.
+  test("da 200 puntos de bonus si el nivel se termina en 61 segundos", () => {
+
+    const segundos= 61
+
+    const resultado = bonusPorTiempo(segundos)
+
+    expect(resultado).toBe(200)
+  })
+  
+
+ test("da 200 puntos de bonus si el nivel se termina en 80 segundos", () => {
+
+    const segundos= 80
+
+    const resultado = bonusPorTiempo(segundos)
+
+    expect(resultado).toBe(200)
+  })
+
+
+ test("da 500 puntos de bonus si el nivel se termina en 40 segundos", () => {
+
+    const segundos= 40
+
+    const resultado = bonusPorTiempo(segundos)
+
+    expect(resultado).toBe(500)
+  })
+
+
+  test("da 0 puntos de bonus si el nivel se termina en 140 segundos", () => {
+
+    const segundos= 140
+
+    const resultado = bonusPorTiempo(segundos)
+
+    expect(resultado).toBe(0)
+  })
+
+  test("no da bonus (o da 0) si los segundos son negativos", () => {
+     const segundos = -5
+
+     const resultado = bonusPorTiempo(segundos)
+
+     expect(resultado).toBe(0)
+  });
 });
 
 // ─────────────────────────────────────────────────────────────────────
