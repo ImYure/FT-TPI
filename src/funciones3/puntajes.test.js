@@ -1,12 +1,12 @@
 import { describe, test, expect } from "vitest";
 import {
-  calcularPuntaje,
-  medalla,
-  bonusPorTiempo,
-  podio,
-  formatearTiempo,
-  validarNombre,
-  ERRORES,
+    calcularPuntaje,
+    medalla,
+    bonusPorTiempo,
+    podio,
+    formatearTiempo,
+    validarNombre,
+    ERRORES,
 } from "./puntajes.js";
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -31,22 +31,47 @@ import {
 // Reemplazá cada `test.todo` por un test de verdad.
 // ─────────────────────────────────────────────────────────────────────
 describe("calcularPuntaje", () => {
-  test("suma 10 puntos por cada acierto cuando no hay errores", () => {
-    // Arrange
-    const aciertos = 3;
-    const errores = 0;
+    test("suma 10 puntos por cada acierto cuando no hay errores", () => {
+        // Arrange
+        const aciertos = 3;
+        const errores = 0;
 
-    // Act
-    const resultado = calcularPuntaje(aciertos, errores);
+        // Act
+        const resultado = calcularPuntaje(aciertos, errores);
 
-    // Assert
-    expect(resultado).toBe(30);
-  });
+        // Assert
+        expect(resultado).toBe(30);
+    });
 
-  test.todo("resta 5 puntos por cada error");
-  test.todo("devuelve 0 cuando no hay aciertos ni errores");
-  test.todo("devuelve 0 cuando los errores restan justo lo mismo que suman los aciertos");
-  test.todo("devuelve 0, y no un número negativo, cuando los errores restan más de lo que suman los aciertos");
+    test("resta 5 puntos por cada error", () => {
+        //Arrange
+        const aciertos = 5
+        const errores = 2
+
+        //Act
+        const resultado = calcularPuntaje(aciertos, errores)
+
+        //Assert
+        expect(resultado).toBe(40)
+
+    });
+
+    test("devuelve 0 cuando no hay aciertos ni errores", () => {
+        //Arrange
+        const aciertos = 0
+        const errores = 0
+
+        //Act
+        const resultado = calcularPuntaje(aciertos, errores)
+
+        //Assert
+        expect(resultado).toBe(0)
+    });
+
+    test.todo("devuelve 0 cuando los errores restan justo lo mismo que suman los aciertos");
+
+    test.todo("devuelve 0, y no un número negativo, cuando los errores restan más de lo que suman los aciertos");
+
 });
 
 // ─────────────────────────────────────────────────────────────────────
@@ -56,22 +81,22 @@ describe("calcularPuntaje", () => {
 // donde la medalla CAMBIA: el último de una y el primero de la siguiente.
 // ─────────────────────────────────────────────────────────────────────
 describe("medalla", () => {
-  test("devuelve 'bronce' con un puntaje de 250", () => {
-    expect(medalla(250)).toBe("bronce");
-  });
+    test("devuelve 'bronce' con un puntaje de 250", () => {
+        expect(medalla(250)).toBe("bronce");
+    });
 
-  test.todo("devuelve 'sin medalla' con un puntaje de 50");
-  test.todo("devuelve 'plata' con un puntaje de 700");
-  test.todo("devuelve 'oro' con un puntaje de 3000");
+    test.todo("devuelve 'sin medalla' con un puntaje de 50");
+    test.todo("devuelve 'plata' con un puntaje de 700");
+    test.todo("devuelve 'oro' con un puntaje de 3000");
 
-  test.todo("devuelve 'sin medalla' con 99 puntos (le falta uno para bronce)");
-  test.todo("devuelve 'bronce' con exactamente 100 puntos");
+    test.todo("devuelve 'sin medalla' con 99 puntos (le falta uno para bronce)");
+    test.todo("devuelve 'bronce' con exactamente 100 puntos");
 
-  test.todo("devuelve 'bronce' con 499 puntos (le falta uno para plata)");
-  test.todo("devuelve 'plata' con exactamente 500 puntos");
+    test.todo("devuelve 'bronce' con 499 puntos (le falta uno para plata)");
+    test.todo("devuelve 'plata' con exactamente 500 puntos");
 
-  // Falta el cambio de plata a oro.
-  // Escribí vos los dos tests, con su nombre, siguiendo el modelo de arriba.
+    // Falta el cambio de plata a oro.
+    // Escribí vos los dos tests, con su nombre, siguiendo el modelo de arriba.
 });
 
 // ─────────────────────────────────────────────────────────────────────
@@ -88,11 +113,11 @@ describe("medalla", () => {
 //   4. Recién ahí arreglá `puntajes.js` y mirá cómo el test pasa a verde.
 // ─────────────────────────────────────────────────────────────────────
 describe("bonusPorTiempo", () => {
-  test("da 500 puntos de bonus si el nivel se termina en 30 segundos", () => {
-    expect(bonusPorTiempo(30)).toBe(500);
-  });
+    test("da 500 puntos de bonus si el nivel se termina en 30 segundos", () => {
+        expect(bonusPorTiempo(30)).toBe(500);
+    });
 
-  // Seguí vos.
+    // Seguí vos.
 });
 
 // ─────────────────────────────────────────────────────────────────────
@@ -108,23 +133,23 @@ describe("bonusPorTiempo", () => {
 //   - ¿Y si...? (uno que se te ocurra a vos)
 // ─────────────────────────────────────────────────────────────────────
 describe("podio", () => {
-  test("devuelve los nombres de los 3 jugadores con más puntos, de mayor a menor", () => {
-    // Arrange
-    const jugadores = [
-      { nombre: "Ana", puntos: 300 },
-      { nombre: "Beto", puntos: 900 },
-      { nombre: "Caro", puntos: 500 },
-      { nombre: "Dani", puntos: 100 },
-    ];
+    test("devuelve los nombres de los 3 jugadores con más puntos, de mayor a menor", () => {
+        // Arrange
+        const jugadores = [
+            { nombre: "Ana", puntos: 300 },
+            { nombre: "Beto", puntos: 900 },
+            { nombre: "Caro", puntos: 500 },
+            { nombre: "Dani", puntos: 100 },
+        ];
 
-    // Act
-    const resultado = podio(jugadores);
+        // Act
+        const resultado = podio(jugadores);
 
-    // Assert
-    expect(resultado).toEqual(["Beto", "Caro", "Ana"]);
-  });
+        // Assert
+        expect(resultado).toEqual(["Beto", "Caro", "Ana"]);
+    });
 
-  // Seguí vos.
+    // Seguí vos.
 });
 
 // ─────────────────────────────────────────────────────────────────────
@@ -137,11 +162,11 @@ describe("podio", () => {
 //   - ¿Y con más de 10 minutos?
 // ─────────────────────────────────────────────────────────────────────
 describe("formatearTiempo", () => {
-  test("devuelve '1:15' cuando pasaron 75 segundos", () => {
-    expect(formatearTiempo(75)).toBe("1:15");
-  });
+    test("devuelve '1:15' cuando pasaron 75 segundos", () => {
+        expect(formatearTiempo(75)).toBe("1:15");
+    });
 
-  // Seguí vos.
+    // Seguí vos.
 });
 
 // ─────────────────────────────────────────────────────────────────────
@@ -156,25 +181,25 @@ describe("formatearTiempo", () => {
 //   - ¿Y el nombre vacío?
 // ─────────────────────────────────────────────────────────────────────
 describe("validarNombre", () => {
-  test("acepta un nombre de 6 caracteres que empieza con letra y no tiene espacios", () => {
-    // Arrange
-    const nombre = "Rayo99";
+    test("acepta un nombre de 6 caracteres que empieza con letra y no tiene espacios", () => {
+        // Arrange
+        const nombre = "Rayo99";
 
-    // Act
-    const resultado = validarNombre(nombre);
+        // Act
+        const resultado = validarNombre(nombre);
 
-    // Assert
-    expect(resultado).toEqual({ valido: true, errores: [] });
-  });
+        // Assert
+        expect(resultado).toEqual({ valido: true, errores: [] });
+    });
 
-  test("rechaza un nombre con un espacio en el medio", () => {
-    const resultado = validarNombre("Rayo 99");
+    test("rechaza un nombre con un espacio en el medio", () => {
+        const resultado = validarNombre("Rayo 99");
 
-    expect(resultado.valido).toBe(false);
-    expect(resultado.errores).toContain(ERRORES.ESPACIOS);
-  });
+        expect(resultado.valido).toBe(false);
+        expect(resultado.errores).toContain(ERRORES.ESPACIOS);
+    });
 
-  // Seguí vos.
+    // Seguí vos.
 });
 
 /* ═══════════════════════════════════════════════════════════════════
