@@ -15,8 +15,20 @@ export default function App() {
 
         <main className="contenido">
           <Switch>
+            <Route path="/inventario">
+              <h1>inventario</h1>
+            </Route>
+            <Route path="/pvp">
+              <h1>pvp(no andara)</h1>
+            </Route>
             <Route path="/inicio">
               <h1>Inicio</h1>
+            </Route>
+            <Route path="/tienda">
+              <h1>Tienda</h1>
+            </Route>
+            <Route path="/perfil">
+              <h1>perfil</h1>
             </Route>
 
             <Route>

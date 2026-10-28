@@ -14,10 +14,9 @@
 /* HEADER */
 
 .header {
-  width: 90%;
-  max-width: 970px;
-  min-height: 63px;
-  margin-top: 8px;
+width: 100%;          /* Ocupa el 100% del contenedor padre */
+  max-width: none;      /* Elimina la restricción máxima de 970px */
+  min-height: 100px;
   padding: 0 25px;
   box-sizing: border-box;
 
@@ -173,11 +172,25 @@
   margin: 10px 0;
 }
 
+
+
+
+
+
+
+
 /* FOOTER */
 
+
+
+
+
+
+
+
 .footer {
-  width: 90%;
-  max-width: 970px;
+  width: 100%;          /* Ocupa el 100% del contenedor padre */
+  max-width: none;      /* Elimina la restricción máxima de 970px */
   min-height: 100px;
   box-sizing: border-box;
   padding: 22px;

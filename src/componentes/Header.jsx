@@ -17,12 +17,6 @@ export default function Header() {
           Registrarse
         </Link>
 
-        <button className="menu-hamburguesa" aria-label="Abrir menú">
-          <span></span>
-          <span></span>
-          <span></span>
-          
-        </button>
       </div>
     </header>
   );
