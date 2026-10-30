@@ -1,10 +1,14 @@
-
 import "./App.css";
 import { Router, Route, Switch } from "wouter";
-
 import Header from "./componentes/Header";
 import Navb from "./componentes/Navb";
 import Footer from "./componentes/Footer";
+
+import Inicio from "./vistas/Inicio";
+import Tienda from "./vistas/Tienda";
+import Pvp from "./vistas/Pvp";
+import Perfil from "./vistas/Perfil";
+import Inventario from "./vistas/inventario";
 
 export default function App() {
   return (
@@ -15,20 +19,29 @@ export default function App() {
 
         <main className="contenido">
           <Switch>
+
             <Route path="/inventario">
-              <h1>inventario</h1>
+              <Inventario />
             </Route>
+
             <Route path="/pvp">
-              <h1>pvp(no andara)</h1>
+              <Pvp />
             </Route>
+
+            <Route path="/">
+              <Inicio />
+            </Route>
+
             <Route path="/inicio">
-              <h1>Inicio</h1>
+              <Inicio />
             </Route>
+
             <Route path="/tienda">
-              <h1>Tienda</h1>
+              <Tienda />
             </Route>
+            
             <Route path="/perfil">
-              <h1>perfil</h1>
+              <Perfil />
             </Route>
 
             <Route>
