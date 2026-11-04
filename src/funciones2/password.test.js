@@ -67,7 +67,7 @@ describe("validarPassword - valores límite de longitud", () => {
   })
 
 
-  test("rechaza una contraseña de 7 caracteres", () => {
+7h  test("rechaza una contraseña de 7 caracteres", () => {
     //arrange
     const contraseña = "Abcdef1"
 

@@ -1,0 +1,43 @@
+.cuadro1 {
+    display: flex;
+    flex-direction: row;
+    width: 1450px;
+    min-height: 640px;
+    margin-left: -205px;
+    overflow: hidden;
+}
+
+.miku {
+    width: 400%;
+    background: linear-gradient(
+        to bottom,
+        #6E1D9D,
+        #55167A,
+        #4A136A,
+        #41115D,
+        #260A37
+    );
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.Login {
+    width: 430%;
+    background-color: white;
+    color: #260A37;
+    padding: 30px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+h1{
+    color: black;
+    font-size: 20px;    
+
+}
