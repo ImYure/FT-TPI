@@ -1,5 +1,5 @@
 import "../App.css";
-import cartasInicio from "../imagenes/cartas.inicio.png";
+import cartasInicio from "../assets/cartas.inicio.png";
 
 function Inicio() {
   return (
