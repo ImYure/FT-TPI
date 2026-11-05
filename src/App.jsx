@@ -4,6 +4,8 @@ import Header from "./componentes/Header";
 import Navb from "./componentes/Navb";
 import Footer from "./componentes/Footer";
 
+
+import ParteLegal from "./vistas/ParteLegal";
 import Inicio from "./vistas/Inicio";
 import Tienda from "./vistas/Tienda";
 import Pvp from "./vistas/Pvp";
@@ -42,6 +44,9 @@ export default function App() {
             
             <Route path="/perfil">
               <Perfil />
+            </Route>
+            <Route path="/ParteLegal">
+              <ParteLegal />
             </Route>
 
             <Route>

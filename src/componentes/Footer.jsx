@@ -12,22 +12,22 @@ export default function Footer() {
 
       <div className="footer-columna">
         <h3>Producto</h3>
-        <a href="/">Funciones</a>
-        <a href="/">Precios</a>
-        <a href="/">Novedades</a>
+        <a href="/ParteLegal">Funciones</a>
+        <a href="/ParteLegal">Precios</a>
+        <a href="/ParteLegal">Novedades</a>
       </div>
 
       <div className="footer-columna">
         <h3>Empresa</h3>
-        <a href="/">Sobre nosotros</a>
-        <a href="/">Empleos</a>
-        <a href="/">Contacto</a>
+        <a href="/ParteLegal">Sobre nosotros</a>
+        <a href="/ParteLegal">Empleos</a>
+        <a href="/ParteLegal">Contacto</a>
       </div>
 
       <div className="footer-columna">
         <h3>Legal</h3>
-        <a href="/">Términos y condiciones</a>
-        <a href="/">Política de privacidad</a>
+        <a href="/ParteLegal">Términos y condiciones</a>
+        <a href="/ParteLegal">Política de privacidad</a>
       </div>
     </footer>
   );
