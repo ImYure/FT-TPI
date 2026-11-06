@@ -1,4 +1,5 @@
 import "../App.css";
+import { Link } from "wouter";
 import cartasInicio from "../assets/cartas.inicio.png";
 
 function Inicio() {
@@ -16,8 +17,12 @@ function Inicio() {
           </p>
 
           <div className="inicio-botones">
-            <button>Ver mis sobres</button>
-            <button>Ver mis cartas</button>
+            <Link href="/registro" className="boton-registro">
+              Ver mis sobres
+            </Link>
+            <Link href="/cartas" className="boton-registro">
+              Ver mis cartas
+            </Link>
           </div>
 
           <div className="inicio-estadisticas">

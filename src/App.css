@@ -75,6 +75,10 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
   filter: brightness(1.15);
 }
 
+.boton-registro.tiendaNavb-boton {
+  border-radius: 50px;
+}
+
 .menu-hamburguesa {
   width: 40px;
   margin-left: 25px;
@@ -400,9 +404,6 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
   margin-bottom: 24px;
 }
 
-.parte-legal__articulo:last-child {
-  margin-bottom: 0;
-}
 
 .parte-legal__articulo h2 {
   margin: 0 0 8px;
