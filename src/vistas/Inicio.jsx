@@ -18,27 +18,27 @@ function Inicio() {
 
           <div className="inicio-botones">
             <Link href="/registro" className="boton-registro">
-              Ver mis sobres
+              ver mis sobres
             </Link>
-            <Link href="/cartas" className="boton-registro">
-              Ver mis cartas
+            <Link href="/cartas" className="boton-registro boton-secundario">
+              ver mis cartas
             </Link>
           </div>
 
           <div className="inicio-estadisticas">
             <div>
               <h2>67mil</h2>
-              <p>Usuarios registrados</p>
+              <p>usuarios activos</p>
             </div>
 
             <div>
               <h2>6.7/10</h2>
-              <p>Valoracion</p>
+              <p>valoracion</p>
             </div>
 
             <div>
               <h2>24/7</h2>
-              <p>Siempre disponible</p>
+              <p>soporte</p>
             </div>
           </div>
         </div>
