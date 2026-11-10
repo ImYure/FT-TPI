@@ -445,12 +445,10 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
 
 .inicio-contenido.tienda {
   display: flex;
-  align-items: start;
-  justify-content: space-between;
-  gap: 25px;
+  align-items: flex-start;
+  justify-content: flex-start; /* O usa 'flex-start' si prefieres que comiencen desde la izquierda */
+  gap: 25px; /* Reducido de 25px a 15px (o el valor que prefieras) */
 }
-
-
 
 /* filtros estilos */
 
