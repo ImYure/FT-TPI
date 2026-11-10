@@ -1,12 +1,16 @@
 import Filtros from "../componentes/Filtros.jsx";
 import TiendaNavb from "../componentes/TiendaNavb.jsx";
+import ListaProductos from "../componentes/ListaProductos.jsx";
+import articulosDefault from "../datos/articulos.js";
+
 export default function Tienda() {
   return (
-    <header className="inicio-contenido tienda">
-    <Filtros/>
-    <TiendaNavb/>
-   
-     
-    </header>
+    <div className="inicio-contenido tienda">
+      <Filtros />
+      <div className="tienda-columna-derecha">
+        <TiendaNavb />
+        <ListaProductos articulos={articulosDefault} />
+      </div>
+    </div>
   );
 }

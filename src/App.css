@@ -305,7 +305,7 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
 .inicio-contenido {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 70px;
 }
 
@@ -314,7 +314,7 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
 }
 
 .inicio-texto h1 {
-  font-size: 32px;
+  font-size: 60px;
   font-weight: normal;
 }
 
@@ -324,7 +324,7 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
 
 .inicio-texto p {
   color: #666;
-  font-size: 16px;
+  font-size: 32px;
   line-height: 1.5;
 }
 
@@ -373,7 +373,7 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
 
 .inicio-imagen img {
   width: 100%;
-  max-width: 500px;
+  max-width: 5000px;
   object-fit: contain;
 }
 
@@ -443,11 +443,105 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
 
 /* tienda (estos son los componentes de ellso) */
 
+/* Contenedor principal de la tienda (Filtros a la izquierda, columna derecha al lado) */
 .inicio-contenido.tienda {
   display: flex;
   align-items: flex-start;
-  justify-content: flex-start; /* O usa 'flex-start' si prefieres que comiencen desde la izquierda */
-  gap: 25px; /* Reducido de 25px a 15px (o el valor que prefieras) */
+  justify-content: center;
+  gap: 25px;
+  margin-bottom: 25px;
+  width: 90%;
+  max-width: 2200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Sub-contenedor en cascada (vertical) para la barra de navegación y los productos */
+.tienda-columna-derecha {
+  display: flex;
+  flex-direction: column; /* Esto hace que se pongan uno debajo del otro */
+  gap: 20px;              /* Espacio entre la barra superior y los productos */
+  flex: 1;                /* Ocupa el espacio restante al lado del filtro */
+}
+
+/* tarjeta del producto */
+
+.lista-productos {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); /* Antes estaba en 220px */
+  gap: 15px; /* Reducido para que estén más juntas */
+}
+
+.tarjeta-producto {
+  color: rgb(53, 0, 243);
+  border: 1px solid #a101f1;
+  border-radius: 15px; /* Ligeramente más pequeño */
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(48, 25, 61, 0.15);
+  display: flex;
+  flex-direction: column;
+  background: #260A37;
+}
+
+.tarjeta-producto__imagen-contenedor {
+  margin: 14px 14px 0 14px; /* Crea el espacio alrededor (arriba y laterales) dentro de la tarjeta morada */
+  padding: 12px; /* Reducido de 20px a 12px */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  box-sizing: border-box;
+  border-radius: 18px; /* Ligeramente más pequeño */
+}
+
+.tarjeta-producto img {
+  width: 100%;
+  height: 110px; /* Reducido de 160px a 110px */
+  object-fit: contain;
+}
+
+.tarjeta-producto__info {
+  padding: 12px; /* Reducido de 20px a 12px */
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.tarjeta-producto h3 {
+  margin: 0;
+  font-size: 16px; /* Reducido de 20px a 16px */
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+}
+.tarjeta-producto p {
+  margin: 0;
+  font-size: 10px;
+  color: #d9c4ed;
+  line-height: 1.3;
+}
+.tarjeta-producto__precio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #24152f, #15091d);
+  border: 1px solid #7900a6;
+  border-radius: 50px;
+  padding: 6px 10px; /* Más compacto */
+}
+
+.tarjeta-producto__icono-moneda {
+  font-size: 12px;
+}
+
+.tarjeta-producto__numero-precio {
+  font-size: 13px; /* Reducido de 16px a 13px */
+  font-weight: bold;
+  color: white;
+  letter-spacing: 0.5px;
 }
 
 /* filtros estilos */
