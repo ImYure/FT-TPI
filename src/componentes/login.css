@@ -1,14 +1,37 @@
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: white;
+}
+
+.pagina {
+    width: 100%;
+    min-height: 100vh;
+}
+
 .cuadro1 {
     display: flex;
-    flex-direction: row;
-    width: 1450px;
-    min-height: 640px;
-    margin-left: -205px;
+    width: 100%;
+    min-height: 100vh;
     overflow: hidden;
 }
 
 .miku {
-    width: 400%;
+    width: 48%;
+    min-height: 100vh;
+    flex-shrink: 0;
     background: linear-gradient(
         to bottom,
         #6E1D9D,
@@ -18,26 +41,246 @@
         #260A37
     );
     color: white;
+    position: relative;
+    padding: 35px 50px;
+}
+
+.logo {
+    position: absolute;
+    top: 35px;
+    left: 50px;
+}
+
+.logo-icono {
+    width: 16px;
+    height: 16px;
+    border: 2px solid white;
+    border-radius: 3px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.bienvenida {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    padding: 30px;
-    box-sizing: border-box;
+}
+
+.bienvenida p {
+    width: 100%;
+    color: white;
+    font-size: 30px;
+    line-height: 1.3;
+    text-align: center;
+    margin: 0;
+}
+
+.texto-inferior {
+    max-width: 420px;
+    color: #d8b4fe !important;
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    text-align: center;
+    margin: 20px 0 0 !important;
 }
 
 .Login {
-    width: 430%;
+    width: 52%;
+    min-height: 100vh;
     background-color: white;
     color: #260A37;
-    padding: 30px;
-    box-sizing: border-box;
-    text-align: center;
+    padding: 45px 9%;
 }
 
-h1{
-    color: black;
-    font-size: 20px;    
+.titulo-bienvenida {
+    width: 100%;
+    text-align: center;
+    font-size: 23px;
+    color: #260A37;
+    margin: 20px 0 35px;
+}
 
+.pestanas {
+    display: flex;
+    width: 100%;
+    background-color: #f8dafa;
+    padding: 5px;
+    gap: 5px;
+    border-radius: 5px;
+    margin-bottom: 40px;
+}
+
+.pestanas button {
+    width: 50%;
+    padding: 14px;
+    border: none;
+    border-radius: 4px;
+    background-color: transparent;
+    color: #55167A;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.pestanas button.activo {
+    background-color: white;
+    color: #41115D;
+    font-weight: bold;
+}
+
+.contenido-formulario {
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.Login form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.Login form > label:not(.opcion),
+.campo label {
+    display: block;
+    width: 100%;
+    text-align: left;
+    color: #260A37;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.Login input:not([type="checkbox"]) {
+    display: block;
+    width: 100%;
+    height: 48px;
+    padding: 12px 15px;
+    border: 1px solid #edc9f5;
+    border-radius: 5px;
+    background-color: #f9e5fc;
+    color: #260A37;
+    font-size: 14px;
+    outline: none;
+}
+
+.Login input:focus {
+    border: 2px solid #8b3db5;
+    background-color: white;
+}
+
+.Login input::placeholder {
+    color: #999999;
+}
+
+.opcion {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 9px;
+    width: 100%;
+    margin-top: 10px;
+    color: #444444;
+    font-size: 13px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.opcion input {
+    width: 17px;
+    height: 17px;
+    accent-color: #6E1D9D;
+    cursor: pointer;
+}
+
+.fila {
+    display: flex;
+    width: 100%;
+    gap: 15px;
+}
+
+.campo {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.boton-principal {
+    display: block;
+    width: 75%;
+    min-height: 48px;
+    margin: 30px auto 0;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #65347f;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.boton-principal:hover {
+    background-color: #41115D;
+}
+
+@media (max-width: 750px) {
+    .cuadro1 {
+        flex-direction: column;
+    }
+
+    .miku {
+        width: 100%;
+        min-height: 350px;
+        padding: 30px;
+    }
+
+    .logo {
+        top: 30px;
+        left: 30px;
+    }
+
+    .bienvenida {
+        width: 85%;
+    }
+
+    .bienvenida p {
+        font-size: 24px;
+    }
+
+    .texto-inferior {
+        font-size: 14px !important;
+        margin-top: 15px !important;
+    }
+
+    .Login {
+        width: 100%;
+        min-height: 600px;
+        padding: 30px 25px;
+    }
+
+    .titulo-bienvenida {
+        font-size: 20px;
+    }
+
+    .fila {
+        flex-direction: column;
+    }
+
+    .campo {
+        width: 100%;
+    }
 }
