@@ -39,11 +39,15 @@ describe("sumar", ()=>{
     })
 
 
-     test("devuelve hola,ana cuando el nombre es ana", ()=>{
+     test("devuelve hola, ana cuando el nombre es ana", ()=>{
         const nombre = "ana"
 
         const resul = saludar(nombre)
         
+<<<<<<< HEAD:src/funciones/funciones.test.js
         expect(resul).toBe("hola, ana!");
+=======
+        expect(nom).toBe("hola, ana!");
+>>>>>>> origin/testing:tarea_funciones/funciones_1/funciones.test.js
     })
 })
