@@ -7,7 +7,7 @@ import Footer from "./componentes/Footer";
 import Inicio from "./vistas/Inicio";
 import Tienda from "./vistas/Tienda";
 import Pvp from "./vistas/Pvp";
-import Perfil from "./vistas/Perfil";
+import Perfil from "./vistas/PerfilUsuario";
 import Inventario from "./vistas/inventario";
 
 export default function App() {
