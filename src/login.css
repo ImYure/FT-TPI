@@ -1,24 +1,14 @@
 
-* {
+.pagina,
+.pagina * {
     box-sizing: border-box;
-}
-
-html,
-body,
-#root {
-    width: 100%;
-    min-height: 100%;
-    margin: 0;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: white;
 }
 
 .pagina {
     width: 100%;
     min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: white;
 }
 
 .cuadro1 {
@@ -45,7 +35,7 @@ body {
     padding: 35px 50px;
 }
 
-.logo {
+.login-logo {
     position: absolute;
     top: 35px;
     left: 50px;
@@ -151,7 +141,7 @@ body {
     gap: 12px;
 }
 
-.Login form > label:not(.opcion),
+.Login form > label:not(.login-opcion),
 .campo label {
     display: block;
     width: 100%;
@@ -184,7 +174,7 @@ body {
     color: #999999;
 }
 
-.opcion {
+.login-opcion {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -197,7 +187,7 @@ body {
     cursor: pointer;
 }
 
-.opcion input {
+.login-opcion input {
     width: 17px;
     height: 17px;
     accent-color: #6E1D9D;
@@ -248,7 +238,7 @@ body {
         padding: 30px;
     }
 
-    .logo {
+    .login-logo {
         top: 30px;
         left: 30px;
     }

@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import "./login.css";
+import "../login.css";
 
 function Login() {
     const [modo, setModo] = useState("login");
@@ -43,7 +43,7 @@ function Login() {
             <div className="cuadro1">
 
                 <div className="miku">
-                    <div className="logo">
+                    <div className="login-logo">
                         <div className="logo-icono">V</div>
                     </div>
 
@@ -106,7 +106,7 @@ function Login() {
                                     required
                                 />
 
-                                <label className="opcion">
+                                <label className="login-opcion">
                                     <input
                                         type="checkbox"
                                         checked={Recordarme}
@@ -115,7 +115,7 @@ function Login() {
                                     Recordar
                                 </label>
 
-                                <label className="opcion">
+                                <label className="login-opcion">
                                     <input
                                         type="checkbox"
                                         checked={AceptarTerminos}
@@ -192,7 +192,7 @@ function Login() {
                                     required
                                 />
 
-                                <label className="opcion">
+                                <label className="login-opcion">
                                     <input
                                         type="checkbox"
                                         checked={AceptarTerminos}

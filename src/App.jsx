@@ -1,21 +1,9 @@
-<<<<<<< HEAD
-
-import Login from "./componentes/login";
-
-function App() {
-  return (
-    <Login />
-  );
-}
-
-export default App;
-=======
 import "./App.css";
 import { Router, Route, Switch } from "wouter";
 import Header from "./componentes/Header";
 import Navb from "./componentes/Navb";
 import Footer from "./componentes/Footer";
-
+import Login from "./vistas/login";
 import Inicio from "./vistas/Inicio";
 import Tienda from "./vistas/Tienda";
 import Pvp from "./vistas/Pvp";
@@ -26,52 +14,62 @@ export default function App() {
   return (
     <Router>
       <div className="App">
-        <Header />
-        <Navb />
+        <Switch>
 
-        <main className="contenido">
-          <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
 
-            <Route path="/inventario">
-              <Inventario />
-            </Route>
+          <Route>
+            <>
+              <Header />
+              <Navb/>
 
-            <Route path="/pvp">
-              <Pvp />
-            </Route>
+              <main className="contenido">
+                <Switch>
+                  <Route path="/inventario">
+                    <Inventario />
+                  </Route>
 
-            <Route path="/">
-              <Inicio />
-            </Route>
+                  <Route path="/pvp">
+                    <Pvp />
+                  </Route>
 
-            <Route path="/inicio">
-              <Inicio />
-            </Route>
+                  <Route path="/">
+                    <Inicio />
+                  </Route>
 
-            <Route path="/tienda">
-              <Tienda />
-            </Route>
-            
-            <Route path="/perfil">
-              <Perfil />
-            </Route>
+                  <Route path="/inicio">
+                    <Inicio />
+                  </Route>
 
-            <Route>
-              <div className="Error404">
-                <h1>404</h1>
-                <h2>Página no encontrada</h2>
-                <p>
-                  Lo sentimos, la página que intentás visitar
-                  no existe o fue movida.
-                </p>
-              </div>
-            </Route>
-          </Switch>
-        </main>
+                  <Route path="/tienda">
+                    <Tienda />
+                  </Route>
 
-        <Footer />
+                  <Route path="/perfil">
+                    <Perfil />
+                  </Route>
+
+                  <Route>
+                    <div className="Error404">
+                      <h1>404</h1>
+                      <h2>Página no encontrada</h2>
+                      <p>
+                        Lo sentimos, la página que intentás visitar
+                        no existe o fue movida.
+                      </p>
+                    </div>
+                  </Route>
+                </Switch>
+              </main>
+
+              <Footer />
+            </>
+          </Route>
+
+        </Switch>
       </div>
     </Router>
   );
 }
->>>>>>> origin/testing
