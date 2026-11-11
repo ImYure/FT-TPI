@@ -481,7 +481,7 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
   box-shadow: 0 4px 12px rgba(48, 25, 61, 0.15);
   display: flex;
   flex-direction: column;
-  background: #260A37;
+background: linear-gradient(135deg, #4e006b, #7902a0);
 }
 
 .tarjeta-producto__imagen-contenedor {
@@ -490,7 +490,7 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
   display: flex;
   justify-content: center;
   align-items: center;
-  
+  background: white;
   box-sizing: border-box;
   border-radius: 18px; /* Ligeramente más pequeño */
 }
@@ -513,7 +513,7 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
   margin: 0;
   font-size: 16px; /* Reducido de 20px a 16px */
   font-weight: bold;
-  color: rgb(0, 0, 0);
+  color: rgb(252, 253, 251);
 }
 .tarjeta-producto p {
   margin: 0;
@@ -548,6 +548,10 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
 
 
 .panel-filtros {
+  position: sticky;
+  top: 20px;
+  z-index: 10;
+  /* los tres cosas de arriba hace que se quede quieto */
   width: 100%;
   max-width: 280px;
   background: #ffffff;
