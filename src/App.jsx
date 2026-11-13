@@ -4,6 +4,7 @@ import Header from "./componentes/Header";
 import Navb from "./componentes/Navb";
 import Footer from "./componentes/Footer";
 import Login from "./vistas/login";
+import ParteLegal from "./vistas/ParteLegal";
 import Inicio from "./vistas/Inicio";
 import Tienda from "./vistas/Tienda";
 import Pvp from "./vistas/Pvp";
@@ -23,7 +24,7 @@ export default function App() {
           <Route>
             <>
               <Header />
-              <Navb/>
+              <Navb />
 
               <main className="contenido">
                 <Switch>
@@ -39,8 +40,15 @@ export default function App() {
                     <Inicio />
                   </Route>
 
-                  <Route path="/inicio">
-                    <Inicio />
+                  <Route path="/tienda">
+                    <Tienda />
+                  </Route>
+
+                  <Route path="/perfil">
+                    <Perfil />
+                  </Route>
+                  <Route path="/ParteLegal">
+                    <ParteLegal />
                   </Route>
 
                   <Route path="/tienda">
