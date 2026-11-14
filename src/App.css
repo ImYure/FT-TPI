@@ -520,12 +520,14 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
 .tarjeta-producto {
   color: rgb(53, 0, 243);
   border: 1px solid #a101f1;
-  border-radius: 15px; /* Ligeramente más pequeño */
+  border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(48, 25, 61, 0.15);
   display: flex;
   flex-direction: column;
   background: linear-gradient(135deg, #1e0527, #7902a0);
+  /* NUEVO: Asegura que todas las tarjetas midan exactamente lo mismo en una misma fila */
+  height: 100%; 
 }
 
 .tarjeta-producto__imagen-contenedor {
@@ -546,11 +548,11 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
 }
 
 .tarjeta-producto__info {
-  padding: 12px; /* Reducido de 20px a 12px */
+  padding: 12px;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  flex: 1;
+  flex: 1; /* NUEVO: Hace que esta sección ocupe todo el espacio sobrante */
 }
 
 .tarjeta-producto h3 {
@@ -565,19 +567,40 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
   color: #d9c4ed;
   line-height: 1.3;
 }
+
 .tarjeta-producto__precio {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  margin-top: 5px;
   background: linear-gradient(135deg, #310142, #7902a0);
   border: 1px solid #ffffff;
   border-radius: 50px;
-  padding: 6px 10px; /* Más compacto */
-  margin-bottom: 3px; /* Eliminado el margen inferior */
+  padding: 6px 10px;
+  margin-bottom: 3px; 
+  
+  /* NUEVO: Empuja el botón automáticamente hacia el fondo de la tarjeta */
+  margin-top: auto; 
+
+  /* NUEVO: Propiedades necesarias para que el <button> se vea y funcione bien */
+  cursor: pointer;
+  font-family: inherit;
+  width: 100%; /* Opcional: hace que ocupe todo el ancho disponible de la tarjeta */
+  transition: all 0.2s ease; /* Suaviza la animación al pasar el mouse */
 }
 
+/* NUEVO: Efecto cuando el usuario pasa el mouse por encima */
+.tarjeta-producto__precio:hover {
+  background: linear-gradient(135deg, #45045e, #9204bf); /* Un tono más claro */
+  border-color: #ffd700; /* Cambia el borde a un tono amarillo/dorado llamativo */
+  transform: translateY(-2px); /* Da un pequeño efecto de elevación */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* NUEVO: Efecto cuando el usuario hace clic */
+.tarjeta-producto__precio:active {
+  transform: translateY(0);
+}
 
 .tarjeta-producto__numero-precio {
   font-size: 15px; /* Reducido de 16px a 13px */
