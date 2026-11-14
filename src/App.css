@@ -11,7 +11,11 @@
   color: #24152f;
 }
 
+
+
 /* HEADER */
+
+
 
 .header {
 width: 100%;          /* Ocupa el 100% del contenedor padre */
@@ -97,7 +101,12 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
   background: white;
 }
 
+
+
 /* NAVBAR */
+
+
+
 
 .navbar {
   width: 90%;
@@ -144,6 +153,8 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
 
 /* CONTENIDO CENTRAL */
 
+
+
 .contenido {
   width: 85%;
   flex: 1;
@@ -152,7 +163,11 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
   margin-top: 30px; /* Ajusta este valor (ej. 30px, 50px) según el espacio que desees */
 }
 
+
+
 /* ERROR 404 */
+
+
 
 .Error404 {
   padding: 40px 20px;
@@ -290,6 +305,9 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
 
 /* inicio */
 
+
+
+
 /* Botón secundario de inicio */
 .boton-registro.boton-secundario {
   background: white;
@@ -324,7 +342,7 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
 
 .inicio-texto p {
   color: #666;
-  font-size: 32px;
+  font-size: 20px;
   line-height: 1.5;
 }
 
@@ -381,6 +399,7 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
 
 
 /* Parte legal */
+
 
 
 
@@ -443,20 +462,23 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
 
 /* tienda (estos son los componentes de ellso) */
 
+
+
 /* Contenedor principal de la tienda (Filtros a la izquierda, columna derecha al lado) */
+
 .inicio-contenido.tienda {
   display: flex;
   align-items: flex-start;
   justify-content: center;
   gap: 25px;
   margin-bottom: 25px;
-  width: 90%;
-  max-width: 2200px;
   margin-left: auto;
   margin-right: auto;
 }
 
 /* Sub-contenedor en cascada (vertical) para la barra de navegación y los productos */
+
+
 .tienda-columna-derecha {
   display: flex;
   flex-direction: column; /* Esto hace que se pongan uno debajo del otro */
@@ -464,7 +486,29 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
   flex: 1;                /* Ocupa el espacio restante al lado del filtro */
 }
 
+.inicio-texto-icono {
+  display: flex;
+  align-items: center;  
+  gap: 15px;            
+}
+
+/* Controla el tamaño de la imagen para que se achique correctamente */
+.inicio-texto-icono img {
+  width: 90px;          /* Ajusta el ancho que prefieras (ej. 30px, 40px, 50px) */
+  height: 90px;         /* Mantiene la proporción si usas object-fit */
+  object-fit: contain;  /* Evita que la imagen se deforme */
+}
+
+/* Opcional: si quieres ajustar el tamaño del título "Tienda" al lado */
+.inicio-texto-icono h1 {
+  font-size: 55px;      
+  margin: 0;
+}
+
 /* tarjeta del producto */
+
+
+
 
 .lista-productos {
   flex: 1;
@@ -534,23 +578,74 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
   margin-bottom: 3px; /* Eliminado el margen inferior */
 }
 
-.tarjeta-producto__icono-moneda {
-  font-size: 12px;
-}
 
 .tarjeta-producto__numero-precio {
-  font-size: 13px; /* Reducido de 16px a 13px */
+  font-size: 15px; /* Reducido de 16px a 13px */
   font-weight: bold;
   color: white;
   letter-spacing: 0.5px;
 }
 
+.tarjeta-producto__precio .saldo-icono img {
+  width: 24px;          /* Cambia a 24px o el tamaño que prefieras */
+  height: 24px;         
+  object-fit: contain;  
+}
+
+/* Saldo */
+
+
+
+
+.saldo { 
+  position: sticky;
+  top: 35px;
+  z-index: 10;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.438);
+  
+  /* --- CAMBIOS PARA PARECERSE A LA FOTO --- */
+  background-color: #ffffff;    /* Fondo blanco */
+  border-radius: 50px;          /* Bordes totalmente redondeados (tipo pastilla) */
+  padding: 10px 20px;           /* Espaciado interno para que no quede apretado */
+  display: flex;
+  align-items: center;          /* Centra verticalmente los elementos */
+  justify-content: flex-start;  /* Los alinea desde la izquierda */
+  gap: 15px;                    /* Espacio entre el círculo amarillo y el número */
+  
+  width: 90%;         
+  max-width: 250px;             /* Un ancho adecuado para que entre el ícono y el número */
+  margin: 0 auto;               /* Centra el bloque en la pantalla */
+}
+
+/* Círculo amarillo del ícono (como en la foto) */
+.saldo-icono img {
+  background-color: #ffd700;    /* Amarillo brillante */
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;           /* Lo hace un círculo perfecto */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;               /* Evita que el círculo se deforme */
+}
+
+/* Estilo del número (violeta y moderno) */
+.saldo-texto .monto {
+  color: #6b21a8;               /* Tono morado/violeta similar al de la imagen */
+  font-size: 1.5rem;            /* Tamaño grande */
+  font-weight: bold;            /* Negrita */
+  letter-spacing: 1px;          /* EspACIado entre números opcional */
+}
+
+
+
 /* filtros estilos */
+
 
 
 .panel-filtros {
   position: sticky;
-  top: 20px;
+  top: 35px;
   z-index: 10;
   /* los tres cosas de arriba hace que se quede quieto */
   width: 100%;

@@ -13,7 +13,7 @@ export default function Header() {
           Iniciar sesión
         </Link>
 
-        <Link href="/registro" className="boton-registro">
+        <Link href="/login" className="boton-registro">
           Registrarse
         </Link>
 

@@ -39,6 +39,9 @@ export default function App() {
                   <Route path="/">
                     <Inicio />
                   </Route>
+                  <Route path="/inicio">
+                    <Inicio />
+                  </Route>
 
                   <Route path="/tienda">
                     <Tienda />

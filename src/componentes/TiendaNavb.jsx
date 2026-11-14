@@ -5,10 +5,14 @@ export default function TiendaNavb() {
       <section className="inicio-contenido">
         <div className="inicio-texto">
 
-          <h1>Tienda</h1>
-          <p>El mejor sitio web para tus peleas favoritas y colecciones de cartas.</p>
-         
-         <div className="inicio-botones">
+          <div className="inicio-texto-icono">
+            <img src="../public/tienda.png" alt="tienda-icono" />
+            <h1>Tienda</h1>
+          </div>
+
+          <p>Adquiri cartas, sobres y objetos para tu coleccón </p>
+
+          <div className="inicio-botones">
 
             <Link href="/tienda/sobres" className="boton-registro tiendaNavb-boton">
               <span>♙</span>
@@ -21,7 +25,7 @@ export default function TiendaNavb() {
             <Link href="/tienda/consumibles" className="boton-registro tiendaNavb-boton">
               <span>♙</span>
               Consumibles???
-            </Link> 
+            </Link>
             <Link href="/tienda/recarga" className="boton-registro tiendaNavb-boton">
               <span>♙</span>
               Recarga
