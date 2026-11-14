@@ -5,10 +5,11 @@ import Navb from "./componentes/Navb";
 import Footer from "./componentes/Footer";
 import Login from "./vistas/login";
 import PerfilAdmin from "./vistas/perfilAdmin";
+import ParteLegal from "./vistas/ParteLegal";
 import Inicio from "./vistas/Inicio";
 import Tienda from "./vistas/Tienda";
 import Pvp from "./vistas/Pvp";
-import Perfil from "./vistas/Perfil";
+import Perfil from "./vistas/PerfilUsuario";
 import Inventario from "./vistas/inventario";
 import SobresAdmin from "./vistas/sobresAdmin";
 import PerfilesAdmin from "./vistas/perfilesAdmin";
@@ -38,7 +39,7 @@ export default function App() {
           <Route>
             <>
               <Header />
-              <Navb/>
+              <Navb />
 
               <main className="contenido">
                 <Switch>
@@ -53,9 +54,19 @@ export default function App() {
                   <Route path="/">
                     <Inicio />
                   </Route>
-
                   <Route path="/inicio">
                     <Inicio />
+                  </Route>
+
+                  <Route path="/tienda">
+                    <Tienda />
+                  </Route>
+
+                  <Route path="/perfil">
+                    <Perfil />
+                  </Route>
+                  <Route path="/ParteLegal">
+                    <ParteLegal />
                   </Route>
 
                   <Route path="/tienda">
