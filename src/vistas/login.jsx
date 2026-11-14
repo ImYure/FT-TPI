@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import "../login.css";
 
@@ -44,7 +43,7 @@ function Login() {
 
                 <div className="miku">
                     <div className="login-logo">
-                        <div className="logo-icono">V</div>
+                        <div className="logo-icono"></div>
                     </div>
 
                     <div className="bienvenida">
