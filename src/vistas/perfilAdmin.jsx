@@ -24,6 +24,11 @@ export default function PerfilAdmin() {
       return;
     }
 
+    if (Number(ataque) < 0 || Number(defensa) < 0 || Number(vida) < 0 || Number(velocidad) < 0) {
+      alert("Las estadísticas no pueden ser negativas.");
+      return;
+    }
+
     const nuevaCarta = {
       id: editando ? editando : Date.now(),
       nombre,
@@ -176,19 +181,19 @@ export default function PerfilAdmin() {
             <div className="admin-dos-columnas">
               <div>
                 <label>Ataque</label>
-                <input type="number" value={ataque} onChange={e => setAtaque(e.target.value)} />
+                <input type="number" min="0" value={ataque} onChange={e => setAtaque(e.target.value)} />
               </div>
               <div>
                 <label>Defensa</label>
-                <input type="number" value={defensa} onChange={e => setDefensa(e.target.value)} />
+                <input type="number" min="0" value={defensa} onChange={e => setDefensa(e.target.value)} />
               </div>
               <div>
                 <label>Vida</label>
-                <input type="number" value={vida} onChange={e => setVida(e.target.value)} />
+                <input type="number" min="0" value={vida} onChange={e => setVida(e.target.value)} />
               </div>
               <div>
                 <label>Velocidad</label>
-                <input type="number" value={velocidad} onChange={e => setVelocidad(e.target.value)} />
+                <input type="number" min="0" value={velocidad} onChange={e => setVelocidad(e.target.value)} />
               </div>
             </div>
 

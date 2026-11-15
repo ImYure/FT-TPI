@@ -15,6 +15,11 @@ function SobresAdmin() {
     const [editando, setEditando] = useState(null);
 
     function agregarCarta() {
+        if (cartasDisponibles.length >= 30) {
+            alert("Ya hay 30 cartas, no se pueden agregar más.");
+            return;
+        }
+
         const nuevaCarta = prompt("Ingresá el nombre de la nueva carta:");
 
         if (nuevaCarta && nuevaCarta.trim() !== "") {
@@ -60,6 +65,11 @@ function SobresAdmin() {
 
         if (Number(precio) < 0 || Number(cantidad) < 1) {
             alert("Ingresá un precio válido y una cantidad mayor a cero.");
+            return;
+        }
+
+        if (Number(cantidad) > 30) {
+            alert("Solo hay 30 cartas, la cantidad no puede ser mayor a 30.");
             return;
         }
 
@@ -177,6 +187,7 @@ function SobresAdmin() {
                                     id="cantidad-sobre"
                                     type="number"
                                     min="1"
+                                    max="30"
                                     placeholder="Ej: 5"
                                     value={cantidad}
                                     onChange={(e) => setCantidad(e.target.value)}
