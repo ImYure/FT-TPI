@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./PerfilUsuario.css";
+import "../../estilos/PerfilUsuario.css";
 
 function PerfilUsuario() {
   const [usuario, setUsuario] = useState({

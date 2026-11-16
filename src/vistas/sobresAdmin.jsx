@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import Footer from "../componentes/Footer";
-import "../sobresAdmin.css";
+import Footer from "../componentes/navegacion/Footer";
+import "../estilos/sobresAdmin.css";
 
 function SobresAdmin() {
     const [nombre, setNombre] = useState("");

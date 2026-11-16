@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import TiendaNavb from "../componentes/TiendaNavb.jsx";
+import TiendaNavb from "../componentes/navegacion/TiendaNavb.jsx";
 import ListaProductos from "../componentes/ListaProductos.jsx";
 import articulosDefault from "../datos/articulos.js";
 import Saldo from "../componentes/Saldo.jsx";

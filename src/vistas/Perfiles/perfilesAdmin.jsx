@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import Footer from "../componentes/Footer";
-import "../perfilesAdmin.css";
+import Footer from "../../componentes/navegacion/Footer";
+import "../../estilos/perfilesAdmin.css";
 
 function PerfilesAdmin() {
     const [nombre, setNombre] = useState("");
