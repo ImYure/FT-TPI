@@ -1,59 +1,86 @@
-export default function Filtros() {
-  return (<aside className="panel-filtros">
-    <div className="filtros-header">
-      <div className="filtros-titulo">
-        <h2>Filtros</h2>
-      </div>
-      <p className="filtros-subtitulo">
-        Filtra Filtra Filtra Filtra Filtra Filtra Filtra Filtra Filtra
-      </p>
-    </div>
 
-    <div className="filtros-grupo">
-      <h3 className="filtros-label-seccion">Categorías</h3>
-      <div className="select-personalizado">
-        <select defaultValue="">
-          <option value="" disabled>Categorías</option>
-          <option value="todos">Todos</option>
-          <option value="criatura">Criatura</option>
-          <option value="hechizo">Hechizo</option>
-        </select>
-        <span className="flecha-select">▾</span>
-      </div>
-    </div>
-    <div className="filtros-divisor"></div>
-    <div className="filtros-grupo">
-      <h3 className="filtros-label-seccion">Rareza</h3>
-      <label className="checkbox-label">
-        <input type="checkbox" defaultChecked />
-        <span className="checkbox-custom"></span>
-        Comun
-      </label>
-      <label className="checkbox-label">
-        <input type="checkbox" />
-        <span className="checkbox-custom"></span>
-        Raro
-      </label>
-      <label className="checkbox-label">
-        <input type="checkbox" />
-        <span className="checkbox-custom"></span>
-        Legendario
-      </label>
-    </div>
+export default function Filtros({ filtros, onChange }) {
 
-    <div className="filtros-divisor"></div>
+  function cambiarFiltro(propiedad, valor) {
+    onChange({
+      ...filtros,
+      [propiedad]: valor
+    });
+  }
 
-    <div className="filtros-grupo">
-      <h3 className="filtros-label-seccion">Ordenar por</h3>
-      <div className="select-personalizado">
-        <select defaultValue="">
-          <option value="" disabled>ns inventen</option>
-          <option value="reciente">Más reciente</option>
-          <option value="precio">Precio</option>
-        </select>
-        <span className="flecha-select">▾</span>
+  function cambiarRareza(rareza) {
+    const nuevasRarezas = filtros.rareza.includes(rareza)
+      ? filtros.rareza.filter(r => r !== rareza)
+      : [...filtros.rareza, rareza];
+
+    cambiarFiltro("rareza", nuevasRarezas);
+  }
+
+  return (
+    <aside className="panel-filtros">
+
+      <div className="filtros-header">
+        <div className="filtros-titulo">
+          <h2>Filtros</h2>
+        </div>
+        <p className="filtros-subtitulo">
+          Encontrá los artículos que buscás.
+        </p>
       </div>
-    </div>
-  </aside>
+
+      <div className="filtros-grupo">
+        <h3 className="filtros-label-seccion">Categorías</h3>
+
+        <div className="select-personalizado">
+          <select
+            value={filtros.categoria}
+            onChange={(e) => cambiarFiltro("categoria", e.target.value)}
+          >
+            <option value="todos">Todas las categorías</option>
+            <option value="anime">Anime</option>
+            <option value="videojuegos">Videojuegos</option>
+            <option value="memes">Memes</option>
+            <option value="curi">Curi</option>
+            <option value="peronaslol">Personas LOL</option>
+          </select>
+        </div>
+      </div>
+
+      <div className="filtros-divisor"></div>
+
+      <div className="filtros-grupo">
+        <h3 className="filtros-label-seccion">Rareza</h3>
+
+        {["comun", "raro", "legendario"].map((rareza) => (
+          <label className="checkbox-label" key={rareza}>
+            <input
+              type="checkbox"
+              checked={filtros.rareza.includes(rareza)}
+              onChange={() => cambiarRareza(rareza)}
+            />
+            <span className="checkbox-custom"></span>
+            {rareza}
+          </label>
+        ))}
+      </div>
+
+      <div className="filtros-divisor"></div>
+
+      <div className="filtros-grupo">
+        <h3 className="filtros-label-seccion">Ordenar por</h3>
+
+        <div className="select-personalizado">
+          <select
+            value={filtros.orden}
+            onChange={(e) => cambiarFiltro("orden", e.target.value)}
+          >
+            <option value="ninguno">Sin ordenar</option>
+            <option value="reciente">Más reciente</option>
+            <option value="precio">Menor precio</option>
+          </select>
+        </div>
+      </div>
+
+    </aside>
   );
 }

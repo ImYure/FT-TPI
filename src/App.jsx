@@ -69,14 +69,6 @@ export default function App() {
                     <ParteLegal />
                   </Route>
 
-                  <Route path="/tienda">
-                    <Tienda />
-                  </Route>
-
-                  <Route path="/perfil">
-                    <Perfil />
-                  </Route>
-
                   <Route>
                     <div className="Error404">
                       <h1>404</h1>

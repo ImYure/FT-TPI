@@ -1,0 +1,83 @@
+/* Estructura general de 2 columnas en Inventario */
+.inventario-layout {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Efecto visual al pasar el mouse por las tarjetas de la grilla */
+.item-seleccionable {
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  height: 100%;
+}
+
+.item-seleccionable:hover {
+  transform: translateY(-4px);
+}
+
+/* Columna derecha fija al hacer scroll */
+.inventario-panel-derecho {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+  position: sticky;
+  top: 20px;
+}
+
+/* Contenedor de la tarjeta o sobre ampliado */
+.detalle-carta-contenedor {
+  width: 100%;
+}
+
+/* Escalado de los elementos internos de TarjetaCarta cuando está en el panel derecho */
+.detalle-carta-contenedor .carta-item {
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.detalle-carta-contenedor .carta-item__interior {
+  padding: 16px;
+  gap: 14px;
+}
+
+.detalle-carta-contenedor .carta-item__rareza {
+  font-size: 14px;
+  padding: 4px 14px;
+}
+
+.detalle-carta-contenedor .carta-item__nombre {
+  font-size: 20px;
+}
+
+.detalle-carta-contenedor .carta-item__imagen {
+  height: 210px;
+}
+
+.detalle-carta-contenedor .carta-stat {
+  padding: 8px 4px;
+}
+
+.detalle-carta-contenedor .carta-stat strong {
+  font-size: 16px;
+}
+
+.detalle-carta-contenedor .carta-stat span {
+  font-size: 12px;
+}
+
+.detalle-carta-contenedor .carta-item__habilidad {
+  padding: 12px;
+  gap: 8px;
+}
+
+.detalle-carta-contenedor .carta-item__habilidad h4 {
+  font-size: 15px;
+}
+
+.detalle-carta-contenedor .carta-item__habilidad p {
+  font-size: 13px;
+  line-height: 1.45;
+}

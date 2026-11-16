@@ -1,20 +1,28 @@
 import TarjetaProductos from "./TarjetaProductos";
+import TarjetaCarta from "./TarjetaCarta";
 
-export default function ListaProductos({ articulos }) {
-
+export default function ListaProductos({ articulos, mostrarPrecio = false, onSeleccionar }) {
     return (
         <div className="lista-productos">
-            {articulos.map((articulo) =>
-                <TarjetaProductos
+            {articulos.map((articulo) => (
+                <div
                     key={articulo.id}
-                    id={articulo.id}
-                    tipo={articulo.tipo}
-                    nombre={articulo.nombre}
-                    descripcion={articulo.descripcion}
-                    imagen={articulo.imagen}
-                    precio={articulo.precio}
-                />
-            )}
+                    className={onSeleccionar ? "item-seleccionable" : ""}
+                    onClick={() => onSeleccionar && onSeleccionar(articulo)}
+                >
+                    {articulo.tipo === "carta" ? (
+                        <TarjetaCarta
+                            carta={articulo}
+                            mostrarPrecio={mostrarPrecio}
+                        />
+                    ) : (
+                        <TarjetaProductos
+                            {...articulo}
+                            mostrarPrecio={mostrarPrecio}
+                        />
+                    )}
+                </div>
+            ))}
         </div>
     );
 }

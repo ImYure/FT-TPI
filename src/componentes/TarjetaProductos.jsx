@@ -4,10 +4,12 @@ export default function TarjetaProductos({
     nombre,
     descripcion,
     imagen,
-    precio
+    precio,
+    mostrarPrecio
 }) {
     return (
         <div className="tarjeta-producto">
+            
             <div className="tarjeta-producto__imagen-contenedor">
                 <img src={imagen} alt={nombre} />
             </div>
@@ -16,12 +18,14 @@ export default function TarjetaProductos({
                 <h3>{nombre}</h3>
                 <p>{descripcion}</p>
 
-                <button className="tarjeta-producto__precio">
-                    <div className="saldo-icono">
-                        <img src="../public/saldo.png" alt="Saldo" />
-                    </div>
-                    <span className="tarjeta-producto__numero-precio">{precio}</span>
-                </button>
+                {mostrarPrecio && (
+                    <button className="tarjeta-producto__precio">
+                        <div className="saldo-icono">
+                            <img src="../public/saldo.png" alt="Saldo" />
+                        </div>
+                        <span className="tarjeta-producto__numero-precio">{precio}</span>
+                    </button>
+                )}
             </div>
         </div>
     );
