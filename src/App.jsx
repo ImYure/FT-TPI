@@ -8,9 +8,9 @@ import PerfilAdmin from "./vistas/Perfiles/perfilAdmin";
 import ParteLegal from "./vistas/ParteLegal";
 import Inicio from "./vistas/Inicio";
 import Tienda from "./vistas/Tienda";
-import Pvp from "./vistas/Pvp";
+import Mazos from "./vistas/Mazos";
 import Perfil from "./vistas/Perfiles/PerfilUsuario";
-import Inventario from "./vistas/inventario";
+import Inventario from "./vistas/Inventario";
 import SobresAdmin from "./vistas/sobresAdmin";
 import PerfilesAdmin from "./vistas/Perfiles/perfilesAdmin";
 
@@ -47,8 +47,8 @@ export default function App() {
                     <Inventario />
                   </Route>
 
-                  <Route path="/pvp">
-                    <Pvp />
+                  <Route path="/mazos">
+                    <Mazos />
                   </Route>
 
                   <Route path="/">

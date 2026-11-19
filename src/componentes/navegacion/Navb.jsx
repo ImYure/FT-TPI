@@ -14,10 +14,10 @@ export default function Navb() {
       </Link>
 
       <Link
-        className={`opcion ${location === "/pvp" ? "activa" : ""}`}
-        href="/pvp"
+        className={`opcion ${location === "/mazos" ? "activa" : ""}`}
+        href="/mazos"
       >
-        <span>▤</span> PvP
+        <span>▤</span> Mazos
       </Link>
 
       <Link
