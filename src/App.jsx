@@ -1,40 +1,46 @@
+
 import "./App.css";
 import { Router, Route, Switch } from "wouter";
+
+// Navegación
 import Header from "./componentes/navegacion/Header";
 import Navb from "./componentes/navegacion/Navb";
 import Footer from "./componentes/navegacion/Footer";
+
+// Vistas
 import Login from "./vistas/login";
-import PerfilAdmin from "./vistas/Perfiles/perfilAdmin";
 import ParteLegal from "./vistas/ParteLegal";
 import Inicio from "./vistas/Inicio";
 import Tienda from "./vistas/Tienda";
-import Mazos from "./vistas/Mazos";
-import Perfil from "./vistas/Perfiles/PerfilUsuario";
 import Inventario from "./vistas/Inventario";
-import SobresAdmin from "./vistas/sobresAdmin";
-import PerfilesAdmin from "./vistas/Perfiles/perfilesAdmin";
+import Mazos from "./vistas/Mazos";
 
+// Perfil y administración
+import Perfil from "./vistas/Perfiles/PerfilUsuario";
+import PerfilAdmin from "./vistas/Perfiles/perfilAdmin";
+import SobresAdmin from "./vistas/Perfiles/sobresAdmin";
+import PerfilesAdmin from "./vistas/Perfiles/perfilesAdmin";
 
 export default function App() {
   return (
     <Router>
       <div className="App">
         <Switch>
-         <Route path="/sobresAdmin">
-            <SobresAdmin />
-          </Route>
           <Route path="/login">
             <Login />
-
           </Route>
 
-         <Route path="/perfilesAdmin">
-          <PerfilesAdmin/>
-          </Route>  
+          <Route path="/sobresAdmin">
+            <SobresAdmin />
+          </Route>
 
-         <Route path="/perfilAdmin">
-          <PerfilAdmin/>
-          </Route> 
+          <Route path="/perfilesAdmin">
+            <PerfilesAdmin />
+          </Route>
+
+          <Route path="/perfilAdmin">
+            <PerfilAdmin />
+          </Route>
 
           <Route>
             <>
@@ -51,10 +57,11 @@ export default function App() {
                     <Mazos />
                   </Route>
 
-                  <Route path="/">
+                  <Route path="/inicio">
                     <Inicio />
                   </Route>
-                  <Route path="/inicio">
+
+                  <Route path="/">
                     <Inicio />
                   </Route>
 
@@ -65,6 +72,7 @@ export default function App() {
                   <Route path="/perfil">
                     <Perfil />
                   </Route>
+
                   <Route path="/ParteLegal">
                     <ParteLegal />
                   </Route>
@@ -85,7 +93,6 @@ export default function App() {
               <Footer />
             </>
           </Route>
-
         </Switch>
       </div>
     </Router>

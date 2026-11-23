@@ -1,9 +1,10 @@
+
 import { useState } from "react";
 import { Link } from "wouter";
-import Footer from "../componentes/navegacion/Footer";
-import "../estilos/sobresAdmin.css";
+import Footer from "../../componentes/navegacion/Footer";
+import "../../estilos/sobresAdmin.css";
 
-function SobresAdmin() {
+export default function SobresAdmin({ integrado = false }) {
     const [nombre, setNombre] = useState("");
     const [descripcion, setDescripcion] = useState("");
     const [precio, setPrecio] = useState("");
@@ -35,7 +36,9 @@ function SobresAdmin() {
 
     function seleccionarCarta(carta) {
         if (cartasSeleccionadas.includes(carta)) {
-            setCartasSeleccionadas(cartasSeleccionadas.filter((item) => item !== carta));
+            setCartasSeleccionadas(
+                cartasSeleccionadas.filter((item) => item !== carta)
+            );
         } else {
             setCartasSeleccionadas([...cartasSeleccionadas, carta]);
         }
@@ -83,7 +86,11 @@ function SobresAdmin() {
         };
 
         if (editando) {
-            setSobres(sobres.map((sobre) => (sobre.id === editando ? nuevoSobre : sobre)));
+            setSobres(
+                sobres.map((sobre) =>
+                    sobre.id === editando ? nuevoSobre : sobre
+                )
+            );
         } else {
             setSobres([...sobres, nuevoSobre]);
         }
@@ -99,11 +106,15 @@ function SobresAdmin() {
         setCartasSeleccionadas([...sobre.cartas]);
         setEditando(sobre.id);
 
-        setCartasDisponibles((actuales) => [...new Set([...actuales, ...sobre.cartas])]);
+        setCartasDisponibles((actuales) =>
+            [...new Set([...actuales, ...sobre.cartas])]
+        );
     }
 
     function eliminarSobre(id) {
-        const confirmar = window.confirm("¿Estás seguro de que querés borrar este sobre?");
+        const confirmar = window.confirm(
+            "¿Estás seguro de que querés borrar este sobre?"
+        );
 
         if (confirmar) {
             setSobres(sobres.filter((sobre) => sobre.id !== id));
@@ -116,52 +127,71 @@ function SobresAdmin() {
 
     return (
         <div className="sobres-pagina">
-            <header className="sobres-header">
-                <div className="sobres-logo-escudo" title="Panel Admin"></div>
-                <h1>Admin</h1>
-            </header>
 
-            <nav className="sobres-navbar">
-                <Link href="/perfilAdmin" className="nav-item">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M3 11l9-8 9 8" />
-                      <path d="M5 10v10h5v-6h4v6h5V10" />
-                    </svg>
-                    <span>Cartas</span>
-                </Link>
-                <Link href="/sobresAdmin" className="nav-item activo">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="8" r="4" />
-                      <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
-                    </svg>
-                    <span>Sobres</span>
-                </Link>
-                <Link href="/perfilesAdmin" className="nav-item">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="8" r="4" />
-                      <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
-                    </svg>
-                    <span>Perfiles</span>
-                </Link>
-            </nav>
+            {!integrado && (
+                <header className="sobres-header">
+                    <div
+                        className="sobres-logo-escudo"
+                        title="Panel Admin"
+                    ></div>
+                    <h1>Admin</h1>
+                </header>
+            )}
+
+            {!integrado && (
+                <nav className="sobres-navbar">
+
+                    <Link href="/perfilAdmin" className="nav-item">
+                        <span>Cartas</span>
+                    </Link>
+
+                    <Link href="/sobresAdmin" className="nav-item activo">
+                        <span>Sobres</span>
+                    </Link>
+
+                    <Link href="/perfilesAdmin" className="nav-item">
+                        <span>Perfiles</span>
+                    </Link>
+
+                </nav>
+            )}
 
             <main className="sobres-contenido">
+
                 <div className="sobres-titulo-seccion">
                     <h2>Administrar sobres</h2>
-                    <p>Elegí qué cartas contiene cada sobre y definí su precio.</p>
+                    <p>
+                        Elegí qué cartas contiene cada sobre y definí su precio.
+                    </p>
                 </div>
 
                 <div className="sobres-columnas">
+
                     {/* FORMULARIO */}
-                    <form className="sobres-formulario" onSubmit={crearSobre}>
+
+                    <form
+                        className="sobres-formulario"
+                        onSubmit={crearSobre}
+                    >
+
                         <div className="sobres-form-header">
-                            <h3>{editando ? "Editar sobre" : "Crear sobre"}</h3>
-                            <button type="button" className="sobre-btn-mini" onClick={agregarCarta}>
+                            <h3>
+                                {editando ? "Editar sobre" : "Crear sobre"}
+                            </h3>
+
+                            <button
+                                type="button"
+                                className="sobre-btn-mini"
+                                onClick={agregarCarta}
+                            >
                                 Cartas
                             </button>
                         </div>
 
-                        <label htmlFor="nombre-sobre">Nombre del sobre</label>
+                        <label htmlFor="nombre-sobre">
+                            Nombre del sobre
+                        </label>
+
                         <textarea
                             id="nombre-sobre"
                             className="input-nombre-grande"
@@ -169,9 +199,13 @@ function SobresAdmin() {
                             onChange={(e) => setNombre(e.target.value)}
                         />
 
-                        <label htmlFor="descripcion-sobre" className="label-descripcion">
+                        <label
+                            htmlFor="descripcion-sobre"
+                            className="label-descripcion"
+                        >
                             Descripción
                         </label>
+
                         <input
                             id="descripcion-sobre"
                             type="text"
@@ -181,8 +215,12 @@ function SobresAdmin() {
                         />
 
                         <div className="sobres-fila-doble">
+
                             <div className="sobres-campo-grupo">
-                                <label htmlFor="cantidad-sobre">Cantidad de cartas</label>
+                                <label htmlFor="cantidad-sobre">
+                                    Cantidad de cartas
+                                </label>
+
                                 <input
                                     id="cantidad-sobre"
                                     type="number"
@@ -195,7 +233,10 @@ function SobresAdmin() {
                             </div>
 
                             <div className="sobres-campo-grupo">
-                                <label htmlFor="precio-sobre">Precio</label>
+                                <label htmlFor="precio-sobre">
+                                    Precio
+                                </label>
+
                                 <input
                                     id="precio-sobre"
                                     type="number"
@@ -205,87 +246,140 @@ function SobresAdmin() {
                                     onChange={(e) => setPrecio(e.target.value)}
                                 />
                             </div>
+
                         </div>
 
                         <div className="sobres-cartas">
-                            <label className="label-con-linea">Elegí las cartas que incluye</label>
+
+                            <label className="label-con-linea">
+                                Elegí las cartas que incluye
+                            </label>
 
                             {cartasDisponibles.length > 0 ? (
+
                                 <div className="sobres-cartas-lista">
+
                                     {cartasDisponibles.map((carta) => (
                                         <label
                                             className={`sobre-carta-card ${
-                                                cartasSeleccionadas.includes(carta) ? "seleccionada" : ""
+                                                cartasSeleccionadas.includes(carta)
+                                                    ? "seleccionada"
+                                                    : ""
                                             }`}
                                             key={carta}
                                         >
+
                                             <input
                                                 type="checkbox"
                                                 checked={cartasSeleccionadas.includes(carta)}
                                                 onChange={() => seleccionarCarta(carta)}
                                             />
+
                                             <span>{carta}</span>
+
                                         </label>
                                     ))}
+
                                 </div>
+
                             ) : (
+
                                 <p className="sobres-sin-cartas">
                                     Todavía no hay cartas agregadas. Tocá "Cartas" arriba.
                                 </p>
+
                             )}
+
                         </div>
 
                         <div className="sobres-formulario-acciones">
+
                             {editando && (
-                                <button type="button" className="sobre-cancelar" onClick={limpiarFormulario}>
+                                <button
+                                    type="button"
+                                    className="sobre-cancelar"
+                                    onClick={limpiarFormulario}
+                                >
                                     Cancelar
                                 </button>
                             )}
-                            <button type="submit" className="sobre-btn-guardar">
+
+                            <button
+                                type="submit"
+                                className="sobre-btn-guardar"
+                            >
                                 {editando ? "Guardar Cambios" : "Guardar Carta"}
                             </button>
+
                         </div>
+
                     </form>
 
                     {/* LISTADO */}
+
                     <section className="sobres-listado">
+
                         <h3>Sobres creados</h3>
 
                         {sobres.length === 0 ? (
+
                             <p className="sobres-vacio">
                                 Todavía no hay sobres creados. Se cargarán automáticamente desde MySQL.
                             </p>
+
                         ) : (
+
                             <div className="sobres-lista">
+
                                 {sobres.map((sobre) => (
-                                    <article className="sobre-item" key={sobre.id}>
+
+                                    <article
+                                        className="sobre-item"
+                                        key={sobre.id}
+                                    >
+
                                         <div className="sobre-visual">
+
                                             <div className="sobre-paquete">
+
                                                 <div className="sobre-rayas">
                                                     <span></span>
                                                     <span></span>
                                                     <span></span>
                                                 </div>
+
                                                 <div className="sobre-franja superior">
                                                     <div className="linea-franja"></div>
                                                     <div className="linea-franja"></div>
                                                     <div className="linea-franja"></div>
                                                 </div>
+
                                                 <div className="sobre-escudo-centro"></div>
+
                                                 <div className="sobre-franja inferior">
                                                     <div className="linea-franja"></div>
                                                     <div className="linea-franja"></div>
                                                     <div className="linea-franja"></div>
                                                 </div>
+
                                             </div>
+
                                         </div>
 
                                         <div className="sobre-info">
-                                            <strong className="sobre-titulo-card">{sobre.nombre}</strong>
-                                            <span className="sobre-desc-card">{sobre.descripcion}</span>
+
+                                            <strong className="sobre-titulo-card">
+                                                {sobre.nombre}
+                                            </strong>
+
+                                            <span className="sobre-desc-card">
+                                                {sobre.descripcion}
+                                            </span>
+
                                             <span className="sobre-meta-card">
                                                 {sobre.cantidad} cartas · {sobre.precio} monedas
                                             </span>
+
                                             <span className="sobre-incluye-card">
                                                 Incluye:{" "}
                                                 {sobre.cartas.length > 0
@@ -294,6 +388,7 @@ function SobresAdmin() {
                                             </span>
 
                                             <div className="sobre-acciones">
+
                                                 <button
                                                     type="button"
                                                     className="sobre-boton-editar"
@@ -301,6 +396,7 @@ function SobresAdmin() {
                                                 >
                                                     Editar
                                                 </button>
+
                                                 <button
                                                     type="button"
                                                     className="sobre-boton-eliminar"
@@ -308,19 +404,27 @@ function SobresAdmin() {
                                                 >
                                                     Borrar
                                                 </button>
+
                                             </div>
+
                                         </div>
+
                                     </article>
+
                                 ))}
+
                             </div>
+
                         )}
+
                     </section>
+
                 </div>
+
             </main>
 
-            <Footer />
+            {!integrado && <Footer />}
+
         </div>
     );
 }
-
-export default SobresAdmin;

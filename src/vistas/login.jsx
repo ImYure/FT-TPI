@@ -13,6 +13,8 @@ function Login() {
     const [ConfirmarContraseña, setConfirmarContraseña] = useState("");
     const [Recordarme, setRecordarme] = useState(false);
     const [AceptarTerminos, setAceptarTerminos] = useState(false);
+    const [Cargando, setCargando] = useState(false);
+    const [, setLocation] = useLocation();
 
     async function manejarEnvio(evento) {
         evento.preventDefault();
@@ -30,19 +32,31 @@ function Login() {
             }
 
             try {
-                const respuesta = await axios.post(
-                    "http://localhost:3000/api/registro",
-                    {
+                setCargando(true);
+
+                const respuesta = await fetch("http://localhost:3000/api/registro", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
                         nombre: Nombre,
                         apellido: Apellido,
                         mail: Correo,
                         pass: Contraseña
-                    }
-                );
+                    })
+                });
 
-                alert(respuesta.data.mensaje);
+                const datos = await respuesta.json();
 
-                // Limpiar los campos
+                if (!respuesta.ok) {
+                    alert(datos.mensaje);
+                    return;
+                }
+
+                alert(datos.mensaje || "¡Cuenta creada correctamente!");
+
+                setModo("login");
                 setNombre("");
                 setApellido("");
                 setCorreo("");
@@ -50,16 +64,12 @@ function Login() {
                 setConfirmarContraseña("");
                 setAceptarTerminos(false);
 
-                // Volver al inicio de sesión
-                setModo("login");
-
             } catch (error) {
                 console.error(error);
+                alert("No se pudo conectar con el servidor");
 
-                alert(
-                    error.response?.data?.mensaje ||
-                    "Error al conectar con el servidor"
-                );
+            } finally {
+                setCargando(false);
             }
 
         } else {
@@ -70,31 +80,39 @@ function Login() {
             }
 
             try {
-                const respuesta = await axios.post(
-                    "http://localhost:3000/api/login",
-                    {
+                setCargando(true);
+
+                const respuesta = await fetch("http://localhost:3000/api/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
                         mail: Correo,
                         pass: Contraseña
-                    }
-                );
+                    })
+                });
 
-                // Guardar el token y los datos del usuario
-                localStorage.setItem("token", respuesta.data.token);
-                localStorage.setItem(
-                    "usuario",
-                    JSON.stringify(respuesta.data.usuario)
-                );
+                const datos = await respuesta.json();
 
-                alert(respuesta.data.mensaje);
+                if (!respuesta.ok) {
+                    alert(datos.mensaje);
+                    return;
+                }
+
+                localStorage.setItem("token", datos.token);
+                localStorage.setItem("usuario", JSON.stringify(datos.usuario));
+
+                alert("¡Bienvenido a volterra," + datos.usuario.nombre + "!");
 
                 setLocation("/inicio");
+
             } catch (error) {
                 console.error(error);
+                alert("no se pudo conectar con el servidor");
 
-                alert(
-                    error.response?.data?.mensaje ||
-                    "Error al conectar con el servidor"
-                );
+            } finally {
+                setCargando(false);
             }
         }
     }
@@ -185,8 +203,8 @@ function Login() {
                                     Leí y acepto los términos y condiciones
                                 </label>
 
-                                <button className="boton-principal" type="submit">
-                                    Iniciar sesión
+                                <button className="boton-principal" type="submit" disabled={Cargando}>
+                                    {Cargando ? "ingresando..." : "inciar sesion"}
                                 </button>
                             </form>
                         </div>
@@ -253,8 +271,8 @@ function Login() {
                                     Acepto los términos y condiciones
                                 </label>
 
-                                <button className="boton-principal" type="submit">
-                                    Crear cuenta
+                                <button className="boton-principal" type="submit" disabled={Cargando}>
+                                    {Cargando ? "registrando..." : "Crear cuenta"}
                                 </button>
                             </form>
                         </div>
