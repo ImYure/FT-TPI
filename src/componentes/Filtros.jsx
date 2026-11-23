@@ -1,5 +1,5 @@
 
-export default function Filtros({ filtros, onChange }) {
+export default function Filtros({ filtros, onChange, categorias, rarezas }) {
 
   function cambiarFiltro(propiedad, valor) {
     onChange({
@@ -23,6 +23,7 @@ export default function Filtros({ filtros, onChange }) {
         <div className="filtros-titulo">
           <h2>Filtros</h2>
         </div>
+
         <p className="filtros-subtitulo">
           Encontrá los artículos que buscás.
         </p>
@@ -37,11 +38,13 @@ export default function Filtros({ filtros, onChange }) {
             onChange={(e) => cambiarFiltro("categoria", e.target.value)}
           >
             <option value="todos">Todas las categorías</option>
-            <option value="anime">Anime</option>
-            <option value="videojuegos">Videojuegos</option>
-            <option value="memes">Memes</option>
-            <option value="curi">Curi</option>
-            <option value="peronaslol">Personas LOL</option>
+
+            {categorias.map((categoria) => (
+              <option key={categoria.id} value={categoria.nombre}>
+                {categoria.nombre}
+              </option>
+            ))}
+
           </select>
         </div>
       </div>
@@ -51,17 +54,21 @@ export default function Filtros({ filtros, onChange }) {
       <div className="filtros-grupo">
         <h3 className="filtros-label-seccion">Rareza</h3>
 
-        {["comun", "raro", "legendario"].map((rareza) => (
-          <label className="checkbox-label" key={rareza}>
+        {rarezas.map((rareza) => (
+          <label className="checkbox-label" key={rareza.id}>
+
             <input
               type="checkbox"
-              checked={filtros.rareza.includes(rareza)}
-              onChange={() => cambiarRareza(rareza)}
+              checked={filtros.rareza.includes(rareza.nombre)}
+              onChange={() => cambiarRareza(rareza.nombre)}
             />
+
             <span className="checkbox-custom"></span>
-            {rareza}
+            {rareza.nombre}
+
           </label>
         ))}
+
       </div>
 
       <div className="filtros-divisor"></div>

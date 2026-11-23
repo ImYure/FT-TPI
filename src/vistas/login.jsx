@@ -14,7 +14,6 @@ function Login() {
     const [Recordarme, setRecordarme] = useState(false);
     const [AceptarTerminos, setAceptarTerminos] = useState(false);
     const [Cargando, setCargando] = useState(false);
-    const [, setLocation] = useLocation();
 
     async function manejarEnvio(evento) {
         evento.preventDefault();
