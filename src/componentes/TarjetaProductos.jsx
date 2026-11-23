@@ -1,3 +1,4 @@
+
 export default function TarjetaProductos({
     id,
     tipo,
@@ -5,11 +6,13 @@ export default function TarjetaProductos({
     descripcion,
     imagen,
     precio,
-    mostrarPrecio
+    mostrarPrecio,
+    onAbrirSobre,
+    mostrarBotonAbrir = false
 }) {
     return (
         <div className="tarjeta-producto">
-            
+
             <div className="tarjeta-producto__imagen-contenedor">
                 <img src={imagen} alt={nombre} />
             </div>
@@ -21,12 +24,25 @@ export default function TarjetaProductos({
                 {mostrarPrecio && (
                     <button className="tarjeta-producto__precio">
                         <div className="saldo-icono">
-                            <img src="../public/saldo.png" alt="Saldo" />
+                            <img src="/saldo.png" alt="Saldo" />
                         </div>
-                        <span className="tarjeta-producto__numero-precio">{precio}</span>
+
+                        <span className="tarjeta-producto__numero-precio">
+                            {precio}
+                        </span>
+                    </button>
+                )}
+
+                {tipo === "sobre" && mostrarBotonAbrir && (
+                    <button
+                        className="tarjeta-producto__abrir"
+                        onClick={() => onAbrirSobre?.(id)}
+                    >
+                        Abrir sobre
                     </button>
                 )}
             </div>
+
         </div>
     );
 }

@@ -12,8 +12,8 @@ import Login from "./vistas/login";
 import ParteLegal from "./vistas/ParteLegal";
 import Inicio from "./vistas/Inicio";
 import Tienda from "./vistas/Tienda";
-import Pvp from "./vistas/Pvp";
-import Inventario from "./vistas/inventario";
+import Inventario from "./vistas/Inventario";
+import Mazos from "./vistas/Mazos";
 
 // Perfil y administración
 import Perfil from "./vistas/Perfiles/PerfilUsuario";
@@ -21,27 +21,26 @@ import PerfilAdmin from "./vistas/Perfiles/perfilAdmin";
 import SobresAdmin from "./vistas/Perfiles/sobresAdmin";
 import PerfilesAdmin from "./vistas/Perfiles/perfilesAdmin";
 
-
 export default function App() {
   return (
     <Router>
       <div className="App">
         <Switch>
-         <Route path="/sobresAdmin">
-            <SobresAdmin />
-          </Route>
           <Route path="/login">
             <Login />
-
           </Route>
 
-         <Route path="/perfilesAdmin">
-          <PerfilesAdmin/>
-          </Route>  
+          <Route path="/sobresAdmin">
+            <SobresAdmin />
+          </Route>
 
-         <Route path="/perfilAdmin">
-          <PerfilAdmin/>
-          </Route> 
+          <Route path="/perfilesAdmin">
+            <PerfilesAdmin />
+          </Route>
+
+          <Route path="/perfilAdmin">
+            <PerfilAdmin />
+          </Route>
 
           <Route>
             <>
@@ -54,16 +53,17 @@ export default function App() {
                     <Inventario />
                   </Route>
 
-                  <Route path="/pvp">
-                    <Pvp />
+                  <Route path="/mazos">
+                    <Mazos />
+                  </Route>
+
+                  <Route path="/inicio">
+                    <Inicio />
                   </Route>
 
                   <Route path="/">
                     <Inicio />
                   </Route>
-                  <Route path="/inicio">
-                    <Inicio />
-                  </Route>
 
                   <Route path="/tienda">
                     <Tienda />
@@ -72,16 +72,9 @@ export default function App() {
                   <Route path="/perfil">
                     <Perfil />
                   </Route>
+
                   <Route path="/ParteLegal">
                     <ParteLegal />
-                  </Route>
-
-                  <Route path="/tienda">
-                    <Tienda />
-                  </Route>
-
-                  <Route path="/perfil">
-                    <Perfil />
                   </Route>
 
                   <Route>
@@ -100,7 +93,6 @@ export default function App() {
               <Footer />
             </>
           </Route>
-
         </Switch>
       </div>
     </Router>
