@@ -1,21 +1,24 @@
+import { useLocation } from "wouter";
 import { useState } from "react";
+import axios from "axios";
 import "../login.css";
 
 function Login() {
+    const [, setLocation] = useLocation();
     const [modo, setModo] = useState("login");
     const [Nombre, setNombre] = useState("");
     const [Apellido, setApellido] = useState("");
     const [Correo, setCorreo] = useState("");
-    const [Telefono, setTelefono] = useState("");
     const [Contraseña, setContraseña] = useState("");
     const [ConfirmarContraseña, setConfirmarContraseña] = useState("");
     const [Recordarme, setRecordarme] = useState(false);
     const [AceptarTerminos, setAceptarTerminos] = useState(false);
 
-    function manejarEnvio(evento) {
+    async function manejarEnvio(evento) {
         evento.preventDefault();
 
         if (modo === "registro") {
+
             if (Contraseña !== ConfirmarContraseña) {
                 alert("Las contraseñas no coinciden");
                 return;
@@ -26,14 +29,73 @@ function Login() {
                 return;
             }
 
-            alert("Registro preparado correctamente");
+            try {
+                const respuesta = await axios.post(
+                    "http://localhost:3000/api/registro",
+                    {
+                        nombre: Nombre,
+                        apellido: Apellido,
+                        mail: Correo,
+                        pass: Contraseña
+                    }
+                );
+
+                alert(respuesta.data.mensaje);
+
+                // Limpiar los campos
+                setNombre("");
+                setApellido("");
+                setCorreo("");
+                setContraseña("");
+                setConfirmarContraseña("");
+                setAceptarTerminos(false);
+
+                // Volver al inicio de sesión
+                setModo("login");
+
+            } catch (error) {
+                console.error(error);
+
+                alert(
+                    error.response?.data?.mensaje ||
+                    "Error al conectar con el servidor"
+                );
+            }
+
         } else {
+
             if (!AceptarTerminos) {
                 alert("Tenés que aceptar los términos y condiciones");
                 return;
             }
 
-            alert("Inicio de sesión preparado correctamente");
+            try {
+                const respuesta = await axios.post(
+                    "http://localhost:3000/api/login",
+                    {
+                        mail: Correo,
+                        pass: Contraseña
+                    }
+                );
+
+                // Guardar el token y los datos del usuario
+                localStorage.setItem("token", respuesta.data.token);
+                localStorage.setItem(
+                    "usuario",
+                    JSON.stringify(respuesta.data.usuario)
+                );
+
+                alert(respuesta.data.mensaje);
+
+                setLocation("/inicio");
+            } catch (error) {
+                console.error(error);
+
+                alert(
+                    error.response?.data?.mensaje ||
+                    "Error al conectar con el servidor"
+                );
+            }
         }
     }
 
@@ -87,9 +149,9 @@ function Login() {
                     {modo === "login" ? (
                         <div className="contenido-formulario">
                             <form onSubmit={manejarEnvio}>
-                                <label>Correo o nombre de usuario</label>
+                                <label>Correo electrónico</label>
                                 <input
-                                    type="text"
+                                    type="email"
                                     value={Correo}
                                     onChange={(evento) => setCorreo(evento.target.value)}
                                     placeholder="correo@ejemplo.com"
@@ -161,15 +223,6 @@ function Login() {
                                     value={Correo}
                                     onChange={(evento) => setCorreo(evento.target.value)}
                                     placeholder="correo@ejemplo.com"
-                                    required
-                                />
-
-                                <label>Teléfono</label>
-                                <input
-                                    type="tel"
-                                    value={Telefono}
-                                    onChange={(evento) => setTelefono(evento.target.value)}
-                                    placeholder="Teléfono"
                                     required
                                 />
 

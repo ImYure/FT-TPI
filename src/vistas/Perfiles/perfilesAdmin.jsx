@@ -1,56 +1,75 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { Link } from "wouter";
 import Footer from "../../componentes/navegacion/Footer";
 import "../../estilos/perfilesAdmin.css";
 
 function PerfilesAdmin() {
+    const [roles, setRoles] = useState([]);
     const [nombre, setNombre] = useState("");
-    const [usuario, setUsuario] = useState("");
+    const [apellido, setApellido] = useState("");
     const [correo, setCorreo] = useState("");
-    const [rol, setRol] = useState("Usuario");
+    const [pass, setPass] = useState("");
+    const [rol, setRol] = useState("");
     const [perfiles, setPerfiles] = useState([]);
     const [editando, setEditando] = useState(null);
 
     function limpiar() {
         setNombre("");
-        setUsuario("");
+        setApellido("");
         setCorreo("");
-        setRol("Usuario");
+        setPass("");
+        setRol("");
         setEditando(null);
     }
 
-    function guardar(e) {
+
+    async function guardar(e) {
         e.preventDefault();
 
-        if (!nombre || !usuario || !correo) {
+        if (!nombre || !apellido || !correo || !rol) {
             alert("Completá todos los campos.");
             return;
         }
 
-        const perfil = {
-            id: editando !== null ? editando : Date.now(),
-            nombre,
-            usuario,
-            correo,
-            rol
-        };
-
-        if (editando !== null) {
-            setPerfiles(perfiles.map(p =>
-                p.id === editando ? perfil : p
-            ));
-        } else {
-            setPerfiles([...perfiles, perfil]);
+        if (editando === null && !pass) {
+            alert("Ingresá una contraseña.");
+            return;
         }
 
-        limpiar();
+        try {
+            const respuesta = await axios.post(
+                "http://localhost:3000/api/usuarios",
+                {
+                    nombre,
+                    apellido,
+                    mail: correo,
+                    pass,
+                    rol_id: rol
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                    }
+                }
+            );
+
+            alert(respuesta.data.mensaje || "Usuario creado correctamente.");
+
+            limpiar();
+
+        } catch (error) {
+            console.error("Error al crear el usuario:", error);
+            alert(error.response?.data?.mensaje || "No se pudo crear el usuario.");
+        }
     }
+
 
     function editar(perfil) {
         setNombre(perfil.nombre);
-        setUsuario(perfil.usuario);
-        setCorreo(perfil.correo);
-        setRol(perfil.rol);
+        setApellido(perfil.apellido);
+        setCorreo(perfil.mail);
+        setRol(perfil.rol_id);
         setEditando(perfil.id);
     }
 
@@ -63,6 +82,53 @@ function PerfilesAdmin() {
             }
         }
     }
+
+
+    useEffect(() => {
+        async function obtenerRoles() {
+            try {
+                const respuesta = await axios.get(
+                    "http://localhost:3000/api/roles",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`
+                        }
+                    }
+                );
+
+                setRoles(respuesta.data);
+
+            } catch (error) {
+                console.error("Error al obtener los roles:", error);
+            }
+        }
+
+        obtenerRoles();
+    }, []);
+
+
+    useEffect(() => {
+        async function obtenerPerfiles() {
+            try {
+                const respuesta = await axios.get(
+                    "http://localhost:3000/api/usuarios",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`
+                        }
+                    }
+                );
+
+                setPerfiles(respuesta.data);
+
+            } catch (error) {
+                console.error("Error al obtener los usuarios:", error);
+            }
+        }
+
+        obtenerPerfiles();
+    }, []);
+
 
     return (
         <div className="perfiles-pagina">
@@ -107,24 +173,25 @@ function PerfilesAdmin() {
 
                 <div className="perfiles-columnas">
 
+
                     <form className="perfil-formulario" onSubmit={guardar}>
 
                         <h3>
                             {editando !== null ? "Editar usuario" : "Agregar usuario"}
                         </h3>
 
-                        <label>Nombres</label>
+                        <label>Nombre</label>
                         <input
                             type="text"
                             value={nombre}
                             onChange={e => setNombre(e.target.value)}
                         />
 
-                        <label>Usuario</label>
+                        <label>Apellido</label>
                         <input
                             type="text"
-                            value={usuario}
-                            onChange={e => setUsuario(e.target.value)}
+                            value={apellido}
+                            onChange={e => setApellido(e.target.value)}
                         />
 
                         <label>Email</label>
@@ -134,13 +201,28 @@ function PerfilesAdmin() {
                             onChange={e => setCorreo(e.target.value)}
                         />
 
+                        {editando === null && (
+                            <>
+                                <label>Contraseña</label>
+                                <input
+                                    type="password"
+                                    value={pass}
+                                    onChange={e => setPass(e.target.value)}
+                                />
+                            </>
+                        )}
+
                         <label>Rol del usuario</label>
+
                         <select
                             value={rol}
-                            onChange={e => setRol(e.target.value)}
+                            onChange={e => setRol(Number(e.target.value))}
                         >
-                            <option value="Administrador">Administrador</option>
-                            <option value="Usuario">Jugador</option>
+                            {roles.map(rol => (
+                                <option key={rol.id} value={rol.id}>
+                                    {rol.rol}
+                                </option>
+                            ))}
                         </select>
 
                         <p className="perfil-ayuda">
@@ -162,6 +244,7 @@ function PerfilesAdmin() {
                         )}
 
                     </form>
+
 
                     <section className="perfil-listado">
 
@@ -187,11 +270,11 @@ function PerfilesAdmin() {
                                     perfiles.map(perfil => (
                                         <tr key={perfil.id}>
                                             <td>{perfil.id}</td>
-                                            <td>{perfil.nombre}</td>
-                                            <td>{perfil.correo}</td>
+                                            <td>{perfil.nombre} {perfil.apellido}</td>
+                                            <td>{perfil.mail}</td>
                                             <td>
                                                 <span className={`perfil-etiqueta ${perfil.rol === "Administrador" ? "es-admin" : ""}`}>
-                                                    {perfil.rol === "Usuario" ? "Jugador" : perfil.rol}
+                                                    {perfil.rol}
                                                 </span>
                                             </td>
                                             <td>
