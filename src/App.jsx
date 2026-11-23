@@ -1,17 +1,24 @@
+
 import "./App.css";
 import { Router, Route, Switch } from "wouter";
+
+// Navegación
 import Header from "./componentes/navegacion/Header";
 import Navb from "./componentes/navegacion/Navb";
 import Footer from "./componentes/navegacion/Footer";
+
+// Vistas
 import Login from "./vistas/login";
-import PerfilAdmin from "./vistas/Perfiles/perfilAdmin";
 import ParteLegal from "./vistas/ParteLegal";
 import Inicio from "./vistas/Inicio";
 import Tienda from "./vistas/Tienda";
 import Pvp from "./vistas/Pvp";
-import Perfil from "./vistas/Perfiles/PerfilUsuario";
 import Inventario from "./vistas/inventario";
-import SobresAdmin from "./vistas/sobresAdmin";
+
+// Perfil y administración
+import Perfil from "./vistas/Perfiles/PerfilUsuario";
+import PerfilAdmin from "./vistas/Perfiles/perfilAdmin";
+import SobresAdmin from "./vistas/Perfiles/sobresAdmin";
 import PerfilesAdmin from "./vistas/Perfiles/perfilesAdmin";
 
 
@@ -67,6 +74,14 @@ export default function App() {
                   </Route>
                   <Route path="/ParteLegal">
                     <ParteLegal />
+                  </Route>
+
+                  <Route path="/tienda">
+                    <Tienda />
+                  </Route>
+
+                  <Route path="/perfil">
+                    <Perfil />
                   </Route>
 
                   <Route>

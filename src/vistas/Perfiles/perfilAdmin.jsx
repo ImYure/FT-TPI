@@ -3,7 +3,8 @@ import { Link } from "wouter";
 import Footer from "../../componentes/navegacion/Footer";
 import "../../estilos/perfilAdmin.css";
 
-export default function PerfilAdmin() {
+
+export default function PerfilAdmin({ integrado = false }) {
   const [nombre, setNombre] = useState("");
   const [categoria, setCategoria] = useState("");
   const [rareza, setRareza] = useState("");
@@ -85,14 +86,21 @@ export default function PerfilAdmin() {
 
   return (
     <div className="admin-pagina">
+      {!integrado && (
+  <header className="admin-header">
+    {
       <header className="admin-header">
         <Link href="/" className="admin-escudo" title="Panel Admin">
           <div className="admin-logo-icon"></div>
         </Link>
         <span className="admin-header-text">Admin</span>
-      </header>
+      </header>}
+  </header>
+)}
 
-      <nav className="admin-navbar">
+{!integrado && (
+  <nav className="admin-navbar">
+    {<nav className="admin-navbar">
         <Link href="/perfilAdmin" className="admin-opcion activa">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
             <path d="M3 11l9-8 9 8" />
@@ -114,7 +122,10 @@ export default function PerfilAdmin() {
           </svg>
           <span>Perfiles</span>
         </Link>
-      </nav>
+      </nav>}
+  </nav>
+)}
+      
 
       <main className="admin-contenido">
         <div className="admin-titulo">
@@ -264,7 +275,7 @@ export default function PerfilAdmin() {
         </div>
       </main>
 
-      <Footer />
+      {!integrado && <Footer />}
     </div>
   );
 }

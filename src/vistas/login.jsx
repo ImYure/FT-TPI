@@ -1,4 +1,6 @@
+
 import { useState } from "react";
+import { useLocation } from "wouter";
 import "../login.css";
 
 function Login() {
@@ -6,13 +8,14 @@ function Login() {
     const [Nombre, setNombre] = useState("");
     const [Apellido, setApellido] = useState("");
     const [Correo, setCorreo] = useState("");
-    const [Telefono, setTelefono] = useState("");
     const [Contraseña, setContraseña] = useState("");
     const [ConfirmarContraseña, setConfirmarContraseña] = useState("");
     const [Recordarme, setRecordarme] = useState(false);
     const [AceptarTerminos, setAceptarTerminos] = useState(false);
+    const [Cargando, setCargando] = useState(false);
+    const [, setLocation] = useLocation();
 
-    function manejarEnvio(evento) {
+    async function manejarEnvio(evento) {
         evento.preventDefault();
 
         if (modo === "registro") {
@@ -26,14 +29,88 @@ function Login() {
                 return;
             }
 
-            alert("Registro preparado correctamente");
+            try {
+                setCargando(true);
+
+                const respuesta = await fetch("http://localhost:3000/api/registro", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        nombre: Nombre,
+                        apellido: Apellido,
+                        mail: Correo,
+                        pass: Contraseña
+                    })
+                });
+
+                const datos = await respuesta.json();
+
+                if (!respuesta.ok) {
+                    alert(datos.mensaje);
+                    return;
+                }
+
+                alert(datos.mensaje || "¡Cuenta creada correctamente!");
+
+                setModo("login");
+                setNombre("");
+                setApellido("");
+                setCorreo("");
+                setContraseña("");
+                setConfirmarContraseña("");
+                setAceptarTerminos(false);
+
+            } catch (error) {
+                console.error(error);
+                alert("No se pudo conectar con el servidor");
+
+            } finally {
+                setCargando(false);
+            }
+
         } else {
             if (!AceptarTerminos) {
                 alert("Tenés que aceptar los términos y condiciones");
                 return;
             }
 
-            alert("Inicio de sesión preparado correctamente");
+            try {
+                setCargando(true);
+
+                const respuesta = await fetch("http://localhost:3000/api/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        mail: Correo,
+                        pass: Contraseña
+                    })
+                });
+
+                const datos = await respuesta.json();
+
+                if (!respuesta.ok) {
+                    alert(datos.mensaje);
+                    return;
+                }
+
+                localStorage.setItem("token", datos.token);
+                localStorage.setItem("usuario", JSON.stringify(datos.usuario));
+
+                alert("¡Bienvenido a volterra," + datos.usuario.nombre + "!");
+
+                setLocation("/inicio");
+
+            } catch (error) {
+                console.error(error);
+                alert("no se pudo conectar con el servidor");
+
+            } finally {
+                setCargando(false);
+            }
         }
     }
 
@@ -123,8 +200,8 @@ function Login() {
                                     Leí y acepto los términos y condiciones
                                 </label>
 
-                                <button className="boton-principal" type="submit">
-                                    Iniciar sesión
+                                <button className="boton-principal" type="submit" disabled={Cargando}>
+                                    {Cargando ? "ingresando..." : "inciar sesion"}
                                 </button>
                             </form>
                         </div>
@@ -164,15 +241,6 @@ function Login() {
                                     required
                                 />
 
-                                <label>Teléfono</label>
-                                <input
-                                    type="tel"
-                                    value={Telefono}
-                                    onChange={(evento) => setTelefono(evento.target.value)}
-                                    placeholder="Teléfono"
-                                    required
-                                />
-
                                 <label>Contraseña</label>
                                 <input
                                     type="password"
@@ -200,8 +268,8 @@ function Login() {
                                     Acepto los términos y condiciones
                                 </label>
 
-                                <button className="boton-principal" type="submit">
-                                    Crear cuenta
+                                <button className="boton-principal" type="submit" disabled={Cargando}>
+                                    {Cargando ? "registrando..." : "Crear cuenta"}
                                 </button>
                             </form>
                         </div>
