@@ -1,0 +1,202 @@
+.vista-mazos {
+    flex-direction:column-reverse;
+  width: 100%;
+  min-height: 100vh;
+  color: #1c1922;
+  padding: 28px 36px;
+  box-sizing: border-box;
+}
+
+.mazos-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #181520;
+}
+
+.mazos-header p {
+  margin: 6px 0 18px;
+  color: #6e687a;
+  font-size: 0.95rem;
+}
+
+/* Selector de mazos */
+.selector-mazos {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.pill-mazo {
+  height: 34px;
+  border: 1px solid #d6d0e0;
+  background-color: #ffffff;
+  color: #3a3446;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.pill-mazo.circulo {
+  width: 34px;
+  border-radius: 999px;
+  padding: 0;
+}
+
+.pill-mazo.activo {
+  padding: 0 16px;
+  border-radius: 999px;
+  background-color: #7d00b0;
+  border-color: #7d00b0;
+  color: #ffffff;
+}
+
+.pill-mazo:hover {
+  border-color: #7d00b0;
+}
+
+/* Contenedor morado oscuro de 8 cartas */
+.tablero-mazo-caja {
+  background: linear-gradient(135deg, #2a0838 0%, #190722 100%);
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 10px 25px rgba(42, 8, 56, 0.14);
+}
+
+.grid-ocho-cartas {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.slot-carta {
+  position: relative;
+  min-height: 165px;
+  border-radius: 12px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #241030;
+  border: 1px solid rgba(209, 184, 250, 0.25);
+  color: #ffffff;
+}
+
+.slot-carta.vacia {
+  align-items: center;
+  justify-content: center;
+  border-style: dashed;
+  border-color: rgba(209, 184, 250, 0.2);
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.8rem;
+}
+
+.img-carta-mazo {
+  width: 100%;
+  height: 82px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.btn-quitar-carta {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Botón Guardar Mazo */
+.acciones-mazo {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.btn-guardar-mazo {
+  background-color: #7d00b0;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 9px 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-guardar-mazo:hover {
+  background-color: #64008d;
+}
+
+/* Sección inferior: Tus Cartas Disponibles */
+.seccion-disponibles-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 24px 0 16px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.seccion-disponibles-header h2 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1c1922;
+}
+
+@media (max-width: 1024px) {
+  .grid-ocho-cartas {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .grid-ocho-cartas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.vista-mazos {
+  width: 100%;
+  min-height: 100vh;
+  color: #1c1922;
+  padding: 28px 36px;
+  box-sizing: border-box;
+}
+
+/* Nuevo contenedor horizontal: filtros a la izquierda, cartas a la derecha */
+.contenido-disponibles-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+/* Columna lateral de filtros */
+.contenido-disponibles-layout > :first-child {
+  flex: 0 0 260px; /* ancho fijo/base del panel de filtros */
+}
+
+/* Columna principal de cartas disponibles */
+.contenido-disponibles-layout > :last-child {
+  flex: 1;
+  min-width: 0; /* evita desbordes en grids/flex internos */
+}
+
+@media (max-width: 900px) {
+  .contenido-disponibles-layout {
+    flex-direction: column;
+  }
+
+  .contenido-disponibles-layout > :first-child {
+    flex: auto;
+    width: 100%;
+  }
+}

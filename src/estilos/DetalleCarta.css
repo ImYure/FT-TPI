@@ -1,7 +1,8 @@
 /* Estructura general de 2 columnas en Inventario */
 .inventario-layout {
   display: grid;
-  grid-template-columns: 1fr 350px;
+  /* CAMBIO: minmax(0, 1fr) evita que la columna izquierda se estire o deforme por el contenido interno */
+  grid-template-columns: minmax(0, 1fr) 350px;
   gap: 24px;
   align-items: start;
 }
@@ -22,7 +23,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 20px;
+  gap: 36px; /* antes 20px */
   position: sticky;
   top: 20px;
 }
@@ -30,17 +31,25 @@
 /* Contenedor de la tarjeta o sobre ampliado */
 .detalle-carta-contenedor {
   width: 100%;
+  /* AGREGADO: Evita desbordes del contenedor */
+  box-sizing: border-box;
 }
 
 /* Escalado de los elementos internos de TarjetaCarta cuando está en el panel derecho */
 .detalle-carta-contenedor .carta-item {
+  /* AGREGADO: Ocupa siempre el 100% del panel (350px) */
+  width: 100%;
+  /* AGREGADO: Anula el height: 100% de la grilla para que no se estire verticalmente de más */
+  height: auto;
   padding: 10px;
   border-radius: 20px;
+  box-sizing: border-box;
 }
 
 .detalle-carta-contenedor .carta-item__interior {
   padding: 16px;
   gap: 14px;
+  box-sizing: border-box;
 }
 
 .detalle-carta-contenedor .carta-item__rareza {
@@ -50,14 +59,23 @@
 
 .detalle-carta-contenedor .carta-item__nombre {
   font-size: 20px;
+  /* AGREGADO: Si un nombre es muy largo, lo corta con "..." en vez de agrandar la carta */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .detalle-carta-contenedor .carta-item__imagen {
+  /* AGREGADO: Mantiene siempre la imagen del mismo ancho y alto fijo */
+  width: 100%;
   height: 210px;
+  flex-shrink: 0;
 }
 
 .detalle-carta-contenedor .carta-stat {
   padding: 8px 4px;
+  /* AGREGADO: Evita que números grandes empujen los bordes de las 4 cajitas */
+  min-width: 0;
 }
 
 .detalle-carta-contenedor .carta-stat strong {
@@ -71,6 +89,11 @@
 .detalle-carta-contenedor .carta-item__habilidad {
   padding: 12px;
   gap: 8px;
+  /* AGREGADO: Altura controlada; si la descripción es muy larga hace scroll interno sin deformar la carta */
+  min-height: 110px;
+  max-height: 150px;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .detalle-carta-contenedor .carta-item__habilidad h4 {
@@ -80,4 +103,6 @@
 .detalle-carta-contenedor .carta-item__habilidad p {
   font-size: 13px;
   line-height: 1.45;
+  /* AGREGADO: Corta palabras largas para que no se salgan del recuadro */
+  overflow-wrap: break-word;
 }
