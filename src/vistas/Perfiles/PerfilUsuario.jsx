@@ -1,23 +1,54 @@
 import { useState, useEffect } from "react";
 import "../../estilos/PerfilUsuario.css";
+import { Router } from "wouter";
 
 function PerfilUsuario() {
-  const [usuario, setUsuario] = useState({
-    nombre: "",
-    titulo: "",
-    victorias: 0,
-    rachas: 0,
-    derrotas: 0,
-  });
-
   const [datosCuenta, setDatosCuenta] = useState({
     nombre: "",
     apellido: "",
-    correo: "",
-    telefono: "",
+    mail: "",
+    nombre_usuario: "",
+    titulo: "",
   });
 
   const [editando, setEditando] = useState(false);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/perfil/1")
+      .then((respuesta) => respuesta.json())
+      .then((datos) => {
+        setDatosCuenta(datos.usuarios[0]);
+      });
+  }, []);
+
+  const guardarDatos = () => {
+    fetch("http://localhost:3000/perfil/1", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(datosCuenta),
+    })
+      .then((respuesta) => respuesta.text())
+      .then((mensaje) => {
+        console.log(mensaje);
+        setEditando(false);
+      });
+  };
+
+  const guardarTitulo = () => {
+    fetch("http://localhost:3000/perfil/titulo/1", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ titulo: datosCuenta.titulo }),
+    })
+      .then((respuesta) => respuesta.text())
+      .then((mensaje) => {
+        console.log(mensaje);
+      });
+  };
 
   return (
     <div className="perfil-container">
@@ -27,25 +58,20 @@ function PerfilUsuario() {
         </div>
 
         <div className="perfil-info">
-          <h2>{usuario.nombre}</h2>
-          <p>{usuario.titulo}</p>
-        </div>
+          <h2>{datosCuenta.nombre_usuario}</h2>
 
-        <div className="perfil-stats">
-          <div className="stat-box">
-            <p className="stat-label">Victorias</p>
-            <h2 className="stat-valor">{usuario.victorias}</h2>
-          </div>
-
-          <div className="stat-box">
-            <p className="stat-label">Rachas</p>
-            <h2 className="stat-valor">{usuario.rachas}</h2>
-          </div>
-
-          <div className="stat-box">
-            <p className="stat-label">Derrotas</p>
-            <h2 className="stat-valor">{usuario.derrotas}</h2>
-          </div>
+          <select className="titulo-select"
+            value={datosCuenta.titulo}
+            onChange={(e) =>
+              setDatosCuenta({ ...datosCuenta, titulo: e.target.value })
+            }
+          >
+            <option value="Principiante">Principiante</option>
+            <option value="Coleccionista">Coleccionista</option>
+            <option value="Experto en cartas">Experto en cartas</option>
+            <option value="Gran coleccionista">Gran coleccionista</option>
+          </select>
+          <button onClick={guardarTitulo} className="titulo-boton">Guardar Titulo</button>
         </div>
       </div>
 
@@ -59,7 +85,9 @@ function PerfilUsuario() {
           <input
             type="text"
             value={datosCuenta.nombre}
-            onChange={(e) => setDatosCuenta({ ...datosCuenta, nombre: e.target.value })}
+            onChange={(e) =>
+              setDatosCuenta({ ...datosCuenta, nombre: e.target.value })
+            }
             disabled={!editando}
           />
         </div>
@@ -69,34 +97,34 @@ function PerfilUsuario() {
           <input
             type="text"
             value={datosCuenta.apellido}
-            onChange={(e) => setDatosCuenta({ ...datosCuenta, apellido: e.target.value })}
+            onChange={(e) =>
+              setDatosCuenta({ ...datosCuenta, apellido: e.target.value })
+            }
             disabled={!editando}
           />
         </div>
 
         <div className="cuenta-campo">
-          <label>Correo</label>
+          <label>Mail</label>
           <input
             type="email"
-            value={datosCuenta.correo}
-            onChange={(e) => setDatosCuenta({ ...datosCuenta, correo: e.target.value })}
-            disabled={!editando}
-          />
-        </div>
-
-        <div className="cuenta-campo">
-          <label>Telefono</label>
-          <input
-            type="text"
-            value={datosCuenta.telefono}
-            onChange={(e) => setDatosCuenta({ ...datosCuenta, telefono: e.target.value })}
+            value={datosCuenta.mail}
+            onChange={(e) =>
+              setDatosCuenta({ ...datosCuenta, mail: e.target.value })
+            }
             disabled={!editando}
           />
         </div>
 
         <div className="cuenta-boton-wrapper">
           <button
-            onClick={() => setEditando(!editando)}
+            onClick={() => {
+              if (editando) {
+                guardarDatos();
+              } else {
+                setEditando(true);
+              }
+            }}
             className="cuenta-boton"
           >
             {editando ? "GUARDAR DATOS" : "EDITAR DATOS"}
