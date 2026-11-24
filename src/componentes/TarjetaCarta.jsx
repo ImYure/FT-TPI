@@ -11,7 +11,10 @@ export default function TarjetaCarta({ carta, mostrarPrecio }) {
                 <h3 className="carta-item__nombre">{carta.nombre}</h3>
 
                 <div className="carta-item__imagen">
-                    <img src={carta.imagen} alt={carta.nombre} />
+                    <img
+                        src={`http://localhost:3000/imagenes/cartas/${carta.imagen}`}
+                        alt={carta.nombre}
+                    />
                 </div>
 
                 <div className="carta-item__stats">
@@ -46,7 +49,7 @@ export default function TarjetaCarta({ carta, mostrarPrecio }) {
                         <span className="tarjeta-producto__numero-precio">{carta.precio}</span>
                     </button>
                 )}
-                
+
             </div>
         </div>
     );

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "wouter";
@@ -15,50 +16,101 @@ function PerfilesAdmin() {
     const [editando, setEditando] = useState(null);
     const [cargando, setCargando] = useState(false);
 
-    // Obtener el token guardado al iniciar sesión
+    // Obtener token
     function obtenerToken() {
         return localStorage.getItem("token");
     }
 
-    // Cargar usuarios desde MySQL
+    // Configuración de autorización
+    function obtenerConfig() {
+        return {
+            headers: {
+                Authorization: `Bearer ${obtenerToken()}`
+            }
+        };
+    }
+
+    // Cargar usuarios
     async function cargarUsuarios() {
         try {
             setCargando(true);
 
-            const respuesta = await fetch("http://localhost:3000/api/usuarios", {
-                headers: {
-                    Authorization: `Bearer ${obtenerToken()}`
-                }
-            });
+            const respuesta = await axios.get(
+                "http://localhost:3000/api/usuarios",
+                obtenerConfig()
+            );
 
-            const datos = await respuesta.json();
-
-            if (!respuesta.ok) {
-                throw new Error(datos.mensaje || "No se pudieron cargar los usuarios");
-            }
-
-            setPerfiles(datos);
+            setPerfiles(respuesta.data);
 
         } catch (error) {
-            console.error(error);
-            alert(error.message);
+            console.error("Error al obtener usuarios:", error);
+            alert(error.response?.data?.mensaje || "No se pudieron cargar los usuarios.");
 
         } finally {
             setCargando(false);
         }
     }
 
+    // Cargar roles
+    async function cargarRoles() {
+        try {
+            const respuesta = await axios.get(
+                "http://localhost:3000/api/roles",
+                obtenerConfig()
+            );
+
+            setRoles(respuesta.data);
+
+            // Seleccionar Jugador como rol inicial
+            const rolJugador = respuesta.data.find(
+                rol => rol.rol.toLowerCase() === "jugador"
+            );
+
+            if (rolJugador) {
+                setRol(String(rolJugador.id));
+            } else if (respuesta.data.length > 0) {
+                setRol(String(respuesta.data[0].id));
+            }
+
+        } catch (error) {
+            console.error("Error al obtener los roles:", error);
+            alert(error.response?.data?.mensaje || "No se pudieron cargar los roles.");
+        }
+    }
+
     useEffect(() => {
         cargarUsuarios();
+        cargarRoles();
     }, []);
+
+    // Obtener nombre del rol según su ID
+    function obtenerNombreRol(id) {
+        const rolEncontrado = roles.find(
+            rol => Number(rol.id) === Number(id)
+        );
+
+        return rolEncontrado ? rolEncontrado.rol : "Sin rol";
+    }
 
     // Limpiar formulario
     function limpiar() {
         setNombre("");
         setApellido("");
         setCorreo("");
-        setContraseña("");
-        setRol("2");
+        setPass("");
+
+        const rolJugador = roles.find(
+            rol => rol.rol.toLowerCase() === "jugador"
+        );
+
+        setRol(
+            rolJugador
+                ? String(rolJugador.id)
+                : roles.length > 0
+                    ? String(roles[0].id)
+                    : ""
+        );
+
         setEditando(null);
     }
 
@@ -66,50 +118,61 @@ function PerfilesAdmin() {
     async function guardar(e) {
         e.preventDefault();
 
-        if (!nombre.trim() || !apellido.trim() || !correo.trim()) {
+        if (!nombre.trim() || !apellido.trim() || !correo.trim() || !rol) {
             alert("Completá todos los campos.");
             return;
         }
 
-        if (editando === null && !pass) {
+        if (editando === null && !pass.trim()) {
             alert("Ingresá una contraseña.");
             return;
         }
 
         try {
-            const respuesta = await axios.post(
-                "http://localhost:3000/api/usuarios",
-                {
-                    nombre,
-                    apellido,
-                    mail: correo,
-                    pass,
-                    rol_id: rol
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`
-                    }
-                }
-            );
+            const datos = {
+                nombre,
+                apellido,
+                mail: correo,
+                pass,
+                rol_id: rol
+            };
 
-            alert(respuesta.data.mensaje || "Usuario creado correctamente.");
+            let respuesta;
+
+            if (editando === null) {
+                // Crear usuario
+                respuesta = await axios.post(
+                    "http://localhost:3000/api/usuarios",
+                    datos,
+                    obtenerConfig()
+                );
+            } else {
+                // Editar usuario
+                respuesta = await axios.put(
+                    `http://localhost:3000/api/usuarios/${editando}`,
+                    datos,
+                    obtenerConfig()
+                );
+            }
+
+            alert(respuesta.data.mensaje);
 
             limpiar();
+            cargarUsuarios();
 
         } catch (error) {
-            console.error("Error al crear el usuario:", error);
-            alert(error.response?.data?.mensaje || "No se pudo crear el usuario.");
+            console.error("Error al guardar el usuario:", error);
+            alert(error.response?.data?.mensaje || "No se pudo guardar el usuario.");
         }
     }
 
-
+    // Cargar datos en el formulario para editar
     function editar(perfil) {
         setNombre(perfil.nombre);
         setApellido(perfil.apellido);
         setCorreo(perfil.mail);
         setRol(String(perfil.rol_id));
-        setContraseña("");
+        setPass("");
         setEditando(perfil.id);
     }
 
@@ -120,23 +183,12 @@ function PerfilesAdmin() {
         }
 
         try {
-            const respuesta = await fetch(
+            const respuesta = await axios.delete(
                 `http://localhost:3000/api/usuarios/${id}`,
-                {
-                    method: "DELETE",
-                    headers: {
-                        Authorization: `Bearer ${obtenerToken()}`
-                    }
-                }
+                obtenerConfig()
             );
 
-            const resultado = await respuesta.json();
-
-            if (!respuesta.ok) {
-                throw new Error(resultado.mensaje || "No se pudo eliminar el usuario");
-            }
-
-            alert(resultado.mensaje);
+            alert(respuesta.data.mensaje);
 
             if (editando === id) {
                 limpiar();
@@ -145,100 +197,49 @@ function PerfilesAdmin() {
             cargarUsuarios();
 
         } catch (error) {
-            console.error(error);
-            alert(error.message);
+            console.error("Error al eliminar el usuario:", error);
+            alert(error.response?.data?.mensaje || "No se pudo eliminar el usuario.");
         }
     }
-
-
-    useEffect(() => {
-        async function obtenerRoles() {
-            try {
-                const respuesta = await axios.get(
-                    "http://localhost:3000/api/roles",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem("token")}`
-                        }
-                    }
-                );
-
-                setRoles(respuesta.data);
-
-            } catch (error) {
-                console.error("Error al obtener los roles:", error);
-            }
-        }
-
-        obtenerRoles();
-    }, []);
-
-
-    useEffect(() => {
-        async function obtenerPerfiles() {
-            try {
-                const respuesta = await axios.get(
-                    "http://localhost:3000/api/usuarios",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem("token")}`
-                        }
-                    }
-                );
-
-                setPerfiles(respuesta.data);
-
-            } catch (error) {
-                console.error("Error al obtener los usuarios:", error);
-            }
-        }
-
-        obtenerPerfiles();
-    }, []);
-
 
     return (
         <div className="perfiles-pagina">
 
-            {!integrado && (
-                <header className="admin-header">
-                    <Link href="/" className="admin-escudo" title="Panel Admin">
-                        <div className="admin-logo-icon"></div>
-                    </Link>
+            <header className="admin-header">
+                <Link href="/" className="admin-escudo" title="Panel Admin">
+                    <div className="admin-logo-icon"></div>
+                </Link>
 
-                    <span className="admin-header-text">Admin</span>
-                </header>
-            )}
+                <span className="admin-header-text">Admin</span>
+            </header>
 
-            {!integrado && (
-                <nav className="admin-navbar">
+            <nav className="admin-navbar">
 
-                    <Link href="/perfilAdmin" className="admin-opcion">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M3 11l9-8 9 8" />
-                            <path d="M5 10v10h5v-6h4v6h5V10" />
-                        </svg>
-                        <span>Cartas</span>
-                    </Link>
+                <Link href="/perfilAdmin" className="admin-opcion">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M3 11l9-8 9 8" />
+                        <path d="M5 10v10h5v-6h4v6h5V10" />
+                    </svg>
+                    <span>Cartas</span>
+                </Link>
 
-                    <Link href="/sobresAdmin" className="admin-opcion">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                            <circle cx="12" cy="8" r="4" />
-                            <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
-                        </svg>
-                        <span>Sobres</span>
-                    </Link>
+                <Link href="/sobresAdmin" className="admin-opcion">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="8" r="4" />
+                        <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
+                    </svg>
+                    <span>Sobres</span>
+                </Link>
 
-                    <Link href="/perfilesAdmin" className="admin-opcion activa">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                            <circle cx="12" cy="8" r="4" />
-                            <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
-                        </svg>
-                        <span>Perfiles</span>
-                    </Link>
+                <Link href="/perfilesAdmin" className="admin-opcion activa">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="8" r="4" />
+                        <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
+                    </svg>
+                    <span>Perfiles</span>
+                </Link>
 
-                </nav>
-            )}
+            </nav>
 
             <main className="perfiles-contenido">
 
@@ -248,7 +249,6 @@ function PerfilesAdmin() {
                 </div>
 
                 <div className="perfiles-columnas">
-
 
                     <form className="perfil-formulario" onSubmit={guardar}>
 
@@ -285,8 +285,8 @@ function PerfilesAdmin() {
 
                         <input
                             type="password"
-                            value={contraseña}
-                            onChange={e => setContraseña(e.target.value)}
+                            value={pass}
+                            onChange={e => setPass(e.target.value)}
                             placeholder={
                                 editando !== null
                                     ? "Dejar vacío para mantener la actual"
@@ -298,7 +298,7 @@ function PerfilesAdmin() {
 
                         <select
                             value={rol}
-                            onChange={e => setRol(Number(e.target.value))}
+                            onChange={e => setRol(e.target.value)}
                         >
                             {roles.map(rol => (
                                 <option key={rol.id} value={rol.id}>
@@ -308,7 +308,7 @@ function PerfilesAdmin() {
                         </select>
 
                         <p className="perfil-ayuda">
-                            Elegí "Administrador" para darle acceso al panel de administración.
+                            Elegí el rol que tendrá el usuario.
                         </p>
 
                         <button className="perfil-guardar" type="submit">
@@ -326,7 +326,6 @@ function PerfilesAdmin() {
                         )}
 
                     </form>
-
 
                     <section className="perfil-listado">
 
@@ -375,10 +374,12 @@ function PerfilesAdmin() {
                                             <td>{perfil.mail}</td>
 
                                             <td>
-                                                <span className={`perfil-etiqueta ${Number(perfil.rol_id) === 1 ? "es-admin" : ""}`}>
-                                                    {Number(perfil.rol_id) === 1
-                                                        ? "Administrador"
-                                                        : "Jugador"}
+                                                <span className={`perfil-etiqueta ${
+                                                    obtenerNombreRol(perfil.rol_id) === "Administrador"
+                                                        ? "es-admin"
+                                                        : ""
+                                                }`}>
+                                                    {obtenerNombreRol(perfil.rol_id)}
                                                 </span>
                                             </td>
 
@@ -418,7 +419,7 @@ function PerfilesAdmin() {
 
             </main>
 
-            {!integrado && <Footer />}
+            <Footer />
 
         </div>
     );
