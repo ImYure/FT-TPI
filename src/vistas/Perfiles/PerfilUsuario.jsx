@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../../estilos/PerfilUsuario.css";
 
 import PerfilAdmin from "./perfilAdmin";
@@ -9,70 +8,199 @@ import PerfilesAdmin from "./perfilesAdmin";
 function PerfilUsuario() {
 
   // Comprobar el rol del usuario
-  const datosSesion = JSON.parse(localStorage.getItem("usuario") || "null");
+  const datosSesion = JSON.parse(
+    localStorage.getItem("usuario") || "null"
+  );
+
   const esAdmin = Number(datosSesion?.rol_id) === 1;
 
   // Pestaña administrativa seleccionada
   const [seccionAdmin, setSeccionAdmin] = useState("cartas");
 
-  // Datos del perfil del jugador
-  const [usuario, setUsuario] = useState({
-    nombre: "",
-    titulo: "",
-    victorias: 0,
-    rachas: 0,
-    derrotas: 0,
-  });
-
+  // Datos de la cuenta
   const [datosCuenta, setDatosCuenta] = useState({
     nombre: "",
     apellido: "",
-    correo: "",
-    telefono: "",
+    mail: "",
+    titulo: "",
   });
 
   const [editando, setEditando] = useState(false);
 
+  // Obtener datos del usuario
+  useEffect(() => {
+    if (!datosSesion?.id) return;
+
+    fetch(`http://localhost:3000/perfil/${datosSesion.id}`)
+      .then((respuesta) => respuesta.json())
+      .then((datos) => {
+        const cuenta = datos.usuarios[0];
+
+        if (cuenta) {
+          setDatosCuenta(cuenta);
+        }
+      })
+      .catch((error) => {
+        console.error("Error al cargar el perfil:", error);
+      });
+  }, [datosSesion?.id]);
+
+  // Guardar datos personales
+  const guardarDatos = () => {
+    fetch(`http://localhost:3000/perfil/${datosSesion.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(datosCuenta),
+    })
+      .then((respuesta) => respuesta.text())
+      .then((mensaje) => {
+        console.log(mensaje);
+        setEditando(false);
+      })
+      .catch((error) => {
+        console.error("Error al guardar los datos:", error);
+      });
+  };
+
+  // Guardar título
+  const guardarTitulo = () => {
+    fetch(`http://localhost:3000/perfil/titulo/${datosSesion.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        titulo: datosCuenta.titulo,
+      }),
+    })
+      .then((respuesta) => respuesta.text())
+      .then((mensaje) => {
+        console.log(mensaje);
+      })
+      .catch((error) => {
+        console.error("Error al guardar el título:", error);
+      });
+  };
+
   return (
     <div className="perfil-container">
 
-      {/* ================================= */}
-      {/* PERFIL NORMAL DEL JUGADOR */}
-      {/* ================================= */}
+      {/* TARJETA DEL PERFIL: JUGADORES Y ADMINISTRADORES */}
+      <div className="perfil-card">
 
+        <div className="perfil-avatar">
+          <p>👤</p>
+        </div>
+
+        <div className="perfil-info">
+          <h2>{datosCuenta.nombre}</h2>
+
+          <select
+            className="titulo-select"
+            value={datosCuenta.titulo || "Principiante"}
+            onChange={(e) =>
+              setDatosCuenta({
+                ...datosCuenta,
+                titulo: e.target.value,
+              })
+            }
+          >
+            <option value="Principiante">Principiante</option>
+            <option value="Coleccionista">Coleccionista</option>
+            <option value="Experto en cartas">Experto en cartas</option>
+            <option value="Gran coleccionista">
+              Gran coleccionista
+            </option>
+          </select>
+
+          <button
+            onClick={guardarTitulo}
+            className="titulo-boton"
+          >
+            Guardar Título
+          </button>
+        </div>
+
+      </div>
+
+      {/* INFORMACIÓN DE CUENTA DEL JUGADOR */}
       {!esAdmin && (
-        <>
-          <div className="perfil-card">
+        <div className="cuenta-card">
 
-            <div className="perfil-avatar">
-              <p>👤</p>
-            </div>
-
-            <div className="perfil-info">
-              <h2>{usuario.nombre}</h2>
-              <p>{usuario.titulo}</p>
-            </div>
-
-            <div className="perfil-stats">
-
-              <div className="stat-box">
-                <p className="stat-label">Victorias</p>
-                <h2 className="stat-valor">{usuario.victorias}</h2>
-              </div>
-
-              <div className="stat-box">
-                <p className="stat-label">Rachas</p>
-                <h2 className="stat-valor">{usuario.rachas}</h2>
-              </div>
-
-              <div className="stat-box">
-                <p className="stat-label">Derrotas</p>
-                <h2 className="stat-valor">{usuario.derrotas}</h2>
-              </div>
-
-            </div>
+          <div className="cuenta-titulo">
+            <p>👤 Información de la cuenta</p>
           </div>
 
+          <div className="cuenta-campo">
+            <label>Nombre</label>
+            <input
+              type="text"
+              value={datosCuenta.nombre}
+              onChange={(e) =>
+                setDatosCuenta({
+                  ...datosCuenta,
+                  nombre: e.target.value,
+                })
+              }
+              disabled={!editando}
+            />
+          </div>
+
+          <div className="cuenta-campo">
+            <label>Apellido</label>
+            <input
+              type="text"
+              value={datosCuenta.apellido}
+              onChange={(e) =>
+                setDatosCuenta({
+                  ...datosCuenta,
+                  apellido: e.target.value,
+                })
+              }
+              disabled={!editando}
+            />
+          </div>
+
+          <div className="cuenta-campo">
+            <label>Correo</label>
+            <input
+              type="email"
+              value={datosCuenta.mail}
+              onChange={(e) =>
+                setDatosCuenta({
+                  ...datosCuenta,
+                  mail: e.target.value,
+                })
+              }
+              disabled={!editando}
+            />
+          </div>
+
+          <div className="cuenta-boton-wrapper">
+            <button
+              onClick={() => {
+                if (editando) {
+                  guardarDatos();
+                } else {
+                  setEditando(true);
+                }
+              }}
+              className="cuenta-boton"
+            >
+              {editando ? "GUARDAR DATOS" : "EDITAR DATOS"}
+            </button>
+          </div>
+
+        </div>
+      )}
+
+      {/* PANEL EXCLUSIVO DEL ADMINISTRADOR */}
+      {esAdmin && (
+        <div className="admin-panel-integrado">
+
+          {/* INFORMACIÓN DE CUENTA */}
           <div className="cuenta-card">
 
             <div className="cuenta-titulo">
@@ -87,7 +215,7 @@ function PerfilUsuario() {
                 onChange={(e) =>
                   setDatosCuenta({
                     ...datosCuenta,
-                    nombre: e.target.value
+                    nombre: e.target.value,
                   })
                 }
                 disabled={!editando}
@@ -102,7 +230,7 @@ function PerfilUsuario() {
                 onChange={(e) =>
                   setDatosCuenta({
                     ...datosCuenta,
-                    apellido: e.target.value
+                    apellido: e.target.value,
                   })
                 }
                 disabled={!editando}
@@ -110,29 +238,14 @@ function PerfilUsuario() {
             </div>
 
             <div className="cuenta-campo">
-              <label>Correo</label>
+              <label>Mail</label>
               <input
                 type="email"
-                value={datosCuenta.correo}
+                value={datosCuenta.mail}
                 onChange={(e) =>
                   setDatosCuenta({
                     ...datosCuenta,
-                    correo: e.target.value
-                  })
-                }
-                disabled={!editando}
-              />
-            </div>
-
-            <div className="cuenta-campo">
-              <label>Teléfono</label>
-              <input
-                type="text"
-                value={datosCuenta.telefono}
-                onChange={(e) =>
-                  setDatosCuenta({
-                    ...datosCuenta,
-                    telefono: e.target.value
+                    mail: e.target.value,
                   })
                 }
                 disabled={!editando}
@@ -141,7 +254,13 @@ function PerfilUsuario() {
 
             <div className="cuenta-boton-wrapper">
               <button
-                onClick={() => setEditando(!editando)}
+                onClick={() => {
+                  if (editando) {
+                    guardarDatos();
+                  } else {
+                    setEditando(true);
+                  }
+                }}
                 className="cuenta-boton"
               >
                 {editando ? "GUARDAR DATOS" : "EDITAR DATOS"}
@@ -149,15 +268,6 @@ function PerfilUsuario() {
             </div>
 
           </div>
-        </>
-      )}
-
-      {/* ================================= */}
-      {/* PANEL EXCLUSIVO DEL ADMINISTRADOR */}
-      {/* ================================= */}
-
-      {esAdmin && (
-        <div className="admin-panel-integrado">
 
           {/* NAVEGACIÓN ADMINISTRATIVA */}
           <nav className="admin-tabs">
@@ -200,7 +310,7 @@ function PerfilUsuario() {
           {/* ADMINISTRACIÓN DE CARTAS */}
           <div
             style={{
-              display: seccionAdmin === "cartas" ? "block" : "none"
+              display: seccionAdmin === "cartas" ? "block" : "none",
             }}
           >
             <PerfilAdmin integrado={true} />
@@ -209,7 +319,7 @@ function PerfilUsuario() {
           {/* ADMINISTRACIÓN DE SOBRES */}
           <div
             style={{
-              display: seccionAdmin === "sobres" ? "block" : "none"
+              display: seccionAdmin === "sobres" ? "block" : "none",
             }}
           >
             <SobresAdmin integrado={true} />
@@ -218,7 +328,7 @@ function PerfilUsuario() {
           {/* ADMINISTRACIÓN DE PERFILES */}
           <div
             style={{
-              display: seccionAdmin === "perfiles" ? "block" : "none"
+              display: seccionAdmin === "perfiles" ? "block" : "none",
             }}
           >
             <PerfilesAdmin integrado={true} />

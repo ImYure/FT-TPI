@@ -147,6 +147,30 @@
   opacity: 0.9;
 }
 
+.titulo-select {
+    background: transparent;
+    color: #555;
+    border: 1px solid #7a1fa2;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.titulo-boton {
+    background: linear-gradient(135deg, #7a1fa2, #3d0a52);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 5px 9px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.titulo-boton:hover {
+    opacity: 0.9;
+}
 
 
 
