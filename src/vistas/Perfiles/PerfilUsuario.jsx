@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import "../../estilos/PerfilUsuario.css";
 
@@ -87,43 +88,45 @@ function PerfilUsuario() {
   return (
     <div className="perfil-container">
 
-      {/* TARJETA DEL PERFIL: JUGADORES Y ADMINISTRADORES */}
-      <div className="perfil-card">
+      {/* TARJETA DEL PERFIL: SOLO JUGADORES */}
+      {!esAdmin && (
+        <div className="perfil-card">
 
-        <div className="perfil-avatar">
-          <p>👤</p>
+          <div className="perfil-avatar">
+            <p>👤</p>
+          </div>
+
+          <div className="perfil-info">
+            <h2>{datosCuenta.nombre}</h2>
+
+            <select
+              className="titulo-select"
+              value={datosCuenta.titulo || "Principiante"}
+              onChange={(e) =>
+                setDatosCuenta({
+                  ...datosCuenta,
+                  titulo: e.target.value,
+                })
+              }
+            >
+              <option value="Principiante">Principiante</option>
+              <option value="Coleccionista">Coleccionista</option>
+              <option value="Experto en cartas">Experto en cartas</option>
+              <option value="Gran coleccionista">
+                Gran coleccionista
+              </option>
+            </select>
+
+            <button
+              onClick={guardarTitulo}
+              className="titulo-boton"
+            >
+              Guardar Título
+            </button>
+          </div>
+
         </div>
-
-        <div className="perfil-info">
-          <h2>{datosCuenta.nombre}</h2>
-
-          <select
-            className="titulo-select"
-            value={datosCuenta.titulo || "Principiante"}
-            onChange={(e) =>
-              setDatosCuenta({
-                ...datosCuenta,
-                titulo: e.target.value,
-              })
-            }
-          >
-            <option value="Principiante">Principiante</option>
-            <option value="Coleccionista">Coleccionista</option>
-            <option value="Experto en cartas">Experto en cartas</option>
-            <option value="Gran coleccionista">
-              Gran coleccionista
-            </option>
-          </select>
-
-          <button
-            onClick={guardarTitulo}
-            className="titulo-boton"
-          >
-            Guardar Título
-          </button>
-        </div>
-
-      </div>
+      )}
 
       {/* INFORMACIÓN DE CUENTA DEL JUGADOR */}
       {!esAdmin && (
@@ -307,32 +310,19 @@ function PerfilUsuario() {
 
           </nav>
 
-          {/* ADMINISTRACIÓN DE CARTAS */}
-          <div
-            style={{
-              display: seccionAdmin === "cartas" ? "block" : "none",
-            }}
-          >
+          {/* MOSTRAR SOLAMENTE LA SECCIÓN SELECCIONADA */}
+
+          {seccionAdmin === "cartas" && (
             <PerfilAdmin integrado={true} />
-          </div>
+          )}
 
-          {/* ADMINISTRACIÓN DE SOBRES */}
-          <div
-            style={{
-              display: seccionAdmin === "sobres" ? "block" : "none",
-            }}
-          >
+          {seccionAdmin === "sobres" && (
             <SobresAdmin integrado={true} />
-          </div>
+          )}
 
-          {/* ADMINISTRACIÓN DE PERFILES */}
-          <div
-            style={{
-              display: seccionAdmin === "perfiles" ? "block" : "none",
-            }}
-          >
+          {seccionAdmin === "perfiles" && (
             <PerfilesAdmin integrado={true} />
-          </div>
+          )}
 
         </div>
       )}

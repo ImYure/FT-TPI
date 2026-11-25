@@ -1,3 +1,4 @@
+
 .perfil-container {
   max-width: 900px;
   margin: 24px auto;
@@ -147,102 +148,110 @@
   opacity: 0.9;
 }
 
+/* ---------- Selector de título ---------- */
+
 .titulo-select {
-    background: transparent;
-    color: #555;
-    border: 1px solid #7a1fa2;
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 0.85rem;
-    cursor: pointer;
+  background: transparent;
+  color: #555;
+  border: 1px solid #7a1fa2;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
 }
 
 .titulo-boton {
-    background: linear-gradient(135deg, #7a1fa2, #3d0a52);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 5px 9px;
-    font-size: 0.7rem;
-    cursor: pointer;
-    margin-left: 10px;
+  background: linear-gradient(135deg, #7a1fa2, #3d0a52);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 9px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  margin-left: 10px;
 }
 
 .titulo-boton:hover {
-    opacity: 0.9;
+  opacity: 0.9;
 }
 
-
+/* ---------- Panel integrado del administrador ---------- */
 
 .admin-panel-integrado {
-    width: 100%;
-    margin-top: 35px;
+  width: 100%;
+  margin-top: 35px;
 }
 
-/* Barra de navegación del administrador */
+/* ---------- Barra de navegación del administrador ---------- */
+
 .admin-tabs {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 
-    width: 100%;
-    max-width: 730px;
-    height: 56px;
+  width: 100%;
+  max-width: 730px;
+  height: 56px;
 
-    margin: 0 auto 25px;
-    padding: 0 10px;
+  /* Mayor separación de la información de cuenta */
+  margin: 50px auto 25px;
+  padding: 0 10px;
 
-    background: linear-gradient(100deg, #380044, #a000b8);
-    border-radius: 40px;
+  background: linear-gradient(100deg, #380044, #a000b8);
+  border-radius: 40px;
 
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.20);
-    overflow: hidden;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.20);
+  overflow: hidden;
 }
 
-/* Botones de navegación */
+/* ---------- Botones de navegación ---------- */
+
 .admin-tab {
-    position: relative;
+  position: relative;
 
-    flex: 1;
-    height: 100%;
+  flex: 1;
+  height: 100%;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    border: none;
-    background: transparent;
+  border: none;
+  background: transparent;
 
-    color: white;
-    font-size: 14px;
-    font-weight: 500;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
 
-    cursor: pointer;
-    transition: background 0.2s;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 /* Efecto al pasar el mouse */
+
 .admin-tab:hover {
-    background: rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.10);
 }
 
 /* Pestaña seleccionada */
+
 .admin-tab.activo {
-    color: white;
-    background: transparent;
+  color: white;
+  background: transparent;
 }
 
 /* Línea blanca debajo de la opción seleccionada */
+
 .admin-tab.activo::after {
-    content: "";
-    position: absolute;
+  content: "";
+  position: absolute;
 
-    bottom: 5px;
-    left: 30%;
+  bottom: 5px;
+  left: 30%;
 
-    width: 40%;
-    height: 3px;
+  width: 40%;
+  height: 3px;
 
-    background-color: white;
-    border-radius: 5px;
+  background-color: white;
+  border-radius: 5px;
 }

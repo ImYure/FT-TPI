@@ -5,7 +5,7 @@ import { Link } from "wouter";
 import Footer from "../../componentes/navegacion/Footer";
 import "../../estilos/perfilesAdmin.css";
 
-function PerfilesAdmin() {
+function PerfilesAdmin({ integrado = false }) {
     const [roles, setRoles] = useState([]);
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
@@ -205,41 +205,45 @@ function PerfilesAdmin() {
     return (
         <div className="perfiles-pagina">
 
-            <header className="admin-header">
-                <Link href="/" className="admin-escudo" title="Panel Admin">
-                    <div className="admin-logo-icon"></div>
-                </Link>
+            {!integrado && (
+                <header className="admin-header">
+                    <Link href="/" className="admin-escudo" title="Panel Admin">
+                        <div className="admin-logo-icon"></div>
+                    </Link>
 
-                <span className="admin-header-text">Admin</span>
-            </header>
+                    <span className="admin-header-text">Admin</span>
+                </header>
+            )}
 
-            <nav className="admin-navbar">
+            {!integrado && (
+                <nav className="admin-navbar">
 
-                <Link href="/perfilAdmin" className="admin-opcion">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M3 11l9-8 9 8" />
-                        <path d="M5 10v10h5v-6h4v6h5V10" />
-                    </svg>
-                    <span>Cartas</span>
-                </Link>
+                    <Link href="/perfilAdmin" className="admin-opcion">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M3 11l9-8 9 8" />
+                            <path d="M5 10v10h5v-6h4v6h5V10" />
+                        </svg>
+                        <span>Cartas</span>
+                    </Link>
 
-                <Link href="/sobresAdmin" className="admin-opcion">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="12" cy="8" r="4" />
-                        <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
-                    </svg>
-                    <span>Sobres</span>
-                </Link>
+                    <Link href="/sobresAdmin" className="admin-opcion">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="12" cy="8" r="4" />
+                            <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
+                        </svg>
+                        <span>Sobres</span>
+                    </Link>
 
-                <Link href="/perfilesAdmin" className="admin-opcion activa">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="12" cy="8" r="4" />
-                        <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
-                    </svg>
-                    <span>Perfiles</span>
-                </Link>
+                    <Link href="/perfilesAdmin" className="admin-opcion activa">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="12" cy="8" r="4" />
+                            <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
+                        </svg>
+                        <span>Perfiles</span>
+                    </Link>
 
-            </nav>
+                </nav>
+            )}
 
             <main className="perfiles-contenido">
 
@@ -419,7 +423,7 @@ function PerfilesAdmin() {
 
             </main>
 
-            <Footer />
+            {!integrado && <Footer />}
 
         </div>
     );
