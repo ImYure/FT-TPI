@@ -1,131 +1,260 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { Link } from "wouter";
 import Footer from "../../componentes/navegacion/Footer";
 import "../../estilos/sobresAdmin.css";
 
+const API_SOBRES = "http://localhost:3000/sobres";
+const API_CARTAS = "http://localhost:3000/cartas";
+
 export default function SobresAdmin({ integrado = false }) {
+    const [editando, setEditando] = useState(false);
+    const [sobreEditandoId, setSobreEditandoId] = useState(null);
     const [nombre, setNombre] = useState("");
     const [descripcion, setDescripcion] = useState("");
     const [precio, setPrecio] = useState("");
     const [cantidad, setCantidad] = useState("");
+    const [categoria, setCategoria] = useState("");
+    const [rareza, setRareza] = useState("");
 
-    const [cartasDisponibles, setCartasDisponibles] = useState([]);
-    const [cartasSeleccionadas, setCartasSeleccionadas] = useState([]);
+    const [imagen, setImagen] = useState(null);
+    const [vistaPrevia, setVistaPrevia] = useState("");
+
     const [sobres, setSobres] = useState([]);
-    const [editando, setEditando] = useState(null);
+    const [categorias, setCategorias] = useState([]);
+    const [rarezas, setRarezas] = useState([]);
 
-    function agregarCarta() {
-        if (cartasDisponibles.length >= 30) {
-            alert("Ya hay 30 cartas, no se pueden agregar más.");
-            return;
-        }
+    const [cargando, setCargando] = useState(true);
 
-        const nuevaCarta = prompt("Ingresá el nombre de la nueva carta:");
+    // CONFIGURACIÓN DEL TOKEN
+    function obtenerConfig() {
+        const token = localStorage.getItem("token");
 
-        if (nuevaCarta && nuevaCarta.trim() !== "") {
-            const cartaLimpia = nuevaCarta.trim();
-
-            if (!cartasDisponibles.includes(cartaLimpia)) {
-                setCartasDisponibles([...cartasDisponibles, cartaLimpia]);
-            } else {
-                alert("Esa carta ya está en la lista.");
+        return {
+            headers: {
+                Authorization: `Bearer ${token}`
             }
+        };
+    }
+
+    // OBTENER SOBRES
+    async function cargarSobres() {
+
+        try {
+            const respuesta = await axios.get(API_SOBRES);
+
+            setSobres(respuesta.data.sobres);
+
+        } catch (error) {
+            console.error("Error al cargar sobres:", error);
+            alert("No se pudieron cargar los sobres.");
         }
     }
 
-    function seleccionarCarta(carta) {
-        if (cartasSeleccionadas.includes(carta)) {
-            setCartasSeleccionadas(
-                cartasSeleccionadas.filter((item) => item !== carta)
-            );
-        } else {
-            setCartasSeleccionadas([...cartasSeleccionadas, carta]);
+    // OBTENER CATEGORÍAS
+    async function cargarCategorias() {
+
+        try {
+            const respuesta = await axios.get(`${API_CARTAS}/categorias`);
+
+            setCategorias(respuesta.data.categorias);
+
+        } catch (error) {
+            console.error("Error al cargar categorías:", error);
         }
     }
 
+    // OBTENER RAREZAS
+    async function cargarRarezas() {
+
+        try {
+            const respuesta = await axios.get(`${API_CARTAS}/rareza`);
+
+            setRarezas(respuesta.data.rarezas);
+
+        } catch (error) {
+            console.error("Error al cargar rarezas:", error);
+        }
+    }
+
+    // CARGAR DATOS AL ABRIR
+    useEffect(() => {
+
+        Promise.all([
+            cargarSobres(),
+            cargarCategorias(),
+            cargarRarezas()
+        ]).finally(() => {
+            setCargando(false);
+        });
+
+    }, []);
+
+    // SELECCIONAR IMAGEN
+    function seleccionarImagen(e) {
+
+        const archivo = e.target.files[0];
+
+        if (archivo) {
+            setImagen(archivo);
+            setVistaPrevia(URL.createObjectURL(archivo));
+        }
+    }
+
+    // LIMPIAR FORMULARIO
     function limpiarFormulario() {
+
         setNombre("");
         setDescripcion("");
         setPrecio("");
         setCantidad("");
-        setCartasSeleccionadas([]);
-        setEditando(null);
+        setCategoria("");
+        setRareza("");
+        setImagen(null);
+        setVistaPrevia("");
+
+        setEditando(false);
+        setSobreEditandoId(null);
     }
 
-    function crearSobre(e) {
+    // CREAR SOBRE
+    // CREAR O EDITAR SOBRE
+    async function crearSobre(e) {
+
         e.preventDefault();
 
         if (
-            nombre.trim() === "" ||
-            descripcion.trim() === "" ||
+            !nombre.trim() ||
+            !descripcion.trim() ||
             precio === "" ||
-            cantidad === ""
+            cantidad === "" ||
+            !categoria ||
+            !rareza ||
+            (!editando && !imagen)
         ) {
-            alert("Completá todos los campos.");
+            alert("Completá todos los campos y seleccioná una imagen.");
             return;
         }
 
-        if (Number(precio) < 0 || Number(cantidad) < 1) {
-            alert("Ingresá un precio válido y una cantidad mayor a cero.");
+        if (
+            Number(precio) < 0 ||
+            Number(cantidad) < 1 ||
+            Number(cantidad) > 30
+        ) {
+            alert("Ingresá un precio válido y una cantidad entre 1 y 30.");
             return;
         }
 
-        if (Number(cantidad) > 30) {
-            alert("Solo hay 30 cartas, la cantidad no puede ser mayor a 30.");
-            return;
+        const datos = new FormData();
+
+        datos.append("nombre", nombre);
+        datos.append("descripcion", descripcion);
+        datos.append("precio", precio);
+        datos.append("cantidad_carta", cantidad);
+        datos.append("categoria_id", categoria);
+        datos.append("rareza_id", rareza);
+
+        if (imagen) {
+            datos.append("imagen", imagen);
         }
 
-        const nuevoSobre = {
-            id: editando ? editando : Date.now(),
-            nombre: nombre.trim(),
-            descripcion: descripcion.trim(),
-            precio: Number(precio),
-            cantidad: Number(cantidad),
-            cartas: [...cartasSeleccionadas]
-        };
+        try {
 
-        if (editando) {
-            setSobres(
-                sobres.map((sobre) =>
-                    sobre.id === editando ? nuevoSobre : sobre
-                )
+            if (editando) {
+
+                await axios.put(
+                    `${API_SOBRES}/${sobreEditandoId}`,
+                    datos,
+                    obtenerConfig()
+                );
+
+                alert("Sobre actualizado correctamente.");
+
+            } else {
+
+                await axios.post(
+                    API_SOBRES,
+                    datos,
+                    obtenerConfig()
+                );
+
+                alert("Sobre creado correctamente.");
+            }
+
+            limpiarFormulario();
+            cargarSobres();
+
+        } catch (error) {
+
+            console.error("Error al guardar sobre:", error);
+
+            alert(
+                error.response?.data?.mensaje ||
+                "No se pudo guardar el sobre."
             );
-        } else {
-            setSobres([...sobres, nuevoSobre]);
         }
-
-        limpiarFormulario();
     }
-
+    // EDITAR SOBRE
     function editarSobre(sobre) {
+
         setNombre(sobre.nombre);
         setDescripcion(sobre.descripcion);
-        setPrecio(String(sobre.precio));
-        setCantidad(String(sobre.cantidad));
-        setCartasSeleccionadas([...sobre.cartas]);
-        setEditando(sobre.id);
+        setPrecio(sobre.precio);
+        setCantidad(sobre.cantidad_carta);
+        setCategoria(sobre.categoria_id);
+        setRareza(sobre.rareza_id);
 
-        setCartasDisponibles((actuales) =>
-            [...new Set([...actuales, ...sobre.cartas])]
+        setImagen(null);
+
+        setVistaPrevia(
+            sobre.imagen
+                ? `http://localhost:3000/imagenes/sobres/${sobre.imagen}`
+                : ""
         );
+
+        setEditando(true);
+        setSobreEditandoId(sobre.id);
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
     }
 
-    function eliminarSobre(id) {
+    // ELIMINAR SOBRE
+    async function eliminarSobre(id) {
+
         const confirmar = window.confirm(
-            "¿Estás seguro de que querés borrar este sobre?"
+            "¿Estás seguro de que querés eliminar este sobre?"
         );
 
-        if (confirmar) {
-            setSobres(sobres.filter((sobre) => sobre.id !== id));
+        if (!confirmar) return;
 
-            if (editando === id) {
-                limpiarFormulario();
-            }
+        try {
+
+            await axios.delete(
+                `${API_SOBRES}/${id}`,
+                obtenerConfig()
+            );
+
+            alert("Sobre eliminado correctamente.");
+
+            cargarSobres();
+
+        } catch (error) {
+
+            console.error("Error al eliminar sobre:", error);
+
+            alert(
+                error.response?.data?.mensaje ||
+                "No se pudo eliminar el sobre."
+            );
         }
     }
 
     return (
+
         <div className="sobres-pagina">
 
             {!integrado && (
@@ -161,7 +290,7 @@ export default function SobresAdmin({ integrado = false }) {
                 <div className="sobres-titulo-seccion">
                     <h2>Administrar sobres</h2>
                     <p>
-                        Elegí qué cartas contiene cada sobre y definí su precio.
+                        Creá y administrá los sobres del juego.
                     </p>
                 </div>
 
@@ -175,41 +304,45 @@ export default function SobresAdmin({ integrado = false }) {
                     >
 
                         <div className="sobres-form-header">
-                            <h3>
-                                {editando ? "Editar sobre" : "Crear sobre"}
-                            </h3>
-
-                            <button
-                                type="button"
-                                className="sobre-btn-mini"
-                                onClick={agregarCarta}
-                            >
-                                Cartas
-                            </button>
+                            <h3>{editando ? "Editar sobre" : "Crear sobre"}</h3>
                         </div>
+
+                        <label htmlFor="imagen-sobre">
+                            Imagen del sobre
+                        </label>
+
+                        <input
+                            id="imagen-sobre"
+                            type="file"
+                            accept="image/png, image/jpeg, image/webp, image/gif, image/avif"
+                            onChange={seleccionarImagen}
+                        />
+
+                        {vistaPrevia && (
+                            <img
+                                src={vistaPrevia}
+                                alt="Vista previa"
+                                className="sobre-imagen-preview"
+                            />
+                        )}
 
                         <label htmlFor="nombre-sobre">
                             Nombre del sobre
                         </label>
 
-                        <textarea
+                        <input
                             id="nombre-sobre"
-                            className="input-nombre-grande"
+                            type="text"
                             value={nombre}
                             onChange={(e) => setNombre(e.target.value)}
                         />
 
-                        <label
-                            htmlFor="descripcion-sobre"
-                            className="label-descripcion"
-                        >
+                        <label htmlFor="descripcion-sobre">
                             Descripción
                         </label>
 
-                        <input
+                        <textarea
                             id="descripcion-sobre"
-                            type="text"
-                            placeholder="Ej: leon kennedy"
                             value={descripcion}
                             onChange={(e) => setDescripcion(e.target.value)}
                         />
@@ -217,6 +350,7 @@ export default function SobresAdmin({ integrado = false }) {
                         <div className="sobres-fila-doble">
 
                             <div className="sobres-campo-grupo">
+
                                 <label htmlFor="cantidad-sobre">
                                     Cantidad de cartas
                                 </label>
@@ -226,13 +360,14 @@ export default function SobresAdmin({ integrado = false }) {
                                     type="number"
                                     min="1"
                                     max="30"
-                                    placeholder="Ej: 5"
                                     value={cantidad}
                                     onChange={(e) => setCantidad(e.target.value)}
                                 />
+
                             </div>
 
                             <div className="sobres-campo-grupo">
+
                                 <label htmlFor="precio-sobre">
                                     Precio
                                 </label>
@@ -241,74 +376,74 @@ export default function SobresAdmin({ integrado = false }) {
                                     id="precio-sobre"
                                     type="number"
                                     min="0"
-                                    placeholder="Ej: 100"
+                                    step="0.01"
                                     value={precio}
                                     onChange={(e) => setPrecio(e.target.value)}
                                 />
+
                             </div>
 
                         </div>
 
-                        <div className="sobres-cartas">
+                        <div className="sobres-fila-doble">
 
-                            <label className="label-con-linea">
-                                Elegí las cartas que incluye
-                            </label>
+                            <div className="sobres-campo-grupo">
 
-                            {cartasDisponibles.length > 0 ? (
+                                <label>Categoría</label>
 
-                                <div className="sobres-cartas-lista">
+                                <select
+                                    value={categoria}
+                                    onChange={(e) => setCategoria(e.target.value)}
+                                >
+                                    <option value="">Seleccionar</option>
 
-                                    {cartasDisponibles.map((carta) => (
-                                        <label
-                                            className={`sobre-carta-card ${
-                                                cartasSeleccionadas.includes(carta)
-                                                    ? "seleccionada"
-                                                    : ""
-                                            }`}
-                                            key={carta}
-                                        >
-
-                                            <input
-                                                type="checkbox"
-                                                checked={cartasSeleccionadas.includes(carta)}
-                                                onChange={() => seleccionarCarta(carta)}
-                                            />
-
-                                            <span>{carta}</span>
-
-                                        </label>
+                                    {categorias.map(cat => (
+                                        <option key={cat.id} value={cat.id}>
+                                            {cat.nombre}
+                                        </option>
                                     ))}
 
-                                </div>
+                                </select>
 
-                            ) : (
+                            </div>
 
-                                <p className="sobres-sin-cartas">
-                                    Todavía no hay cartas agregadas. Tocá "Cartas" arriba.
-                                </p>
+                            <div className="sobres-campo-grupo">
 
-                            )}
+                                <label>Rareza</label>
+
+                                <select
+                                    value={rareza}
+                                    onChange={(e) => setRareza(e.target.value)}
+                                >
+                                    <option value="">Seleccionar</option>
+
+                                    {rarezas.map(r => (
+                                        <option key={r.id} value={r.id}>
+                                            {r.nombre}
+                                        </option>
+                                    ))}
+
+                                </select>
+
+                            </div>
 
                         </div>
 
                         <div className="sobres-formulario-acciones">
 
-                            {editando && (
-                                <button
-                                    type="button"
-                                    className="sobre-cancelar"
-                                    onClick={limpiarFormulario}
-                                >
-                                    Cancelar
-                                </button>
-                            )}
+                            <button
+                                type="button"
+                                className="sobre-cancelar"
+                                onClick={limpiarFormulario}
+                            >
+                                Limpiar
+                            </button>
 
                             <button
                                 type="submit"
                                 className="sobre-btn-guardar"
                             >
-                                {editando ? "Guardar Cambios" : "Guardar Carta"}
+                                {editando ? "Guardar cambios" : "Crear sobre"}
                             </button>
 
                         </div>
@@ -321,17 +456,21 @@ export default function SobresAdmin({ integrado = false }) {
 
                         <h3>Sobres creados</h3>
 
-                        {sobres.length === 0 ? (
+                        {cargando ? (
+
+                            <p>Cargando sobres...</p>
+
+                        ) : sobres.length === 0 ? (
 
                             <p className="sobres-vacio">
-                                Todavía no hay sobres creados. Se cargarán automáticamente desde MySQL.
+                                Todavía no hay sobres creados.
                             </p>
 
                         ) : (
 
                             <div className="sobres-lista">
 
-                                {sobres.map((sobre) => (
+                                {sobres.map(sobre => (
 
                                     <article
                                         className="sobre-item"
@@ -340,29 +479,20 @@ export default function SobresAdmin({ integrado = false }) {
 
                                         <div className="sobre-visual">
 
-                                            <div className="sobre-paquete">
+                                            {sobre.imagen ? (
+                                                <div className="sobre-imagen-contenedor">
+                                                    <img
+                                                        src={`http://localhost:3000/imagenes/sobres/${sobre.imagen}`}
+                                                        alt={sobre.nombre}
+                                                    />
+                                                </div>
+                                            ) : (
 
-                                                <div className="sobre-rayas">
-                                                    <span></span>
-                                                    <span></span>
-                                                    <span></span>
+                                                <div className="sobre-paquete">
+                                                    <div className="sobre-escudo-centro"></div>
                                                 </div>
 
-                                                <div className="sobre-franja superior">
-                                                    <div className="linea-franja"></div>
-                                                    <div className="linea-franja"></div>
-                                                    <div className="linea-franja"></div>
-                                                </div>
-
-                                                <div className="sobre-escudo-centro"></div>
-
-                                                <div className="sobre-franja inferior">
-                                                    <div className="linea-franja"></div>
-                                                    <div className="linea-franja"></div>
-                                                    <div className="linea-franja"></div>
-                                                </div>
-
-                                            </div>
+                                            )}
 
                                         </div>
 
@@ -377,21 +507,16 @@ export default function SobresAdmin({ integrado = false }) {
                                             </span>
 
                                             <span className="sobre-meta-card">
-                                                {sobre.cantidad} cartas · {sobre.precio} monedas
+                                                {sobre.cantidad_carta} cartas · {sobre.precio} monedas
                                             </span>
 
                                             <span className="sobre-incluye-card">
-                                                Incluye:{" "}
-                                                {sobre.cartas.length > 0
-                                                    ? sobre.cartas.join(", ")
-                                                    : "Sin cartas seleccionadas"}
+                                                {sobre.categoria} - {sobre.rareza}
                                             </span>
-
                                             <div className="sobre-acciones">
 
                                                 <button
                                                     type="button"
-                                                    className="sobre-boton-editar"
                                                     onClick={() => editarSobre(sobre)}
                                                 >
                                                     Editar
@@ -399,14 +524,12 @@ export default function SobresAdmin({ integrado = false }) {
 
                                                 <button
                                                     type="button"
-                                                    className="sobre-boton-eliminar"
                                                     onClick={() => eliminarSobre(sobre.id)}
                                                 >
-                                                    Borrar
+                                                    Eliminar
                                                 </button>
 
                                             </div>
-
                                         </div>
 
                                     </article>

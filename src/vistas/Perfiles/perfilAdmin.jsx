@@ -97,7 +97,8 @@ export default function PerfilAdmin({ integrado = false }) {
       ataque === "" ||
       defensa === "" ||
       vida === "" ||
-      velocidad === ""
+      velocidad === "" ||
+      critico === ""
     ) {
       alert("Completá todos los campos.");
       return;
@@ -314,7 +315,7 @@ export default function PerfilAdmin({ integrado = false }) {
               <img
                 src={vistaPrevia}
                 alt="Vista previa"
-                className="admin-imagen-preview"
+                className="sobre-imagen-preview"
               />
             )}
 

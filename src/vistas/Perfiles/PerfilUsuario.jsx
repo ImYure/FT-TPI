@@ -32,17 +32,23 @@ function PerfilUsuario() {
     if (!datosSesion?.id) return;
 
     fetch(`http://localhost:3000/perfil/${datosSesion.id}`)
-      .then((respuesta) => respuesta.json())
-      .then((datos) => {
+    .then((respuesta) => {
+        if (!respuesta.ok) {
+            throw new Error("Error al obtener el perfil");
+        }
+
+        return respuesta.json();
+    })
+    .then((datos) => {
         const cuenta = datos.usuarios[0];
 
         if (cuenta) {
-          setDatosCuenta(cuenta);
+            setDatosCuenta(cuenta);
         }
-      })
-      .catch((error) => {
+    })
+    .catch((error) => {
         console.error("Error al cargar el perfil:", error);
-      });
+    });
   }, [datosSesion?.id]);
 
   // Guardar datos personales

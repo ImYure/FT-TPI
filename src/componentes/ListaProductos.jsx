@@ -6,8 +6,7 @@ export default function ListaProductos({ articulos, mostrarPrecio = false, onSel
         <div className="lista-productos">
             {articulos.map((articulo) => (
                 <div
-                    key={articulo.id}
-                    className={onSeleccionar ? "item-seleccionable" : ""}
+key={`${articulo.tipo}-${articulo.id}`}                    className={onSeleccionar ? "item-seleccionable" : ""}
                     onClick={() => onSeleccionar && onSeleccionar(articulo)}
                 >
                     {articulo.tipo === "carta" ? (
