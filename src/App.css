@@ -521,6 +521,7 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
   color: rgb(53, 0, 243);
   border: 1px solid #a101f1;
   border-radius: 15px;
+  gap: 40px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(48, 25, 61, 0.15);
   display: flex;
@@ -531,14 +532,17 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
 }
 
 .tarjeta-producto__imagen-contenedor {
-  margin: 7px 7px 0 7px; /* Crea el espacio alrededor (arriba y laterales) dentro de la tarjeta morada */
-  padding: 15px; /* Reducido de 20px a 12px */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: white;
-  box-sizing: border-box;
-  border-radius: 10px; /* Ligeramente más pequeño */
+    margin: 7px 7px 0 7px;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #ffffff;
+    border: 2px solid #8b5cf6;
+    border-radius: 10px;
+
+    box-sizing: border-box;
 }
 
 .tarjeta-producto img {
@@ -614,7 +618,6 @@ width: 100%;          /* Ocupa el 100% del contenedor padre */
   height: 24px;         
   object-fit: contain;  
 }
-
 /* Saldo */
 
 

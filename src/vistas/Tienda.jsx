@@ -42,26 +42,41 @@ export default function Tienda() {
 
   }, []);
 
-  // 2. Obtener cartas según los filtros
+  // 2. Obtener cartas y sobres según los filtros
   useEffect(() => {
 
     setCargando(true);
     setError("");
 
-    axios.get("http://localhost:3000/cartas", {
-      params: {
-        categoria: filtros.categoria,
-        rareza: filtros.rareza.join(","),
-        orden: filtros.orden
-      }
-    })
+    axios.all([
+      axios.get("http://localhost:3000/cartas", {
+        params: {
+          categoria: filtros.categoria,
+          rareza: filtros.rareza.join(","),
+          orden: filtros.orden
+        }
+      }),
 
-      .then((respuesta) => {
-        setArticulos(respuesta.data.cartas);
+      axios.get("http://localhost:3000/sobres", {
+        params: {
+          categoria: filtros.categoria,
+          rareza: filtros.rareza.join(","),
+          orden: filtros.orden
+        }
+      })
+    ])
+
+      .then(([respuestaCartas, respuestaSobres]) => {
+
+        const cartas = respuestaCartas.data.cartas;
+        const sobres = respuestaSobres.data.sobres;
+
+        setArticulos([...cartas, ...sobres]);
+
       })
 
       .catch((error) => {
-        console.error("Error al obtener las cartas:", error);
+        console.error("Error al obtener los artículos:", error);
         setError("No se pudieron cargar los artículos.");
       })
 
@@ -70,6 +85,24 @@ export default function Tienda() {
       });
 
   }, [filtros.categoria, filtros.rareza, filtros.orden]);
+
+  // 3. Filtrar por tipo de artículo
+  const articulosFiltrados = articulos.filter((articulo) => {
+
+    if (filtros.tipo === "todos") {
+      return true;
+    }
+
+    if (filtros.tipo === "cartas") {
+      return articulo.tipo === "carta";
+    }
+
+    if (filtros.tipo === "sobres") {
+      return articulo.tipo === "sobre";
+    }
+
+    return false;
+  });
 
   return (
 
@@ -107,11 +140,11 @@ export default function Tienda() {
           <p>Cargando artículos...</p>
         ) : error ? (
           <p>{error}</p>
-        ) : articulos.length === 0 ? (
-          <p>No se encontraron cartas.</p>
+        ) : articulosFiltrados.length === 0 ? (
+          <p>No se encontraron artículos.</p>
         ) : (
           <ListaProductos
-            articulos={articulos}
+            articulos={articulosFiltrados}
             mostrarPrecio={true}
           />
         )}

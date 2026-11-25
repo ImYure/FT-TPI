@@ -364,3 +364,11 @@
         flex-direction: column;
     }
 }
+.sobre-imagen-preview {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    display: block;
+    margin: 10px 0;
+    border-radius: 8px;
+}
