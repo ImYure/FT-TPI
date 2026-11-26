@@ -1,5 +1,5 @@
+
 .vista-mazos {
-    flex-direction:column-reverse;
   width: 100%;
   min-height: 100vh;
   color: #1c1922;
@@ -20,7 +20,8 @@
   font-size: 0.95rem;
 }
 
-/* Selector de mazos */
+/* SELECTOR DE MAZOS */
+
 .selector-mazos {
   display: flex;
   align-items: center;
@@ -57,67 +58,199 @@
   border-color: #7d00b0;
 }
 
-/* Contenedor morado oscuro de 8 cartas */
+/* TABLERO DEL MAZO */
+
+.tablero-mazo-wrapper {
+  width: 100%;
+}
+
 .tablero-mazo-caja {
   background: linear-gradient(135deg, #2a0838 0%, #190722 100%);
   border-radius: 20px;
-  padding: 18px;
-  box-shadow: 0 10px 25px rgba(42, 8, 56, 0.14);
+  padding: 22px;
+  box-shadow: 0 10px 25px rgba(42, 8, 56, 0.2);
 }
+
+.encabezado-mazo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+  color: white;
+}
+
+.encabezado-mazo h2 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.encabezado-mazo p {
+  margin: 0;
+  color: #d8b8ed;
+  font-weight: 600;
+}
+
+/* CUATRO CARTAS POR FILA */
 
 .grid-ocho-cartas {
   display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
 }
+
+/* TARJETAS */
 
 .slot-carta {
   position: relative;
-  min-height: 165px;
-  border-radius: 12px;
-  padding: 8px;
+  min-width: 0;
+  min-height: 390px;
+  box-sizing: border-box;
+  border-radius: 15px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  background-color: #241030;
-  border: 1px solid rgba(209, 184, 250, 0.25);
+  align-items: stretch;
+  gap: 10px;
+  background: linear-gradient(160deg, #281039, #160820);
+  border: 2px solid #a51be0;
   color: #ffffff;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.3);
 }
 
 .slot-carta.vacia {
+  min-height: 390px;
   align-items: center;
   justify-content: center;
   border-style: dashed;
-  border-color: rgba(209, 184, 250, 0.2);
-  color: rgba(255, 255, 255, 0.45);
-  font-size: 0.8rem;
+  border-color: rgba(209, 184, 250, 0.35);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  background: rgba(20, 5, 30, 0.4);
 }
 
-.img-carta-mazo {
-  width: 100%;
-  height: 82px;
-  object-fit: cover;
-  border-radius: 8px;
+/* RAREZA */
+
+.badge-rareza {
+  align-self: flex-start;
+  padding: 5px 10px;
+  border: 1px solid #c22cff;
+  border-radius: 20px;
+  color: #e8a5ff;
+  font-size: 0.8rem;
+  font-weight: 700;
 }
+
+/* NOMBRE */
+
+.nombre-carta-mazo {
+  margin: 0;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ffffff;
+  overflow-wrap: anywhere;
+}
+
+/* IMAGEN */
+
+.img-carta-mazo {
+  display: block;
+  width: 100%;
+  height: 190px;
+  object-fit: contain;
+  background: #10051a;
+  border: 2px solid #bd26ed;
+  border-radius: 12px;
+}
+
+/* ESTADÍSTICAS */
+
+.estadisticas-carta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.estadistica-carta {
+  min-width: 0;
+  padding: 7px 2px;
+  border: 1px solid #b62be8;
+  border-radius: 8px;
+  text-align: center;
+  background: #190b27;
+}
+
+.estadistica-carta strong {
+  display: block;
+  font-size: 0.9rem;
+  color: #ffffff;
+}
+
+.estadistica-carta span {
+  display: block;
+  font-size: 0.68rem;
+  color: #d5a8ed;
+}
+
+/* HABILIDAD */
+
+.habilidad-carta {
+  padding: 10px;
+  border: 1px solid #bd26ed;
+  border-radius: 10px;
+  background: #1b0a29;
+}
+
+.habilidad-carta h4 {
+  margin: 0 0 7px;
+  text-align: center;
+  color: #e66aff;
+  font-size: 0.85rem;
+}
+
+.habilidad-carta p {
+  margin: 0;
+  color: #ffffff;
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
+
+/* CANTIDAD */
+
+.cantidad-carta-mazo {
+  margin: 0;
+  color: #d8b8ed;
+  font-size: 0.85rem;
+}
+
+/* QUITAR CARTA */
 
 .btn-quitar-carta {
   position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 22px;
-  height: 22px;
+  top: 9px;
+  right: 9px;
+  width: 27px;
+  height: 27px;
   border: none;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.65);
-  color: #fff;
+  background: #8100a8;
+  color: #ffffff;
+  font-size: 18px;
   cursor: pointer;
+  z-index: 2;
 }
 
-/* Botón Guardar Mazo */
+.btn-quitar-carta:hover {
+  background: #c000e8;
+}
+
+/* GUARDAR MAZO */
+
 .acciones-mazo {
   display: flex;
   justify-content: flex-end;
-  margin-top: 12px;
+  margin-top: 15px;
 }
 
 .btn-guardar-mazo {
@@ -125,7 +258,7 @@
   color: #ffffff;
   border: none;
   border-radius: 10px;
-  padding: 9px 16px;
+  padding: 10px 18px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -134,7 +267,8 @@
   background-color: #64008d;
 }
 
-/* Sección inferior: Tus Cartas Disponibles */
+/* CARTAS DISPONIBLES */
+
 .seccion-disponibles-header {
   display: flex;
   align-items: center;
@@ -151,27 +285,6 @@
   color: #1c1922;
 }
 
-@media (max-width: 1024px) {
-  .grid-ocho-cartas {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 600px) {
-  .grid-ocho-cartas {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-.vista-mazos {
-  width: 100%;
-  min-height: 100vh;
-  color: #1c1922;
-  padding: 28px 36px;
-  box-sizing: border-box;
-}
-
-/* Nuevo contenedor horizontal: filtros a la izquierda, cartas a la derecha */
 .contenido-disponibles-layout {
   display: flex;
   flex-direction: row;
@@ -179,18 +292,43 @@
   gap: 24px;
 }
 
-/* Columna lateral de filtros */
 .contenido-disponibles-layout > :first-child {
-  flex: 0 0 260px; /* ancho fijo/base del panel de filtros */
+  flex: 0 0 260px;
 }
 
-/* Columna principal de cartas disponibles */
 .contenido-disponibles-layout > :last-child {
   flex: 1;
-  min-width: 0; /* evita desbordes en grids/flex internos */
+  min-width: 0;
 }
 
-@media (max-width: 900px) {
+/* TABLETS */
+
+@media (max-width: 1000px) {
+  .grid-ocho-cartas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* CELULARES */
+
+@media (max-width: 600px) {
+  .vista-mazos {
+    padding: 20px 12px;
+  }
+
+  .tablero-mazo-caja {
+    padding: 12px;
+  }
+
+  .grid-ocho-cartas {
+    grid-template-columns: 1fr;
+  }
+
+  .slot-carta,
+  .slot-carta.vacia {
+    min-height: 370px;
+  }
+
   .contenido-disponibles-layout {
     flex-direction: column;
   }

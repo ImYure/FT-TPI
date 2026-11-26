@@ -159,7 +159,6 @@ export default function PerfilAdmin({ integrado = false }) {
   function limpiarFormulario() {
     setNombre("");
     setCategoria("");
-    setRareza("");
     setDescripcion("");
     setImagen(null);
     setVistaPrevia("");

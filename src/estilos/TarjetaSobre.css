@@ -1,0 +1,244 @@
+
+/* ==========================================
+   TARJETA DE SOBRE - VOLTERRA
+========================================== */
+
+.tarjeta-sobre {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    width: 100%;
+    height: 100%;
+    min-height: 340px;
+
+    overflow: hidden;
+    color: white;
+
+    border: 2px solid #bd8be0;
+    border-radius: 13px;
+
+    background: linear-gradient(145deg, #590078, #270033 75%);
+    box-shadow: 0 5px 15px rgba(48, 0, 65, 0.25);
+
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tarjeta-sobre:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 9px 20px rgba(48, 0, 65, 0.35);
+}
+
+/* Parte superior del paquete */
+
+.tarjeta-sobre__parte-superior {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 12px;
+
+    background: linear-gradient(90deg, #d9b2f2, #8d42b8, #d9b2f2);
+    border-bottom: 2px solid #f0d5ff;
+
+    color: #351047;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Imagen del paquete */
+
+.tarjeta-sobre__imagen {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 10px 10px 0;
+    padding: 12px;
+
+    min-height: 175px;
+    overflow: hidden;
+
+    border: 2px solid #c38be8;
+    border-radius: 8px;
+
+    background: linear-gradient(145deg, #4c1767, #170020);
+}
+
+.tarjeta-sobre__imagen img {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    height: 155px;
+
+    object-fit: contain;
+}
+
+/* Efecto de brillo */
+
+.tarjeta-sobre__brillo {
+    position: absolute;
+    top: -50%;
+    left: -60%;
+
+    width: 50%;
+    height: 200%;
+
+    transform: rotate(30deg);
+    background: rgba(255, 255, 255, 0.10);
+
+    pointer-events: none;
+}
+
+/* Sello del paquete */
+
+.tarjeta-sobre__sello {
+    position: absolute;
+    z-index: 2;
+
+    right: 8px;
+    bottom: 8px;
+
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #f5d98b;
+    border-radius: 50%;
+
+    background: linear-gradient(135deg, #f5d98b, #a66b16);
+
+    color: #3b1749;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* Información del sobre */
+
+.tarjeta-sobre__info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    gap: 7px;
+    padding: 13px;
+}
+
+.tarjeta-sobre__info h3 {
+    margin: 0;
+    color: #f4dfff;
+    font-size: 16px;
+    text-align: center;
+}
+
+.tarjeta-sobre__info p {
+    margin: 0;
+    color: #d9c4ed;
+    font-size: 10px;
+    line-height: 1.4;
+    text-align: center;
+}
+
+/* Precio */
+
+.tarjeta-sobre__precio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    width: 100%;
+    margin-top: auto;
+    padding: 7px;
+
+    border: 1px solid #e4c1ff;
+    border-radius: 30px;
+
+    background: linear-gradient(135deg, #310142, #7902a0);
+
+    color: white;
+    cursor: pointer;
+    font-family: inherit;
+
+    transition: 0.2s;
+}
+
+.tarjeta-sobre__precio:hover {
+    border-color: #ffd700;
+    filter: brightness(1.2);
+}
+
+.tarjeta-sobre__precio img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+
+.tarjeta-sobre__precio span {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/* ==========================================
+   SOBRE DE LA TARJETA DE LA TIENDA
+========================================== */
+
+.tarjeta-sobre .sobre-visual {
+    width: 100%;
+    height: 205px;
+    flex: 0 0 205px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    align-self: stretch;
+    margin: 0;
+    padding: 10px 0;
+
+    filter: drop-shadow(0 6px 8px #0006);
+}
+
+.tarjeta-sobre .sobre-paquete {
+    width: 88px;
+    height: 130px;
+
+    margin: 0 auto;
+    flex-shrink: 0;
+
+    transform: rotate(-17deg) scale(1.10);
+    transform-origin: center;
+}
+
+/* Adaptación para pantallas pequeñas */
+
+@media (max-width: 600px) {
+    .tarjeta-sobre {
+        min-height: 310px;
+    }
+
+    .tarjeta-sobre .sobre-visual {
+        height: 190px;
+        flex-basis: 190px;
+    }
+
+    .tarjeta-sobre__imagen {
+        min-height: 150px;
+    }
+
+    .tarjeta-sobre__imagen img {
+        height: 130px;
+    }
+}

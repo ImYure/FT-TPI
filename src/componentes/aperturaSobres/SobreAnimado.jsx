@@ -1,27 +1,40 @@
+
 import { useState } from "react";
 import "../../estilos/apertura.css";
 
 export default function SobreAnimado({
     sobre,
-    cartasDisponibles,
+    cartasObtenidas = [],
     onCerrar
 }) {
     const [etapa, setEtapa] = useState("sobre");
 
-    // Determinamos cuántas cartas entrega el sobre
-    const cantidadCartas = sobre.rareza === "comun" ? 3 : 5;
+    function obtenerImagenSobre() {
+        if (!sobre?.imagen) return "";
 
-    // Elegimos las cartas aleatoriamente
-    const cartasObtenidas = [];
-
-    for (let i = 0; i < cantidadCartas; i++) {
-        if (cartasDisponibles.length > 0) {
-            const indice = Math.floor(
-                Math.random() * cartasDisponibles.length
-            );
-
-            cartasObtenidas.push(cartasDisponibles[indice]);
+        if (sobre.imagen.startsWith("http")) {
+            return sobre.imagen;
         }
+
+        if (sobre.imagen.startsWith("/")) {
+            return `http://localhost:3000${sobre.imagen}`;
+        }
+
+        return `http://localhost:3000/imagenes/sobres/${sobre.imagen}`;
+    }
+
+    function obtenerImagenCarta(imagen) {
+        if (!imagen) return "";
+
+        if (imagen.startsWith("http")) {
+            return imagen;
+        }
+
+        if (imagen.startsWith("/")) {
+            return `http://localhost:3000${imagen}`;
+        }
+
+        return `http://localhost:3000/imagenes/cartas/${imagen}`;
     }
 
     return (
@@ -34,7 +47,7 @@ export default function SobreAnimado({
 
                         <div className="sobre-cuerpo">
                             <img
-                                src={sobre.imagen}
+                                src={obtenerImagenSobre()}
                                 alt={sobre.nombre}
                             />
                         </div>
@@ -52,35 +65,52 @@ export default function SobreAnimado({
             )}
 
             {etapa === "resultado" && (
-                <div
-                    className="resultado-apertura"
-                    onClick={onCerrar}
-                >
+                <div className="resultado-apertura">
+
                     <h2>¡Sobre abierto!</h2>
 
                     <p>Estas son las cartas que obtuviste:</p>
 
-                    <div className="cartas-obtenidas">
-                        {cartasObtenidas.map((carta, indice) => (
-                            <div
-                                className="carta-obtenida"
-                                key={indice}
-                            >
-                                <img
-                                    src={carta.imagen}
-                                    alt={carta.nombre}
-                                />
+                    {cartasObtenidas.length > 0 ? (
 
-                                <h3>{carta.nombre}</h3>
+                        <div className="cartas-obtenidas">
 
-                                <span>{carta.rareza}</span>
-                            </div>
-                        ))}
-                    </div>
+                            {cartasObtenidas.map((carta, indice) => (
+                                <div
+                                    className="carta-obtenida"
+                                    key={carta.id || indice}
+                                >
 
-                    <p className="mensaje-continuar">
-                        Tocá cualquier parte para continuar
-                    </p>
+                                    <img
+                                        src={obtenerImagenCarta(carta.imagen)}
+                                        alt={carta.nombre}
+                                    />
+
+                                    <h3>{carta.nombre}</h3>
+
+                                    <span>{carta.rareza}</span>
+
+                                </div>
+                            ))}
+
+                        </div>
+
+                    ) : (
+
+                        <p>
+                            Todavía no se recibieron las cartas de la apertura.
+                        </p>
+
+                    )}
+
+                    <button
+                        type="button"
+                        className="tarjeta-producto__abrir"
+                        onClick={onCerrar}
+                    >
+                        Continuar
+                    </button>
+
                 </div>
             )}
 

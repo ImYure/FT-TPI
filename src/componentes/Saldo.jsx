@@ -1,12 +1,19 @@
-export default function Saldo() {
+
+export default function Saldo({ saldo = 0 }) {
+
   return (
     <aside className="saldo">
+
       <div className="saldo-icono">
-        <img src="../public/saldo.png" alt="Saldo" />
+        <img src="/saldo.png" alt="Saldo" />
       </div>
+
       <div className="saldo-texto">
-        <span className="monto">123456789</span>
+        <span className="monto">
+          {Number(saldo).toLocaleString("es-AR")}
+        </span>
       </div>
+
     </aside>
   );
 }

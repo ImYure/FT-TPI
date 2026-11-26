@@ -1,3 +1,4 @@
+
 * {
     box-sizing: border-box;
 }
@@ -226,53 +227,86 @@
 }
 
 .sobres-cartas {
-    margin-top: 18px;
+    margin-top: 14px;
+}
+
+/* TÍTULO Y DESCRIPCIÓN DE SELECCIÓN DE CARTAS */
+
+.sobres-cartas h3,
+.sobres-seleccion-cartas h3 {
+    margin: 0 0 5px;
+    color: #572477;
+    font-size: 11px;
+    font-weight: 600;
 }
 
 .sobres-formulario label.label-con-linea {
-    padding-bottom: 6px;
+    padding-bottom: 4px;
     border-bottom: 1px solid #aaaaaa;
-    margin-bottom: 22px;
+    margin-bottom: 10px;
+    font-size: 10px;
 }
+
+/* LISTA DE CARTAS */
 
 .sobres-cartas-lista {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    max-height: 260px;
+    gap: 5px;
+    max-height: 190px;
     overflow-y: auto;
+    padding: 2px 5px 2px 0;
 }
 
-.sobres-formulario .sobre-carta-card {
+/* OPCIÓN DE CARTA: ESTILO PARA AMBAS CLASES */
+
+.sobres-formulario .sobre-carta-card,
+.sobres-formulario .sobres-carta-opcion {
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: space-between;
+    gap: 8px;
+
     width: 100%;
+    min-height: 30px;
+    height: 30px;
     margin: 0;
-    padding: 0 14px;
-    height: 40px;
-    border: 1px solid #555555;
-    border-radius: 7px;
+    padding: 4px 8px;
+
+    border: 1px solid #e4d8ed;
+    border-radius: 6px;
+
     background: #f7f7f7;
     color: #7c1fa8;
-    font-size: 10px;
+
+    font-size: 9px;
+    font-weight: 400;
     cursor: pointer;
+
     transition: background-color 0.15s, border-color 0.15s;
 }
 
-.sobre-carta-card:hover {
+.sobre-carta-card:hover,
+.sobres-carta-opcion:hover {
     background: #faf5ff;
     border-color: #6a1b9a;
 }
 
-.sobre-carta-card.seleccionada {
+.sobre-carta-card.seleccionada,
+.sobres-carta-opcion.seleccionada {
     background: #f4eaff;
     border-color: #6a1b9a;
 }
 
-.sobres-formulario .sobre-carta-card input[type="checkbox"] {
+/* CHECKBOX */
+
+.sobres-formulario .sobre-carta-card input[type="checkbox"],
+.sobres-formulario .sobres-carta-opcion input[type="checkbox"],
+.sobres-formulario .sobres-carta-opcion label input[type="checkbox"] {
+    display: inline-block;
     width: 13px;
     height: 13px;
+    min-width: 13px;
     padding: 0;
     margin: 0;
     accent-color: #6a1b9a;
@@ -280,24 +314,84 @@
     flex-shrink: 0;
 }
 
+/* NOMBRE DE LA CARTA */
+
+.sobres-carta-opcion > label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: auto;
+    margin: 0;
+    color: #493653;
+    font-size: 9px;
+    cursor: pointer;
+}
+
+/* PROBABILIDAD */
+
+.sobres-carta-probabilidad {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.sobres-carta-probabilidad label {
+    display: inline-block;
+    width: auto;
+    margin: 0;
+    color: #766780;
+    font-size: 8px;
+    white-space: nowrap;
+}
+
+.sobres-formulario .sobres-carta-probabilidad input[type="number"] {
+    display: block;
+    width: 48px;
+    min-width: 48px;
+    height: 23px;
+    padding: 2px 4px;
+    margin: 0;
+    font-size: 9px;
+    border: 1px solid #d9c9e3;
+    border-radius: 5px;
+}
+
+/* CONTADOR Y MENSAJES */
+
 .sobres-sin-cartas {
     color: #777777;
-    font-size: 10px;
-    margin: 8px 0;
+    font-size: 9px;
+    margin: 6px 0;
 }
+
+.sobres-seleccion-cartas > p {
+    margin: 5px 0 8px;
+    font-size: 9px;
+    color: #81758a;
+}
+
+.sobres-seleccion-cartas > p:last-child {
+    margin: 8px 0 0;
+    font-size: 9px;
+    font-weight: 600;
+    color: #64268b;
+}
+
+/* BOTONES DEL FORMULARIO */
 
 .sobres-formulario-acciones {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 10px;
-    margin-top: 22px;
+    gap: 8px;
+    margin-top: 16px;
 }
 
 .sobre-btn-guardar {
     border: none;
     border-radius: 4px;
-    padding: 5px 16px;
+    padding: 5px 14px;
     background: linear-gradient(90deg, #1b032b 0%, #6a1b9a 100%);
     color: #ffffff;
     font-family: inherit;
@@ -313,7 +407,7 @@
 .sobre-cancelar {
     border: 1px solid #777777;
     border-radius: 4px;
-    padding: 5px 14px;
+    padding: 5px 12px;
     background: #ffffff;
     color: #555555;
     font-family: inherit;
@@ -354,7 +448,8 @@
     padding: 16px 0 18px;
 }
 
-/* separador con degradé como en el diseño */
+/* SEPARADOR */
+
 .sobre-item::after {
     content: "";
     position: absolute;
@@ -365,9 +460,7 @@
     background: linear-gradient(90deg, #cfcfcf 0%, #777777 25%, #777777 85%, #dddddd 100%);
 }
 
-/* ==========================================================
-   SOBRE VISUAL
-   ========================================================== */
+/* SOBRE VISUAL */
 
 .sobre-visual {
     width: 120px;
@@ -386,6 +479,7 @@
     flex-shrink: 0;
     overflow: hidden;
     transform: rotate(-17deg);
+
     background:
         radial-gradient(ellipse at 45% 48%, #8f00ba 0%, transparent 58%),
         linear-gradient(
@@ -397,23 +491,25 @@
             #1c002c 84%,
             #0c0014 100%
         );
+
     clip-path: polygon(
-        0.0% 2.8%, 4.55% 0%, 9.09% 2.8%, 13.64% 0%,
+        0% 2.8%, 4.55% 0%, 9.09% 2.8%, 13.64% 0%,
         18.18% 2.8%, 22.73% 0%, 27.27% 2.8%, 31.82% 0%,
-        36.36% 2.8%, 40.91% 0%, 45.45% 2.8%, 50.0% 0%,
+        36.36% 2.8%, 40.91% 0%, 45.45% 2.8%, 50% 0%,
         54.55% 2.8%, 59.09% 0%, 63.64% 2.8%, 68.18% 0%,
         72.73% 2.8%, 77.27% 0%, 81.82% 2.8%, 86.36% 0%,
-        90.91% 2.8%, 95.45% 0%, 100.0% 2.8%,
-        100.0% 97.2%, 95.45% 100%, 90.91% 97.2%, 86.36% 100%,
+        90.91% 2.8%, 95.45% 0%, 100% 2.8%,
+        100% 97.2%, 95.45% 100%, 90.91% 97.2%, 86.36% 100%,
         81.82% 97.2%, 77.27% 100%, 72.73% 97.2%, 68.18% 100%,
-        63.64% 97.2%, 59.09% 100%, 54.55% 97.2%, 50.0% 100%,
+        63.64% 97.2%, 59.09% 100%, 54.55% 97.2%, 50% 100%,
         45.45% 97.2%, 40.91% 100%, 36.36% 97.2%, 31.82% 100%,
         27.27% 97.2%, 22.73% 100%, 18.18% 97.2%, 13.64% 100%,
-        9.09% 97.2%, 4.55% 100%, 0.0% 97.2%
+        9.09% 97.2%, 4.55% 100%, 0% 97.2%
     );
 }
 
-/* brillo suave sobre el plástico */
+/* BRILLO DEL PLÁSTICO */
+
 .sobre-paquete::before {
     content: "";
     position: absolute;
@@ -430,7 +526,7 @@
     );
 }
 
-/* ---------- rayas diagonales azul-violeta ---------- */
+/* RAYAS DIAGONALES */
 
 .sobre-rayas {
     position: absolute;
@@ -451,11 +547,19 @@
     box-shadow: 0 0 3px #4c12b0aa;
 }
 
-.sobre-rayas span:nth-child(1) { transform: translate(-50%, -50%) rotate(-52deg) translateY(-20px); }
-.sobre-rayas span:nth-child(2) { transform: translate(-50%, -50%) rotate(-52deg) translateY(-3px); }
-.sobre-rayas span:nth-child(3) { transform: translate(-50%, -50%) rotate(-52deg) translateY(14px); }
+.sobre-rayas span:nth-child(1) {
+    transform: translate(-50%, -50%) rotate(-52deg) translateY(-20px);
+}
 
-/* ---------- franjas brillantes arriba y abajo ---------- */
+.sobre-rayas span:nth-child(2) {
+    transform: translate(-50%, -50%) rotate(-52deg) translateY(-3px);
+}
+
+.sobre-rayas span:nth-child(3) {
+    transform: translate(-50%, -50%) rotate(-52deg) translateY(14px);
+}
+
+/* FRANJAS SUPERIOR E INFERIOR */
 
 .sobre-franja {
     position: absolute;
@@ -473,7 +577,6 @@
     box-shadow: 0 0 5px #c24bff99;
 }
 
-/* oscurece el centro de la franja: brillante en los bordes, apagada en el medio */
 .sobre-franja::after {
     content: "";
     position: absolute;
@@ -481,15 +584,19 @@
     background: linear-gradient(90deg, transparent 0%, #1a002bcc 50%, transparent 100%);
 }
 
-.sobre-franja.superior { top: 12px; }
-.sobre-franja.inferior { bottom: 12px; }
+.sobre-franja.superior {
+    top: 12px;
+}
 
-/* las líneas ya las dibuja el fondo de la franja */
+.sobre-franja.inferior {
+    bottom: 12px;
+}
+
 .linea-franja {
     display: none;
 }
 
-/* ---------- escudo blanco central ---------- */
+/* ESCUDO CENTRAL */
 
 .sobre-escudo-centro {
     position: absolute;
@@ -506,7 +613,7 @@
     );
 }
 
-/* INFORMACIÓN */
+/* INFORMACIÓN DEL SOBRE */
 
 .sobre-info {
     flex: 1;
@@ -537,6 +644,8 @@
 .sobre-incluye-card {
     margin-top: 2px;
 }
+
+/* ACCIONES DEL LISTADO */
 
 .sobre-acciones {
     display: flex;
@@ -571,26 +680,90 @@
     color: #ffffff;
 }
 
+/* IMÁGENES DE PREVISUALIZACIÓN */
+
+.sobre-imagen-preview {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    display: block;
+    margin: 10px 0;
+    border-radius: 8px;
+}
+
+.sobre-imagen-contenedor {
+    width: 120px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.sobre-imagen-contenedor img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
 /* RESPONSIVE */
 
 @media (min-width: 1000px) {
-    .sobres-formulario label { font-size: 11px; }
+    .sobres-formulario label {
+        font-size: 11px;
+    }
+
     .sobres-formulario input,
-    .sobres-formulario textarea { font-size: 12px; }
-    .sobres-formulario .sobre-carta-card { font-size: 12px; }
-    .sobres-form-header h3 { font-size: 14px; }
+    .sobres-formulario textarea {
+        font-size: 12px;
+    }
+
+    /* Se evita agrandar las opciones de cartas */
+    .sobres-formulario .sobre-carta-card,
+    .sobres-formulario .sobres-carta-opcion {
+        font-size: 9px;
+    }
+
+    .sobres-form-header h3 {
+        font-size: 14px;
+    }
+
     .sobre-btn-mini,
     .sobre-btn-guardar,
-    .sobre-cancelar { font-size: 10px; }
-    .sobres-listado h3 { font-size: 14px; }
-    .sobre-titulo-card { font-size: 13px; }
-    .sobre-desc-card { font-size: 11px; }
+    .sobre-cancelar {
+        font-size: 10px;
+    }
+
+    .sobres-listado h3 {
+        font-size: 14px;
+    }
+
+    .sobre-titulo-card {
+        font-size: 13px;
+    }
+
+    .sobre-desc-card {
+        font-size: 11px;
+    }
+
     .sobre-meta-card,
-    .sobre-incluye-card { font-size: 10px; }
-    .sobre-acciones button { font-size: 9px; }
-    .sobres-titulo-seccion h2 { font-size: 22px; }
-    .sobres-titulo-seccion p { font-size: 13px; }
-    .sobres-navbar .nav-item { font-size: 12px; }
+    .sobre-incluye-card {
+        font-size: 10px;
+    }
+
+    .sobre-acciones button {
+        font-size: 9px;
+    }
+
+    .sobres-titulo-seccion h2 {
+        font-size: 22px;
+    }
+
+    .sobres-titulo-seccion p {
+        font-size: 13px;
+    }
+
+    .sobres-navbar .nav-item {
+        font-size: 12px;
+    }
 }
 
 @media (max-width: 820px) {
@@ -621,26 +794,15 @@
     .sobre-paquete {
         transform: rotate(-17deg) scale(0.85);
     }
-}
 
-.sobre-imagen-preview {
-    width: 150px;
-    height: 150px;
-    object-fit: contain;
-    display: block;
-    margin: 10px 0;
-    border-radius: 8px;
-}
+    /* Mantener el tamaño del sobre de la tienda */
+    .tarjeta-sobre .sobre-visual {
+        width: 100%;
+        height: 190px;
+        flex-basis: 190px;
+    }
 
-.sobre-imagen-contenedor {
-    width: 120px;
-    height: 150px;
-    overflow: hidden;
-    border-radius: 10px;
-}
-
-.sobre-imagen-contenedor img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    .tarjeta-sobre .sobre-paquete {
+        transform: rotate(-17deg) scale(1.05);
+    }
 }

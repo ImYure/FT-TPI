@@ -1,14 +1,25 @@
+
 import "../estilos/TarjetaCarta.css";
 
-export default function TarjetaCarta({ carta, mostrarPrecio }) {
+export default function TarjetaCarta({
+    carta,
+    mostrarPrecio,
+    onComprar,
+    comprando
+}) {
     return (
         <div className={`carta-item rareza-${carta.rareza}`}>
             <div className="carta-item__interior">
+
                 <div className="carta-item__header">
-                    <span className="carta-item__rareza">★ {carta.rareza}</span>
+                    <span className="carta-item__rareza">
+                        ★ {carta.rareza}
+                    </span>
                 </div>
 
-                <h3 className="carta-item__nombre">{carta.nombre}</h3>
+                <h3 className="carta-item__nombre">
+                    {carta.nombre}
+                </h3>
 
                 <div className="carta-item__imagen">
                     <img
@@ -22,14 +33,17 @@ export default function TarjetaCarta({ carta, mostrarPrecio }) {
                         <strong>{carta.vida}</strong>
                         <span>Vida</span>
                     </div>
+
                     <div className="carta-stat">
                         <strong>{carta.ataque}</strong>
                         <span>Ataque</span>
                     </div>
+
                     <div className="carta-stat">
                         <strong>{carta.defensa}</strong>
                         <span>Def</span>
                     </div>
+
                     <div className="carta-stat">
                         <strong>{carta.velocidad}</strong>
                         <span>Vel</span>
@@ -42,12 +56,26 @@ export default function TarjetaCarta({ carta, mostrarPrecio }) {
                 </div>
 
                 {mostrarPrecio && (
-                    <button className="tarjeta-producto__precio">
+                    <button
+                        type="button"
+                        className="tarjeta-producto__precio"
+                        onClick={onComprar}
+                        disabled={!onComprar || comprando}
+                    >
                         <div className="saldo-icono">
-                            <img src="../public/saldo.png" alt="Saldo" />
+                            <img src="/saldo.png" alt="Saldo" />
                         </div>
-                        <span className="tarjeta-producto__numero-precio">{carta.precio}</span>
+
+                        <span className="tarjeta-producto__numero-precio">
+                            {comprando ? "Comprando..." : carta.precio}
+                        </span>
                     </button>
+                )}
+
+                {!mostrarPrecio && carta.cantidad !== undefined && (
+                    <p className="cantidad-inventario">
+                        Cantidad: {carta.cantidad}
+                    </p>
                 )}
 
             </div>

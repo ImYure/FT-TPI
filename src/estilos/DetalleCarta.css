@@ -1,108 +1,244 @@
-/* Estructura general de 2 columnas en Inventario */
+
+/* ESTRUCTURA GENERAL DEL INVENTARIO */
+
 .inventario-layout {
-  display: grid;
-  /* CAMBIO: minmax(0, 1fr) evita que la columna izquierda se estire o deforme por el contenido interno */
-  grid-template-columns: minmax(0, 1fr) 350px;
-  gap: 24px;
-  align-items: start;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 350px;
+    gap: 24px;
+    align-items: start;
 }
 
-/* Efecto visual al pasar el mouse por las tarjetas de la grilla */
+/* TARJETAS SELECCIONABLES */
+
 .item-seleccionable {
-  cursor: pointer;
-  transition: transform 0.15s ease;
-  height: 100%;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    height: 100%;
 }
 
 .item-seleccionable:hover {
-  transform: translateY(-4px);
+    transform: translateY(-4px);
 }
 
-/* Columna derecha fija al hacer scroll */
+/* PANEL DERECHO */
+
 .inventario-panel-derecho {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 36px; /* antes 20px */
-  position: sticky;
-  top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 36px;
+    position: sticky;
+    top: 20px;
 }
 
-/* Contenedor de la tarjeta o sobre ampliado */
 .detalle-carta-contenedor {
-  width: 100%;
-  /* AGREGADO: Evita desbordes del contenedor */
-  box-sizing: border-box;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Escalado de los elementos internos de TarjetaCarta cuando está en el panel derecho */
+/* ================================= */
+/* DISEÑO DE LA CARTA */
+/* ================================= */
+
 .detalle-carta-contenedor .carta-item {
-  /* AGREGADO: Ocupa siempre el 100% del panel (350px) */
-  width: 100%;
-  /* AGREGADO: Anula el height: 100% de la grilla para que no se estire verticalmente de más */
-  height: auto;
-  padding: 10px;
-  border-radius: 20px;
-  box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    border-radius: 20px;
+    box-sizing: border-box;
 }
 
 .detalle-carta-contenedor .carta-item__interior {
-  padding: 16px;
-  gap: 14px;
-  box-sizing: border-box;
+    padding: 16px;
+    gap: 14px;
+    box-sizing: border-box;
 }
 
 .detalle-carta-contenedor .carta-item__rareza {
-  font-size: 14px;
-  padding: 4px 14px;
+    font-size: 14px;
+    padding: 4px 14px;
 }
 
 .detalle-carta-contenedor .carta-item__nombre {
-  font-size: 20px;
-  /* AGREGADO: Si un nombre es muy largo, lo corta con "..." en vez de agrandar la carta */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .detalle-carta-contenedor .carta-item__imagen {
-  /* AGREGADO: Mantiene siempre la imagen del mismo ancho y alto fijo */
-  width: 100%;
-  height: 210px;
-  flex-shrink: 0;
+    width: 100%;
+    height: 210px;
+    flex-shrink: 0;
 }
 
 .detalle-carta-contenedor .carta-stat {
-  padding: 8px 4px;
-  /* AGREGADO: Evita que números grandes empujen los bordes de las 4 cajitas */
-  min-width: 0;
+    padding: 8px 4px;
+    min-width: 0;
 }
 
 .detalle-carta-contenedor .carta-stat strong {
-  font-size: 16px;
+    font-size: 16px;
 }
 
 .detalle-carta-contenedor .carta-stat span {
-  font-size: 12px;
+    font-size: 12px;
 }
 
 .detalle-carta-contenedor .carta-item__habilidad {
-  padding: 12px;
-  gap: 8px;
-  /* AGREGADO: Altura controlada; si la descripción es muy larga hace scroll interno sin deformar la carta */
-  min-height: 110px;
-  max-height: 150px;
-  overflow-y: auto;
-  box-sizing: border-box;
+    padding: 12px;
+    gap: 8px;
+    min-height: 110px;
+    max-height: 150px;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .detalle-carta-contenedor .carta-item__habilidad h4 {
-  font-size: 15px;
+    font-size: 15px;
 }
 
 .detalle-carta-contenedor .carta-item__habilidad p {
-  font-size: 13px;
-  line-height: 1.45;
-  /* AGREGADO: Corta palabras largas para que no se salgan del recuadro */
-  overflow-wrap: break-word;
+    font-size: 13px;
+    line-height: 1.45;
+    overflow-wrap: break-word;
+}
+
+/* ================================= */
+/* DISEÑO DEL SOBRE EN EL INVENTARIO */
+/* ================================= */
+
+.detalle-carta-contenedor .tarjeta-producto {
+    width: 100%;
+    max-width: 350px;
+    min-height: 0;
+    height: auto;
+    margin: 0 auto;
+    padding: 12px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    border: 2px solid #a101f1;
+    border-radius: 18px;
+
+    background: linear-gradient(135deg, #1e0527, #7902a0);
+    box-shadow: 0 6px 18px rgba(48, 25, 61, 0.25);
+}
+
+/* IMAGEN DEL SOBRE */
+
+.detalle-carta-contenedor .tarjeta-producto__imagen-contenedor {
+    width: 100%;
+    height: 190px;
+    margin: 0;
+    padding: 12px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #ffffff;
+    border: 2px solid #8b5cf6;
+    border-radius: 12px;
+    box-sizing: border-box;
+}
+
+.detalle-carta-contenedor .tarjeta-producto__imagen-contenedor img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* INFORMACIÓN DEL SOBRE */
+
+.detalle-carta-contenedor .tarjeta-producto__info {
+    width: 100%;
+    padding: 8px 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    box-sizing: border-box;
+}
+
+.detalle-carta-contenedor .tarjeta-producto__info h3 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 20px;
+    text-align: center;
+}
+
+.detalle-carta-contenedor .tarjeta-producto__info p {
+    margin: 0;
+    color: #ead9f5;
+    font-size: 13px;
+    text-align: center;
+}
+
+/* BOTÓN ABRIR SOBRE */
+
+.detalle-carta-contenedor .tarjeta-producto__abrir {
+    width: 100%;
+    min-height: 44px;
+    margin-top: 8px;
+    padding: 11px 16px;
+
+    border: 1px solid #ffffff;
+    border-radius: 30px;
+
+    background: linear-gradient(135deg, #310142, #7902a0);
+    color: #ffffff;
+
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.detalle-carta-contenedor .tarjeta-producto__abrir:hover {
+    background: linear-gradient(135deg, #45045e, #9204bf);
+    border-color: #ffd700;
+    transform: translateY(-2px);
+}
+
+.detalle-carta-contenedor .tarjeta-producto__abrir:active {
+    transform: translateY(0);
+}
+
+.detalle-carta-contenedor .tarjeta-producto__abrir:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* CANTIDAD DEL INVENTARIO */
+
+.detalle-carta-contenedor .cantidad-inventario {
+    color: #ffffff;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* ================================= */
+/* ADAPTACIÓN A CELULARES */
+/* ================================= */
+
+@media (max-width: 900px) {
+    .inventario-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .inventario-panel-derecho {
+        position: static;
+        align-items: center;
+    }
+
+    .detalle-carta-contenedor {
+        max-width: 350px;
+        margin: 0 auto;
+    }
 }

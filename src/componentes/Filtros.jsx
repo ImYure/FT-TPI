@@ -1,5 +1,5 @@
 
-export default function Filtros({ filtros, onChange, categorias, rarezas }) {
+export default function Filtros({ filtros, onChange, categorias = [], rarezas = [] }) {
 
   function cambiarFiltro(propiedad, valor) {
     onChange({
