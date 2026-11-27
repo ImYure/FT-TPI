@@ -165,7 +165,7 @@ export default function Inventario() {
             );
 
             // GUARDAR LAS CARTAS QUE DEVUELVE EL BACKEND
-            setCartasObtenidas(respuesta.data.cartas || []);
+            setCartasObtenidas(respuesta.data.cartasObtenidas || []);
 
             // MOSTRAR LA ANIMACIÓN
             setSobreEnApertura(articuloSeleccionado);

@@ -10,6 +10,7 @@ export default function SobreAnimado({
     const [etapa, setEtapa] = useState("sobre");
 
     function obtenerImagenSobre() {
+        console.log("Imagen del sobre:", sobre.imagen);
         if (!sobre?.imagen) return "";
 
         if (sobre.imagen.startsWith("http")) {
@@ -78,7 +79,7 @@ export default function SobreAnimado({
                             {cartasObtenidas.map((carta, indice) => (
                                 <div
                                     className="carta-obtenida"
-                                    key={carta.id || indice}
+                                    key={`${carta.id}-${indice}`}
                                 >
 
                                     <img
